@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Adicionar Usuário</title>
+</head>
+
+<body>
+
+    <header id="cabecalho">
+        <span onclick="openModalPerfil()" id="botaoPerfil">Nome usuário</span>
+        <a href="logout.html" id="botSair">Sair</a>
+    </header>
+
+    <section id="botoes">
+        <div>
+            <img src="../imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
+            <a href="Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
+            <a href="gerenciarTemplate.html" class="links">Gerenciar Template</a>
+            <a href="adicionarTemplate.html" class="links">Cadastrar Template</a>
+            <a href="Uploads.html" class="links">Uploads</a>
+            <a href="adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
+        </div>
+    </section>
+
+    <p id="linha"></p>
+
+    <div class="modalContainer"> <!--Modal de notificações de todas as telas-->
+        <div class="modal">
+            <span class="titulo">Notificações</span>
+            <button onclick="closeModal()" class="botaoX">X</button>
+            <br>
+            <div class="notificDiv">
+                <span>O template nome foi aprovado! Já está disponível para uso. </span>
+                <img src="../imagens/check.png" class="check">
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainerPerfil"> <!--Modal de perfil-->
+        <div class="modalPerfil">
+            <button onclick="closeModalPerfil()" class="botaoXPerfil">X</button>
+            <span class="titulo">Deborah Maia</span> <br>
+            <small>Administrador</small>
+            <div id="divMudarSenha">
+                <form id="mudarSenha">
+                    <p id="tituloSenha">Trocar minha senha</p>
+                    <label for="senhaAtual">Senha atual</label> <br>
+                    <input type="text" class="camposMudarSenha"> <br>
+                    <label for="senhaNova">Nova senha</label> <br>
+                    <input type="text" class="camposMudarSenha"> <br>
+                    <label for="senhaNovaConfirmacao">Confirmar nova senha</label> <br>
+                    <input type="text" class="camposMudarSenha"> <br> <br>
+                    <input type="submit" class="buttonMudarSenha">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="fundo" id="fundo"></div>
+
+    <section id="sectionAdcUser">
+        <div>
+            <p class="titulo">Adicionar Usuário</p>
+            <form id="formulario">
+                <label for="nome">Nome Completo</label> <br>
+                <input type="text" id="nome" class="campos"> <br> <br>
+                <label for="email">E-mail</label> <br>
+                <input type="email" id="email" class="campos"> <br> <br>
+                <label for="matricula">Matricula</label> <br>
+                <input type="text" id="matricula" class="campos"> <br> <br>
+                <label for="nivelAcesso">Nivel de Acesso</label> <br>
+                <select id="nivelAcesso" class="campos">
+                    <option>Administrador</option>
+                    <option>Comum</option>
+                </select> <br> <br>
+                <input type="submit" value="Adicionar" id="buttonAdicionar">
+            </form>
+        </div>
+
+    </section>
+
+    <br>
+
+    <div id="mensagemSucesso" style="display: none;">
+        Usuário adicionado com sucesso!
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        const userData = sessionStorage.getItem('userData');
+        const userDataS = JSON.parse(userData);
+        const tipo_perfil = userDataS.tipo_perfil;
+    
+        if (tipo_perfil === 'Administrador') {
+            botaoDash.style.display = 'inline-block';
+            botaoAdcUser.style.display = 'inline-block';
+        } 
+    </script>
+
+    <script>
+        const adicionar = document.getElementById('formulario')
+
+        adicionar.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const { nome, email, matricula, nivelAcesso } = event.target
+
+            const user = {
+                nome_funcionario: nome.value,
+                email: email.value,
+                matricula: matricula.value,
+                senha: "Quero@2023#",
+                tipo_perfil: nivelAcesso.value,
+            }
+
+            async function enviarDadosParaServidor() {
+                const url = 'http://localhost:3003/usuario/usuariosPost';
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                            "X-Requested-With": "XMLHttpRequest",
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(user),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
+                    }
+
+                    const responseData = await response.json();
+
+                    const mensagemSucesso = document.getElementById('mensagemSucesso');
+                    mensagemSucesso.style.display = 'flex';
+
+                    setTimeout(function () {
+                        mensagemSucesso.style.display = 'none';
+                    }, 5000); // Esconde a mensagem após 5 segundos (5000 milissegundos)
+
+
+                    console.log('Resposta do servidor:', responseData);
+                    console.log(response);
+
+                } catch (error) {
+                    console.log('Erro ao fazer a requisição:', error.message);
+                }
+            }
+
+            enviarDadosParaServidor();
+            limparCampos();
+        });
+
+        function limparCampos() {
+            const nome = document.getElementById('nome');
+            const email = document.getElementById('email');
+            const matricula = document.getElementById('matricula');
+            const nivelAcesso = document.getElementById('nivelAcesso');
+
+            nome.value = '';
+            email.value = '';
+            matricula.value = '';
+            nivelAcesso.value = '';
+        }
+    </script>
+
+    <script src="script_senha.js"></script>
+
+</body>
+
+</html>

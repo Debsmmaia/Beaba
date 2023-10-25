@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Campos {
+  idcampo              Int       @id(map: "campo_pkey") @default(autoincrement())
+  nome_campo           String    @db.VarChar(40)
+  tipo_dado            String    @db.VarChar(40)
+  nulo                 Boolean?
+  template_pertencente Int
+  templates            Templates @relation(fields: [template_pertencente], references: [idtemplate], onDelete: NoAction, onUpdate: NoAction, map: "template_pertencente_fkey")
+}
+
+model Templates {
+  idtemplate    Int             @id(map: "template_pkey") @default(autoincrement())
+  nome_template String          @db.VarChar(40)
+  tipo_arquivo  String          @db.VarChar(10)
+  data_criacao  DateTime        @default(now())
+  status        status_template
+  aprovacao     Boolean         @default(false)
+  usuario       Int             
+  Campos        Campos[]
+  usuarios      Usuarios        @relation(fields: [usuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "usuario_fkey")
+  uploads       Uploads[]
+}
+
+model Uploads {
+  idupload        Int       @id(map: "upload_pkey") @default(autoincrement())
+  caminho_arquivo String    @db.VarChar(500)
+  data_criacao    DateTime  @default(now())
+  usuario         Int
+  template_usado  Int
+  templates       Templates @relation(fields: [template_usado], references: [idtemplate], onDelete: NoAction, onUpdate: NoAction, map: "template_fkey")
+  usuarios        Usuarios  @relation(fields: [usuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "usuarios_fkey")
+}
+
+model Usuarios {
+  nome_funcionario String      @db.VarChar(40)
+  email            String      @db.VarChar(40)
+  matricula        String      @db.VarChar(40) 
+  senha            String      @db.VarChar(200)
+  tipo_perfil      tipo_perfil
+  idusuario        Int         @id(map: "usuarios_pkey") @default(autoincrement())
+  templates        Templates[]
+  uploads          Uploads[]
+}
+
+enum status_template {
+  Ativo
+  Desativo
+}
+
+enum tipo_perfil {
+  Administrador
+  Comum
+}

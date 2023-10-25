@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Uploads" ALTER COLUMN "data_criacao" SET DATA TYPE TIMESTAMP(3);
+
+-- AlterTable
+ALTER TABLE "Usuarios" ALTER COLUMN "senha" SET DATA TYPE VARCHAR(200);

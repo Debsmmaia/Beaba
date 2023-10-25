@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Noto+Rashi+Hebrew:wght@100&display=swap');
+
+body {
+    margin: 0 auto;
+    font-family: 'Inter', sans-serif;
+}
+
+/*Login*/
+
+#bodyLogin{
+    background: -webkit-linear-gradient(left, #026f38, #fce901);
+    display: flex;
+    min-height: 100vh;
+    justify-content: right;
+    align-items: flex-end;
+    font-size: 18px;
+}
+
+#login{
+    display: inline-block;
+    background-color: white;
+    width: 250px;
+    height: 200px;
+    padding: 20px;
+    flex-shrink: 0;
+    border-radius: 25px;
+    margin: 80px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.botaoLogin {
+    border-radius: 5px;
+    background: #026F38;
+    color: white;
+    height: 35px;
+    width: 75px;
+    font-size: 18px;
+    border: 0 solid;
+    cursor: pointer;
+    margin: 10px;
+}
+
+small{
+    opacity: 0.8;
+    font-size: 11px;
+}
+
+.camposLogin{
+    border: #026F38 solid 2px;
+    border-radius: 8px;
+    width: 225px;
+    height: 30px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    background-color: rgb(221, 221, 221);
+}  

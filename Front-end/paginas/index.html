@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style3.css">
+  <title>Login</title>
+</head>
+
+<body id="bodyLogin">
+  <div id="login">
+    <form id="formLogin">
+      <label for="matricula">Login</label> <br>
+      <input type="text" id="matricula" class="camposLogin" placeholder="Matrícula"> <br>
+      <label for="senha">Senha</label> <br>
+      <input type="password" id="senha" class="camposLogin" placeholder="Senha"> <br>
+      <input type="submit" id="enviar" class="botaoLogin" value="Entrar">
+    </form>
+    <br>
+  </div>
+
+  <script>
+ 
+    const loginForm = document.getElementById('formLogin');
+
+    loginForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const matricula = document.getElementById('matricula').value;
+      const senha = document.getElementById('senha').value;
+
+      const user = {
+        matricula: matricula,
+        senha: senha,
+      };
+
+      const url = 'http://localhost:3003/usuario/login';
+      const token = 'QQ2023Tech5';
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(user),
+        });
+
+        if (response.status === 200) {
+          const data = await response.json();
+          console.log('Usuário autenticado:');
+          sessionStorage.setItem('userData', JSON.stringify(data));
+
+          if(data.tipo_perfil === 'Administrador'){
+            window.location.href = '/Front-end/paginas/Dashboard.html';
+          }else{
+            window.location.href = '/Front-end/paginas/gerenciarTemplate.html';
+          }
+          
+        } else if (response.status === 403) {
+          console.log('Acesso negado!');
+        
+        } else {
+          console.error('Erro no login:', response.status);
+        
+        }
+      } catch (error) {
+        console.error('Erro na solicitação de login:', error);
+      }
+      limparCampos();
+    });
+
+    function limparCampos() {
+            const matricula = document.getElementById('matricula');
+            const senha = document.getElementById('senha');
+
+            matricula.value = '';
+            senha.value = '';
+        }
+</script>
+
+</body>
+
+</html>

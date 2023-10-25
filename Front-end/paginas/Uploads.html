@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Gerenciar Template</title>
+</head>
+<body>
+
+    <header id="cabecalho">
+        <span onclick="openModalPerfil()" id="botaoPerfil">Nome usuário</span>
+        <a href="logout.html" id="botSair">Sair</a>
+    </header>
+
+    <section id="botoes">
+        <div>
+            <img src="../imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
+            <a href="Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
+            <a href="gerenciarTemplate.html" class="links">Gerenciar Template</a>
+            <a href="adicionarTemplate.html" class="links">Cadastrar Template</a>
+            <a href="Uploads.html" class="links">Uploads</a>
+            <a href="adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
+        </div>
+    </section>
+
+    <p id="linha"></p>
+
+    <div class="modalContainer"> <!--Modal de notificações de todas as telas-->
+        <div class="modal">
+            <span class="titulo">Notificações</span>
+            <button onclick="closeModal()" class="botaoX">X</button>
+            <br>
+            <div class="notificDiv">
+                <span>O template nome foi aprovado! Já está disponível para uso. </span>
+                <img src="../imagens/check.png" class="check">
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainerPerfil"> <!--Modal de perfil-->
+        <div class="modalPerfil">
+            <button onclick="closeModalPerfil()" class="botaoXPerfil">X</button>
+            <span class="titulo">Deborah Maia</span> <br>
+            <small>Administrador</small>
+            <div id="divMudarSenha">
+                <form id="mudarSenha">
+                    <p id="tituloSenha">Trocar minha senha</p>
+                    <label for="senhaAtual">Senha atual</label> <br>
+                    <input type="text" class="camposMudarSenha"> <br>
+                    <label for="senhaNova">Nova senha</label> <br>
+                    <input type="text" class="camposMudarSenha"> <br>
+                    <label for="senhaNovaConfirmacao">Confirmar nova senha</label> <br>
+                    <input type="text" class="camposMudarSenha"> <br> <br>
+                    <input type="submit" class="buttonMudarSenha">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="fundo" id="fundo"></div>
+    
+    <section>
+        <span class="titulo">Uploads</span> <br> <br>
+        <div class="informacoesTemplate">
+            <span >Nome do arquivo</span>
+            <span class="rotulo">Data do Upload</span>
+            <span class="rotulo">Funcionário</span>
+        </div>
+        <div id="containerTemplate">
+            <div id="template">
+                <span>Funcionários Cadastrados</span>
+                <span>21/21/2021</span>
+                <span>Deborah Maia</span>
+                <div id="divBotoesTemplate">
+                    <button class="botaoBranco">Download</button>  
+                </div> 
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+        const userData = sessionStorage.getItem('userData');
+        const userDataS = JSON.parse(userData);
+        const tipo_perfil = userDataS.tipo_perfil;
+    
+        if (tipo_perfil === 'Administrador') {
+            botaoDash.style.display = 'inline-block';
+            botaoAdcUser.style.display = 'inline-block';
+        } 
+    </script>
+
+    <script src="script_senha.js"></script>
+    
+</body>
+</html>

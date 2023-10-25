@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Templates" ALTER COLUMN "data_criacao" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "Uploads" ALTER COLUMN "data_criacao" SET DEFAULT CURRENT_TIMESTAMP;

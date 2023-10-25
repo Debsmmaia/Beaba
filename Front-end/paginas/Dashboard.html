@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+
+    <header id="cabecalho">
+        <span onclick="openModalPerfil()" id="botaoPerfil"></span>
+        <a href="logout.html" id="botSair">Sair</a>
+    </header>
+
+    <section id="botoes">
+        <div>
+            <img src="../imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
+            <a href="Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
+            <a href="gerenciarTemplate.html" class="links">Gerenciar Template</a>
+            <a href="adicionarTemplate.html" class="links">Cadastrar Template</a>
+            <a href="Uploads.html" class="links">Uploads</a>
+            <a href="adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
+        </div>
+    </section>
+
+    <p id="linha"></p>
+
+    <div class="modalContainer"> <!--Modal de notificações de todas as telas-->
+        <div class="modal">
+            <span class="titulo">Notificações</span>
+            <button onclick="closeModal()" class="botaoX">X</button>
+            <br>
+            <div class="notificDiv">
+                <span>O template nome foi aprovado! Já está disponível para uso. </span>
+                <img src="../imagens/check.png" class="check">
+            </div>
+        </div>
+    </div>
+
+    <div class="modalContainerPerfil"> <!--Modal de perfil-->
+        <div class="modalPerfil">
+            <button onclick="closeModalPerfil()" class="botaoXPerfil">X</button>
+            <div id="informacoesPerfil">
+
+            </div>
+            <div id="divMudarSenha">
+                <form id="mudarSenha">
+                    <p id="tituloSenha">Trocar minha senha</p>
+                    <label for="senhaAtual">Senha atual</label> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaAtual"> <br>
+                    <label for="senhaNova">Nova senha</label> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaNova"> <br>
+                    <label for="senhaNovaConfirmacao">Confirmar nova senha</label> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaNovaConfirmacao"> <br> <br>
+                    <input type="submit" class="buttonMudarSenha">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="fundo" id="fundo"></div>
+
+    <section>
+        <p class="titulo">Seja bem-vindo!</p>
+        <p class="subtitulos" style="margin-left: 10px;">Usuários</p>
+        <div id="usuarios">
+            <div id="tabelaUsuarios">
+
+            </div>
+        </div>
+
+        <br>
+            <div id="aprovacoes">
+                <p class="subtitulos">Templates para aprovação</p>
+                
+            </div>
+            <div id="metricas">
+                <div id="aprovados">Templates Aprovados <span>  </span> </div> <br>
+                <div id="reprovados">Templates Reprovados <span>  </span> </div> <br>
+                <div id="templatesTotal">Templates Ativos <span>  </span> </div>
+            </div>
+
+    </section>
+
+    <script src="script.js"></script>
+
+    <script>
+
+        //nome do botao perfil
+        const logout = document.getElementById('botSair');
+        const botaoDash = document.getElementById('botaoDash');
+        const botaoAdcUser = document.getElementById('botaoAdcUser');
+    
+        logout.addEventListener('click', async () => {
+            const url = 'http://localhost:3003/usuario/logout';
+            const token = 'QQ2023Tech5';
+    
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                });
+    
+                if (response.status === 200) {
+                    window.location.href = '/Front-end/paginas/logout.html';
+                } else {
+                    console.error("Erro ao encerrar!");
+                }
+            } catch (error) {
+                console.error("Erro");
+            }
+        })
+    
+        const userData = sessionStorage.getItem('userData');
+        const userDataS = JSON.parse(userData);
+        const tipo_perfil = userDataS.tipo_perfil;
+
+        const nome = userDataS.nome_funcionario;
+        const spanNomeUsuario = document.getElementById('botaoPerfil');
+        spanNomeUsuario.innerHTML = nome;
+    
+        if (tipo_perfil === 'Administrador') {
+            botaoDash.style.display = 'inline-block';
+            botaoAdcUser.style.display = 'inline-block';
+        } 
+
+        
+
+    </script>
+    
+    <script src="script_dash.js"></script>
+
+    <script src="script_senha.js"></script>
+
+    
+
+</body>
+</html>  
+
