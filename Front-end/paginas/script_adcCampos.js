@@ -2,14 +2,16 @@ const enviar = document.getElementById('enviarForm');
 
 enviar.addEventListener('click', function (event) {
     event.preventDefault();
-    
+
+    console.log("sei la");
+
     const nomeCampo = document.getElementsByClassName('camposAdcTemplate').value;
     const tipo_dado = document.getElementsByClassName('campoSelect').value;
     const campoNulo = document.getElementsByClassName('camposNulo').value;
 
-    if(campoNulo == 'Sim'){
+    if (campoNulo == 'Sim') {
         campoNulo = true;
-    }else if(campoNulo == 'Não'){
+    } else if (campoNulo == 'Não') {
         campoNulo = false;
     }
 
@@ -20,7 +22,7 @@ enviar.addEventListener('click', function (event) {
     console.log(templateDataS.idtemplate);
 
     const campo = {
-        "nome_campo":  nomeCampo,
+        "nome_campo": nomeCampo,
         "tipo_dado": tipo_dado,
         "nulo": campoNulo,
         "template_pertencente": templatePertencente.idtemplate,

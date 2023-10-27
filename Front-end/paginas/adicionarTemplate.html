@@ -11,7 +11,7 @@
 <body>
 
     <header id="cabecalho">
-        <span onclick="openModalPerfil()" id="botaoPerfil">Nome usuário</span>
+        <span onclick="openModalPerfil()" id="botaoPerfil"></span>
         <a href="logout.html" id="botSair">Sair</a>
     </header>
 
@@ -90,125 +90,9 @@
 
     <script src="script.js"></script>
 
-    <script>
-        const userData = sessionStorage.getItem('userData');
-        const userDataS = JSON.parse(userData);
-        const tipo_perfil = userDataS.tipo_perfil;
-
-    
-        if (tipo_perfil === 'Administrador') {
-            botaoDash.style.display = 'inline-block';
-            botaoAdcUser.style.display = 'inline-block';
-        } 
-    </script>
-
-    <script>
-        const qtdCampos = document.getElementById('qtdCampos');
-        const camposAdicionados = document.getElementById('divDireita');
-        const adicionarCampos = document.getElementById('adicionarCampos');
-
-        adicionarCampos.addEventListener('click', function (event) {
-            event.preventDefault();
-            const quantidade = parseInt(qtdCampos.value);
-
-            const camposAtuais = camposAdicionados.querySelectorAll('.divCampos');
-
-            if (camposAtuais.length > quantidade) {
-                for (let i = quantidade; i < camposAtuais.length; i++) {
-                    camposAtuais[i].remove();
-                }
-            }
-
-            for (let i = camposAtuais.length; i < quantidade; i++) {
-                const novoCampo = document.createElement('div');
-                const novoForm = document.createElement('form');
-
-                const novoLabel = document.createElement('label');
-                novoLabel.for = `Conteúdo do campo ${i + 1}`;
-                novoLabel.innerText = `Conteúdo do campo ${i + 1}:`;
-
-                const novoInput = document.createElement('input');
-                novoInput.type = 'text';
-                novoInput.name = `Campo${i + 1}`;
-                novoInput.id = `Campo${i + 1}`;
-
-                const novoLabelSelect = document.createElement('label');
-                novoLabelSelect.for = `Tipo do dado - campo${i + 1}`;
-                novoLabelSelect.innerText = `Tipo do dado - campo ${i + 1}:`;
-
-                const novoSelect = document.createElement('select');
-                novoSelect.name = `Tipo de dado${i + 1}`;
-                novoSelect.id = `Tipo de dado${i + 1}`;
-                const option1 = document.createElement('option');
-                option1.value = 'Numero inteiro';
-                option1.text = 'Numero inteiro';
-                const option2 = document.createElement('option');
-                option2.value = 'Palavra';
-                option2.text = 'Palavra';
-                const option3 = document.createElement('option');
-                option3.value = 'Data';
-                option3.text = 'Data';
-                novoSelect.appendChild(option1);
-                novoSelect.appendChild(option2);
-                novoSelect.appendChild(option3);
-
-                const novoLabelNulo = document.createElement('label');
-                novoLabelNulo.for = `O campo ${i + 1} pode ser nulo?`;
-                novoLabelNulo.innerText = `O campo ${i + 1} pode ser nulo?  `;
-
-                const novoNulo = document.createElement('select');
-                novoSelect.name = `O campo ${i + 1} pode ser nulo?`;
-                novoSelect.id = `O campo ${i + 1} pode ser nulo?`;
-                const option5 = document.createElement('option');
-                option5.value = 'Sim';
-                option5.text = 'Sim';
-                const option6 = document.createElement('option');
-                option6.value = 'Não';
-                option6.text = 'Não';
-                novoNulo.appendChild(option5);
-                novoNulo.appendChild(option6);
-
-                const lineBreak = document.createElement('br');
-                novoInput.classList.add('camposAdcTemplate');
-                novoSelect.classList.add('campoSelect');
-                novoCampo.classList.add('divCampos');
-                novoNulo.classList.add('camposNulo');
-                novoForm.classList.add('camposTemplate')
-
-                novoForm.appendChild(novoLabel);
-                novoForm.appendChild(lineBreak);
-                novoForm.appendChild(novoInput);
-                novoForm.appendChild(lineBreak.cloneNode());
-                novoForm.appendChild(novoLabelSelect);
-                novoForm.appendChild(lineBreak.cloneNode());
-                novoForm.appendChild(novoSelect);
-                novoForm.appendChild(lineBreak.cloneNode());
-                novoForm.appendChild(novoLabelNulo);
-                novoForm.appendChild(novoNulo);
-                novoForm.appendChild(lineBreak.cloneNode());
-                novoForm.appendChild(lineBreak.cloneNode());
-                novoForm.appendChild(lineBreak.cloneNode());
-
-                // Adiciona o formulário com o campo ao novoCampo
-                novoCampo.appendChild(novoForm);
-
-                // Adiciona o novoCampo à divDireita
-                camposAdicionados.appendChild(novoCampo);
-            }
-
-            // Verifica se a quantidade é maior que 0 para mostrar o botão de enviar
-            if (quantidade > 0) {
-                const botaoEnviar = document.getElementById('enviarForm');
-                botaoEnviar.style.display = 'block';
-            } else {
-                const botaoEnviar = document.getElementById('enviarForm');
-                botaoEnviar.style.display = 'none';
-            }
-        });
-    </script>
-
     <script src="script_adcTemplate.js"></script>
-    <script src="script_adcCampos.js"></script>
+
+    <!-- <script src="script_adcCampos.js"></script> -->
 
     <script src="script_senha.js"></script>
 

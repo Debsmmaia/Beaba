@@ -11,7 +11,7 @@
 <body>
 
     <header id="cabecalho">
-        <span onclick="openModalPerfil()" id="botaoPerfil">Nome usuário</span>
+        <span onclick="openModalPerfil()" id="botaoPerfil"></span>
         <a href="logout.html" id="botSair">Sair</a>
     </header>
 
@@ -95,6 +95,10 @@
         const userData = sessionStorage.getItem('userData');
         const userDataS = JSON.parse(userData);
         const tipo_perfil = userDataS.tipo_perfil;
+
+        const nome = userDataS.nome_funcionario;
+        const spanNomeUsuario = document.getElementById('botaoPerfil');
+        spanNomeUsuario.innerHTML = nome;
     
         if (tipo_perfil === 'Administrador') {
             botaoDash.style.display = 'inline-block';
@@ -168,6 +172,7 @@
             matricula.value = '';
             nivelAcesso.value = '';
         }
+
     </script>
 
     <script src="script_senha.js"></script>

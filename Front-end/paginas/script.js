@@ -10,19 +10,6 @@ function closeModal(){
     modal.classList.remove('active')
 }
 
-//Uploads
-
-const modalupload = document.querySelector('.modalContainerUpload');
-
-
-function openModalUpload(){
-    modalupload.classList.add('activeUpload');
-}
-
-function closeModalUpload(){
-    modalupload.classList.remove('activeUpload');
-}
-
 //Perfil
 
 const modalperfil = document.querySelector('.modalContainerPerfil');
@@ -82,10 +69,6 @@ document.getElementById("botaoUpload").addEventListener("click", function(){
 document.querySelector(".botaoXUpload").addEventListener("click", function(){
     document.getElementById("fundo").style.display = "none";
 });
-
-
-
-
 
 
 

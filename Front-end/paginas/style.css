@@ -234,7 +234,7 @@ body {
     animation: modal .4s;
 }
 
-#drop-area{
+.drop-area{
     border: #026F38 dashed;
     height: 150px;
     width: 450px;
@@ -243,7 +243,7 @@ body {
     margin-left: 48px;
 }
 
-#barra{
+.barra{
     width: 0;
     max-width: 350px;
     height: 10px;
@@ -445,10 +445,23 @@ small{
     position: absolute;
     left: 0;
     margin: 30px;
+}
+
+#templatesParaAprovacao{
+    max-width: 65%px;
+    max-height: 200px;
+    margin-bottom: 20px;
     overflow-y: scroll;
 }
 
-#butAprovar{
+.templateDiv{
+    border: #026F38 solid 2px;
+    border-radius: 10px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.butAprovar{
     border-radius: 15px;
     border: 1px solid #026F38;
     background: rgba(2, 111, 56, 0.76);
@@ -461,7 +474,7 @@ small{
     margin-left: 10px;
 }
 
-#butReprovar{
+.butReprovar{
     border-radius: 15px;
     border: 1px solid rgba(255, 0, 0, 0.70);
     background: rgba(255, 100, 100, 0.76);
@@ -809,6 +822,8 @@ input:checked + .slider:before {
 #containerTemplate{
     display: flex;
     overflow-y: scroll;
+    height: 900px;
+    flex-direction: column;
 }
 
 #template{

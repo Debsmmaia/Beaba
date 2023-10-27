@@ -89,88 +89,39 @@
             <span class="rotulo">Solicitante</span>
         </div>
         <div id="containerTemplate">
-            <div id="template">
-                <span>Funcionários Cadastrados</span>
-                <span>XLS</span>
-                <span>5</span>
-                <span>Deborah Maia</span>
-                <div id="divBotoesTemplate">
-                    <button class="botaoBranco">Download</button>
-                    <button class="botaoBranco" id="botaoUpload" onclick="openModalUpload()">Upload</button> 
-                    <label class="switch">
-                        <input type="checkbox" id="toggle">
-                        <span class="slider" id="botaoStatus" style="display: none;""></span>
-                    </label>  
-                </div> 
-            </div>
+            
         </div>
+
+        <div class="modalUpload" style="display: none;">
+            <span class="titulo">Fazer Upload</span> 
+            <button onclick="closeModalUpload()" class="botaoXUpload">X</button> 
+            <br> <br>
+            <form>
+                <div class="drop-area">
+                    <p>Arraste e solte o arquivo aqui!</p>
+                </div>
+                <br>
+                <div class="barra"></div>
+                <div class="informacao"></div>
+                <br>
+                <input type="file" class="arquivo" name="arquivo" value="Pesquisar">
+                <input type="submit" onclick="closeModalUpload()" id="botaoXUpload" class="botoesUpload" value="Adicionar">
+            </form>
+        </div>
+
+        
     </section>
 
     <script src="script.js"></script>
 
-    <script>
-        const userData = sessionStorage.getItem('userData');
-        const userDataS = JSON.parse(userData);
-        const tipo_perfil = userDataS.tipo_perfil;
-
-        console.log(tipo_perfil);
-    
-        if (tipo_perfil === 'Administrador') {
-            botaoDash.style.display = 'inline-block';
-            botaoAdcUser.style.display = 'inline-block';
-        } 
-
-        if (tipo_perfil === 'Administrador') {
-            botaoStatus.style.display = 'inline-block';
-        } 
-
-    </script>
-
-    <script> 
-        document.getElementById("toggle").addEventListener("click", function() {
-        const status = document.querySelector(".status");
-        status.textContent = this.checked ? "Habilitado" : "Desabilitado";});
-    </script>
-
-    <script>
-        const dropArea = document.getElementById('drop-area');
-        const progressBar = document.getElementById('barra');
-        const fileInfo = document.getElementById('informacao');
-
-        dropArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-
-        dropArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const file = e.dataTransfer.files[0];
-
-            fileInfo.textContent = `Nome do arquivo: ${file.name}`;
-            simulateFileUpload(file);
-        });
-
-        function simulateFileUpload(file) {
-
-            const totalSize = file.size;
-            let uploadedSize = 0;
-
-            const uploadInterval = 200; 
-
-            const uploadTimer = setInterval(() => {
-                uploadedSize += 10000; 
-
-                // Atualizar a barra de progresso
-                const progress = (uploadedSize / totalSize) * 100;
-                progressBar.style.width = progress + '%';
-
-                if (uploadedSize >= totalSize) {
-                    clearInterval(uploadTimer);
-                }
-            }, uploadInterval);
-        }
-    </script>
-
     <script src="script_senha.js"></script>
+
+    <script src="script_gerencTemplates.js"></script>
     
 </body>
 </html>
+
+
+
+
+      

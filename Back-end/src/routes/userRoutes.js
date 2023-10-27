@@ -19,8 +19,8 @@ userRoutes.get('/usuariosGet', async (req, res) => {
   }
 });
 
-userRoutes.get('/buscaUsuarioId', async (req, res) => {
-  const idusuario = parseInt(req.body.idusuario); 
+userRoutes.get('/buscaUsuarioId/:idusuario', async (req, res) => {
+  const idusuario = parseInt(req.params.idusuario); 
   try {
     const usuario = await prisma.Usuarios.findUnique({
       where: {

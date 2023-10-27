@@ -12,7 +12,7 @@ templateRoutes.get('/templateGet', async (req, res) => {
       console.error('Erro ao buscar usuários:', error);
       res.status(500).json({ error: 'Erro ao buscar usuários.' });
     }
-  });
+});
 
 templateRoutes.post('/templatePost', async (req, res) => {
     const { nome_template, tipo_arquivo, data_criacao, status, usuario } = req.body;
@@ -51,6 +51,18 @@ templateRoutes.get('/buscaTemplateId/:idtemplate', async (req, res) => {
     res.status(500).json({ erro: 'Erro ao buscar template.' });
   }
 });
+
+templateRoutes.put('/aprovarTemplate', async (req, res) => {
+  const idtemplate = parseInt(req.body.idtemplate);
+  const templateAp = await prisma.Templates.update({ 
+    where: {
+      "idtemplate": idtemplate,
+    },
+    data: req.body
+  });
+  res.json(templateAp);  
+});
+
 
 // templateRoutes.delete('/deletarTemplate/:idtemplate', async (req, res) => {
 //   const idtemplate = parseInt(req.params.idtemplate);
