@@ -6,26 +6,26 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-.titulo{
+.titulo {
     font-family: 'Inter', sans-serif;
     font-size: 32px;
     color: #026F38;
     margin: 8px 0px 15px 10px;
 }
 
-.subtitulos{
+.subtitulos {
     color: #026F38;
     font-size: 23px;
     margin: 15px 15px 15px 0px;
 }
 
-.links{
+.links {
     text-decoration: none;
     color: black;
     margin-right: 18px;
 }
 
-#cabecalho{
+#cabecalho {
     display: flex;
     color: white;
     text-align: left;
@@ -35,18 +35,18 @@ body {
     justify-content: space-between;
 }
 
-#botoes{
+#botoes {
     text-align: right;
 }
 
-#notificacao{
+#notificacao {
     height: 15px;
     margin-bottom: 0;
     margin-top: 10px;
     cursor: pointer;
 }
 
-.notificDiv{
+.notificDiv {
     display: flex;
     border: #026F38 solid 2px;
     border-radius: 10px;
@@ -58,7 +58,7 @@ body {
     align-items: center;
 }
 
-#botSair{
+#botSair {
     color: #026F38;
     font-weight: bold;
     text-decoration: none;
@@ -69,7 +69,7 @@ body {
     margin-top: 5px;
 }
 
-.check{
+.check {
     height: 50px;
 }
 
@@ -99,16 +99,17 @@ body {
 }
 
 
-.active .modal{
+.active .modal {
     animation: modal .4s;
 }
 
 @keyframes modal {
-    from{
+    from {
         opacity: 0;
         transform: translate3d(0, -60px, 0);
     }
-    to{
+
+    to {
         opacity: 1;
         transform: translate3d(0, 0, 0);
     }
@@ -121,8 +122,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); 
-    z-index: 2; 
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
 }
 
 .botaoX {
@@ -163,16 +164,17 @@ body {
 }
 
 
-.active .modal{
+.active .modal {
     animation: modal .4s;
 }
 
 @keyframes modal {
-    from{
+    from {
         opacity: 0;
         transform: translate3d(0, -60px, 0);
     }
-    to{
+
+    to {
         opacity: 1;
         transform: translate3d(0, 0, 0);
     }
@@ -185,8 +187,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); 
-    z-index: 1; 
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
 .botaoX {
@@ -230,11 +232,11 @@ body {
     display: flex;
 }
 
-.activeUpload .modalUpload{
+.activeUpload .modalUpload {
     animation: modal .4s;
 }
 
-.drop-area{
+.drop-area {
     border: #026F38 dashed;
     height: 150px;
     width: 450px;
@@ -243,7 +245,7 @@ body {
     margin-left: 48px;
 }
 
-.barra{
+.barra {
     width: 0;
     max-width: 350px;
     height: 10px;
@@ -252,7 +254,7 @@ body {
     opacity: 0.8;
 }
 
-.botoesUpload{
+.botoesUpload {
     background-color: white;
     border: #026F38 solid 2px;
     border-radius: 10px;
@@ -267,11 +269,12 @@ body {
 }
 
 @keyframes modalUpload {
-    from{
+    from {
         opacity: 0;
         transform: translate3d(0, -60px, 0);
     }
-    to{
+
+    to {
         opacity: 1;
         transform: translate3d(0, 0, 0);
     }
@@ -289,11 +292,11 @@ body {
 
 /*Modal Perfil*/
 
-#botaoPerfil{
+#botaoPerfil {
     cursor: pointer;
 }
 
-.modalContainerPerfil{
+.modalContainerPerfil {
     width: 100vw;
     position: fixed;
     display: none;
@@ -301,7 +304,7 @@ body {
     top: 0px;
 }
 
-.modalPerfil{
+.modalPerfil {
     background-color: white;
     display: inline-block;
     flex-direction: column;
@@ -316,16 +319,17 @@ body {
     display: flex;
 }
 
-.activeperfil .modalPerfil{
+.activeperfil .modalPerfil {
     animation: modal .4s;
 }
 
-@keyframes modalPerfil{
-    from{
+@keyframes modalPerfil {
+    from {
         opacity: 0;
         transform: translate3d(0, -60px, 0);
     }
-    to{
+
+    to {
         opacity: 1;
         transform: translate3d(0, 0, 0);
     }
@@ -343,7 +347,7 @@ body {
     float: right;
 }
 
-#divMudarSenha{
+#divMudarSenha {
     display: flex;
     justify-content: center;
     align-items: left;
@@ -356,7 +360,7 @@ body {
     font-size: 15px;
 }
 
-.buttonMudarSenha{
+.buttonMudarSenha {
     display: block;
     background-color: #026F38;
     opacity: 0.8;
@@ -370,7 +374,7 @@ body {
     cursor: pointer;
 }
 
-.camposMudarSenha{
+.camposMudarSenha {
     border: #026F38 solid 1.5px;
     border-radius: 5px;
     width: 200px;
@@ -378,25 +382,31 @@ body {
     margin-top: 2px;
 }
 
-#tituloSenha{
+#tituloSenha {
     font-size: 19px;
     color: #026F38;
 }
 
-small{
+small {
     color: #026F38;
     opacity: 0.9;
     margin-left: 10px;
 }
 
-.tituloPerfil{
+.tituloPerfil {
     margin-left: 10px;
     font-size: 20px;
 }
 
 /*Dashboard*/
 
-#aprovados{
+.nivelAcessoSelect{
+    border: #026F38 solid 1.8px;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+#aprovados {
     display: flex;
     justify-content: space-between;
     background-color: rgba(76, 147, 40, 0.50);
@@ -408,7 +418,7 @@ small{
     width: 350px;
 }
 
-#reprovados{
+#reprovados {
     display: flex;
     justify-content: space-between;
     background: rgba(255, 97, 97, 0.50);
@@ -420,7 +430,7 @@ small{
     width: 350px;
 }
 
-#templatesTotal{
+#templatesTotal {
     display: flex;
     justify-content: space-between;
     background: rgba(152, 161, 147, 0.50);
@@ -432,14 +442,14 @@ small{
     width: 350px;
 }
 
-#metricas{
+#metricas {
     display: block;
     position: absolute;
     right: 0;
     margin: 30px;
 }
 
-#aprovacoes{
+#aprovacoes {
     display: block;
     width: 65%;
     position: absolute;
@@ -447,21 +457,21 @@ small{
     margin: 30px;
 }
 
-#templatesParaAprovacao{
+#templatesParaAprovacao {
     max-width: 65%px;
     max-height: 200px;
     margin-bottom: 20px;
     overflow-y: scroll;
 }
 
-.templateDiv{
+.templateDiv {
     border: #026F38 solid 2px;
     border-radius: 10px;
     padding: 2px;
     margin: 2px;
 }
 
-.butAprovar{
+.butAprovar {
     border-radius: 15px;
     border: 1px solid #026F38;
     background: rgba(2, 111, 56, 0.76);
@@ -474,7 +484,7 @@ small{
     margin-left: 10px;
 }
 
-.butReprovar{
+.butReprovar {
     border-radius: 15px;
     border: 1px solid rgba(255, 0, 0, 0.70);
     background: rgba(255, 100, 100, 0.76);
@@ -487,7 +497,7 @@ small{
     float: right;
 }
 
-.butEditarUser{
+.butEditarUser {
     border-radius: 15px;
     border: 1px solid #026F38;
     background: rgba(2, 111, 56, 0.76);
@@ -499,7 +509,7 @@ small{
     float: right;
 }
 
-.butExcluirUser{
+.butExcluirUser {
     border-radius: 15px;
     border: 1px solid rgba(255, 0, 0, 0.70);
     background: rgba(255, 100, 100, 0.76);
@@ -511,12 +521,12 @@ small{
     float: right;
 }
 
-.especificacoes{
+.especificacoes {
     margin-right: 10px;
     font-size: 18px;
 }
 
-#usuarios{
+#usuarios {
     display: flex;
     flex-direction: column;
     margin: 0px 25px 5px 25px;
@@ -526,7 +536,7 @@ small{
     padding: 0;
 }
 
-.usuarioDiv{
+.usuarioDiv {
     border: #026F38 solid 2px;
     border-radius: 15px;
     margin: 2px;
@@ -534,19 +544,20 @@ small{
     position: relative;
 }
 
-.esquerda{
+.esquerda {
     position: sticky;
     left: 0;
-    background-color: #fff; 
-}
-
-.centro{
-    position: sticky;
-    left: 33%; /* Ajuste o valor para o centro desejado */
     background-color: #fff;
 }
 
-.direita{
+.centro {
+    position: sticky;
+    left: 33%;
+    /* Ajuste o valor para o centro desejado */
+    background-color: #fff;
+}
+
+.direita {
     position: sticky;
     right: 0;
     background-color: #fff;
@@ -554,11 +565,11 @@ small{
 }
 
 
-.teste{
+.teste {
     padding-right: 100px;
 }
 
-.campoSelectUser{
+.campoSelectUser {
     border: #026F38 solid 2px;
     border-radius: 10px;
     height: 29px;
@@ -568,15 +579,15 @@ small{
     margin: 0;
 }
 
-.campoSelectUser:hover{
+.campoSelectUser:hover {
     border: #102b1d solid 2px;
 }
 
-#formusuario{
+#formusuario {
     width: 100%;
 }
 
-#tabelaUsuarios{
+#tabelaUsuarios {
     display: inline-block;
     width: 1282px;
     height: 200px;
@@ -586,14 +597,14 @@ small{
 
 /*Página de cadastro de usuário*/
 
-#sectionAdcUser{
+#sectionAdcUser {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
-#buttonAdicionar{
+#buttonAdicionar {
     background-color: #026F38;
     opacity: 0.8;
     border: 0 solid;
@@ -608,7 +619,7 @@ small{
     margin: 0 auto;
 }
 
-.campos{
+.campos {
     border: #026F38 solid 2px;
     border-radius: 10px;
     padding: 3px;
@@ -619,7 +630,7 @@ small{
     margin: 0 auto;
 }
 
-h1{
+h1 {
     font-family: 'Inter', sans-serif;
     color: #026F38;
     text-align: center;
@@ -632,7 +643,7 @@ h1{
 
 /*Pagina Adicionar Template*/
 
-#sectionCadastroTemplate{
+#sectionCadastroTemplate {
     display: flex;
     justify-content: space-around;
     align-items: top;
@@ -649,7 +660,7 @@ h1{
     text-align: left;
 }
 
-.divDireita{
+.divDireita {
     position: fixed right;
     margin: 15px;
     border: #026F38 solid 3px;
@@ -668,7 +679,7 @@ h1{
     scrollbar-color: #026F38 gray;
 }
 
-#tituloCampos{
+#tituloCampos {
     text-align: center;
 }
 
@@ -682,7 +693,7 @@ h1{
     justify-content: center;
 }
 
-.camposAdcTemplate{
+.camposAdcTemplate {
     border: #026F38 solid 2px;
     border-radius: 11px;
     height: 25px;
@@ -692,7 +703,8 @@ h1{
     opacity: 0.8;
 }
 
-.campoSelect{ /*Não estava ficando igual com o de cima*/
+.campoSelect {
+    /*Não estava ficando igual com o de cima*/
     border: #026F38 solid 2px;
     border-radius: 11px;
     height: 32px;
@@ -702,11 +714,11 @@ h1{
     opacity: 0.8;
 }
 
-.campoSelect:hover{
+.campoSelect:hover {
     border: #102b1d solid 2px;
 }
 
-.botaoAdicionarTemplate{
+.botaoAdicionarTemplate {
     background-color: #026F38;
     opacity: 0.8;
     color: white;
@@ -720,7 +732,8 @@ h1{
     margin: 0 auto;
 }
 
-.botaoAdicionarTemplate2{ /*para n ter que modificar o botao acima e perder a centralização*/
+.botaoAdicionarTemplate2 {
+    /*para n ter que modificar o botao acima e perder a centralização*/
     background-color: #026F38;
     opacity: 0.8;
     color: white;
@@ -735,7 +748,7 @@ h1{
     float: bottom;
 }
 
-.camposNulo{
+.camposNulo {
     border: #026F38 2px solid;
     border-radius: 10px;
     width: 80px;
@@ -745,8 +758,25 @@ h1{
 
 /*Gerenciar Templates e Uploads*/
 
+td {
+    max-width: 800px;
+    width: 800px;
+}
+
+.status{
+    display: none;
+}
+
+.templateGerenciar{
+    border: #026f38 solid 2px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+}
+
 /*Botao slide*/
 
+/* Estilize o rótulo (label) para que pareça um botão de alternância */
 .switch {
     position: relative;
     display: inline-block;
@@ -801,9 +831,10 @@ input:checked + .slider:before {
     transform: translateX(30px);
 }
 
+
 /*Fim botao slide*/
 
-.informacoesTemplate{
+.informacoesTemplate {
     width: 100%;
     height: 20px;
     display: inline-block;
@@ -814,19 +845,19 @@ input:checked + .slider:before {
     font-size: 20px;
 }
 
-.rotulo{
+.rotulo {
     padding-left: 145px;
     margin-left: 5px;
 }
 
-#containerTemplate{
+#containerTemplate {
     display: flex;
     overflow-y: scroll;
     height: 900px;
     flex-direction: column;
 }
 
-#template{
+#template {
     display: flex;
     border: #026F38 solid 2px;
     border-radius: 15px;
@@ -840,7 +871,7 @@ input:checked + .slider:before {
     align-items: center;
 }
 
-.botaoBranco{
+.botaoBranco {
     width: 88px;
     height: 34px;
     flex-shrink: 0;
@@ -855,7 +886,7 @@ input:checked + .slider:before {
 }
 
 /* modal teste */
-.modalEdicao{
+.modalEdicao {
     display: none;
     position: fixed;
     top: 0;
@@ -864,7 +895,7 @@ input:checked + .slider:before {
     height: 100%;
 }
 
-.modal-contentEdicao{
+.modal-contentEdicao {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -874,17 +905,18 @@ input:checked + .slider:before {
 
 .modal-content button {
     padding: 10px 20px;
-    background-color: #0074d9; /* Cor do botão */
+    background-color: #0074d9;
+    /* Cor do botão */
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .close {
+}
+
+.close {
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 20px;
     cursor: pointer;
-  }
+}

@@ -63,6 +63,17 @@ templateRoutes.put('/aprovarTemplate', async (req, res) => {
   res.json(templateAp);  
 });
 
+templateRoutes.put('/ativarTemplate', async (req, res) => {
+  const idtemplate = parseInt(req.body.idtemplate);
+  const templateAp = await prisma.Templates.update({ 
+    where: {
+      "idtemplate": idtemplate,
+    },
+    data: req.body
+  });
+  res.json(templateAp);  
+});
+
 
 // templateRoutes.delete('/deletarTemplate/:idtemplate', async (req, res) => {
 //   const idtemplate = parseInt(req.params.idtemplate);

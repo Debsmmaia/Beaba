@@ -1,4 +1,3 @@
-//abrir sessão do usuário
 const userData = sessionStorage.getItem('userData');
 const userDataS = JSON.parse(userData);
 const tipo_perfil = userDataS.tipo_perfil;
@@ -49,12 +48,18 @@ function simulateFileUpload(file) {
     }, uploadInterval);
 }
 
-
-
 function openModalUpload() {
     const modalupload = document.querySelector('.modalUpload');
     modalupload.style.display = 'block';
+    console.log("chamando")
 }
+
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("botaoUpload")) {
+        openModalUpload();
+    }
+});
+
 
 function closeModalUpload() {
     const modalupload = document.querySelector('.modalUpload');
@@ -105,35 +110,73 @@ async function renderizarTemplate() {
                   </td>
                   <td>
                   <label class="switch">
-                      <input type="checkbox" class="toggle">
-                      ${isAdmin ? '<span class="toggle-button"></span>' : ''}
-                  </label>
-                    </td>
+                        <input type="checkbox" id="toggle">
+                        ${isAdmin ? ' <span class="slider" id="botaoStatus" ></span>' : ''}
+                    </label>  
+                  </td>
                 </tr>
               </table>
-
-            <div class="fundo" id="fundo"></div>
-
-            <div class="modalContainerUpload"> 
-                
-            </div>
-
-              
             `;
+
+            const toggleElement = templateDiv.querySelector("#toggle");
+
+            if (toggleElement) {
+                    toggleElement.checked = template.status === "Ativo";
+
+                    toggleElement.addEventListener("change", async function() {
+                    const novoEstado = this.checked ? "Ativo" : "Desativo";
+                    console.log(novoEstado)
+                    
+                    const ativo = {
+                        "idtemplate": template.idtemplate,
+                        "status": novoEstado
+                    };
+
+                    const desativo = {
+                        "idtemplate": template.idtemplate,
+                        "status": novoEstado
+                    };
+
+                    if (novoEstado === "Ativo") {
+                        fetch('http://localhost:3003/template/ativarTemplate', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(ativo)
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Estado do toggle atualizado no banco de dados.');
+                            } else {
+                                console.error('Falha ao atualizar o estado do toggle no banco de dados.');
+                            }
+                        });
+                    }else if (novoEstado === "Desativo") {
+                        fetch('http://localhost:3003/template/ativarTemplate', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(desativo)
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Estado do toggle atualizado no banco de dados.');
+                            } else {
+                                console.error('Falha ao atualizar o estado do toggle no banco de dados.');
+                            }
+                        });
+                    }
+                });
+            } else {
+                console.error("Elemento 'toggle' não encontrado.");
+            }
+
             templateList.appendChild(templateDiv);
 
-            const toggleButtonElement = document.querySelector('.toggle-button');
-            console.log(toggleButtonElement);
-
-            const checkbox = templateDiv.querySelector('.toggle');
-            checkbox.addEventListener('click', function () {
-                const status = this.closest('.templateGerenciar').querySelector('.status');
-                status.textContent = this.checked ? "Habilitado" : "Desabilitado";
-            });
 
         }
-
-
     } catch (error) {
         console.error('Erro ao fazer a requisição:', error.message);
     }
@@ -141,4 +184,5 @@ async function renderizarTemplate() {
 
 
 renderizarTemplate();
+
 

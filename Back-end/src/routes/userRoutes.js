@@ -71,13 +71,19 @@ userRoutes.delete('/deletarUsuario', async (req, res) => {
   }
 
   try {
-    const deletedUsuario = await prisma.Usuarios.delete({ 
+    await prisma.Templates.deleteMany({
       where: {
-        "idusuario": idusuario,
+        usuario: idusuario,
       },
     });
 
-    if (!deletedUsuario) {
+    const deletedUser = await prisma.Usuarios.delete({
+      where: {
+        idusuario: idusuario,
+      },
+    });
+
+    if (!deletedUser) {
       return res.status(404).json({ erro: 'Este usuário não existe!' });
     }
 
@@ -88,6 +94,7 @@ userRoutes.delete('/deletarUsuario', async (req, res) => {
     res.status(500).json({ erro: 'Erro ao excluir usuário.' });
   }
 });
+
 
 //atualizar o nivel de acesso do usuário
 userRoutes.put('/atualizarAcesso', async (req, res) => {
