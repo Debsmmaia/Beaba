@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Gerenciar Template</title>
 </head>
-<body>
+<body style="overflow: hidden;">
 
     <header id="cabecalho">
         <span onclick="openModalPerfil()" id="botaoPerfil">Nome usuário</span>
@@ -41,8 +41,9 @@
     <div class="modalContainerPerfil"> <!--Modal de perfil-->
         <div class="modalPerfil">
             <button onclick="closeModalPerfil()" class="botaoXPerfil">X</button>
-            <span class="titulo">Deborah Maia</span> <br>
-            <small>Administrador</small>
+            <div id="informacoesPerfil">
+                
+            </div>
             <div id="divMudarSenha">
                 <form id="mudarSenha">
                     <p id="tituloSenha">Trocar minha senha</p>

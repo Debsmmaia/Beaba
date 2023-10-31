@@ -1,4 +1,4 @@
-//nome do botao perfil
+
 const logout = document.getElementById('botSair');
 const botaoDash = document.getElementById('botaoDash');
 const botaoAdcUser = document.getElementById('botaoAdcUser');
@@ -26,16 +26,13 @@ logout.addEventListener('click', async () => {
   }
 })
 
-
-
-
 //conferir se o user é adm 
 
 const userData = sessionStorage.getItem('userData');
 const userDataS = JSON.parse(userData);
 const tipo_perfil = userDataS.tipo_perfil;
-
 const nome = userDataS.nome_funcionario;
+
 const spanNomeUsuario = document.getElementById('botaoPerfil');
 spanNomeUsuario.innerHTML = nome;
 

@@ -7,8 +7,8 @@ const spanNomeUsuario = document.getElementById('botaoPerfil');
 spanNomeUsuario.innerHTML = nome;
 
 if (tipo_perfil === 'Administrador') {
-  botaoDash.style.display = 'inline-block';
-  botaoAdcUser.style.display = 'inline-block';
+    botaoDash.style.display = 'inline-block';
+    botaoAdcUser.style.display = 'inline-block';
 }
 
 //aparecer botoes dos campos
@@ -174,7 +174,6 @@ adicionar.addEventListener('click', function (event) {
     limparCampos();
 });
 
-//Adicionar campos
 const enviar = document.getElementById('enviarForm');
 enviar.addEventListener('click', async function (event) {
     event.preventDefault();
@@ -184,12 +183,12 @@ enviar.addEventListener('click', async function (event) {
 
     const valoresNomeCampos = [];
     const valoresTiposDados = [];
-    const valoresCamposNulos = []; 
+    const valoresCamposNulos = [];
 
     for (let i = 1; i <= qtdCampos; i++) {
-        const nomeCampo = document.getElementsByName('nomeCampo').value;
-        const tipoDadoCampo = document.getElementsByName('tipoDadoCampo').value;
-        const campoNulo = document.getElementsByName('campoNulo').value;
+        const nomeCampo = document.getElementsByName('nomeCampo')[i - 1].value;
+        const tipoDadoCampo = document.getElementsByName('tipoDadoCampo')[i - 1].value;
+        const campoNulo = document.getElementsByName('campoNulo')[i - 1].value;
 
         valoresNomeCampos.push(nomeCampo);
         valoresTiposDados.push(tipoDadoCampo);
@@ -199,52 +198,65 @@ enviar.addEventListener('click', async function (event) {
         } else if (campoNulo === "Não") {
             valoresCamposNulos.push(false);
         }
-    }
 
-    const templateData = sessionStorage.getItem('templateData');
-    const templateDataS = JSON.parse(templateData);
-    const templatePertencente = templateDataS.idtemplate;
+        const templateData = sessionStorage.getItem('templateData');
+        const templateDataS = JSON.parse(templateData);
+        const templatePertencente = templateDataS.idtemplate;
 
-    const campos = [];
-
-    for (let i = 0; i < qtdCampos; i++) {
         const campo = {
-            "nome_campo": valoresNomeCampos[i],
-            "tipo_dado": valoresTiposDados[i],
-            "nulo": valoresCamposNulos[i],
+            "nome_campo": nomeCampo,
+            "tipo_dado": tipoDadoCampo,
+            "nulo": campoNulo === "Sim",
             "template_pertencente": templatePertencente,
         };
 
-        await enviarDadosParaServidorCampos(campo); 
+        await enviarDadosParaServidorCampos(campo);
     }
 });
 
+async function enviarDadosParaServidorCampos(campo) {
+    const url = 'http://localhost:3003/campos/camposPost';
 
-    async function enviarDadosParaServidorCampos(campo) {
-        const url = 'http://localhost:3003/campos/camposPost';
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(campo),
+        });
 
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(campo),
-            });
-
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
-            }
-
-            const responseData = await response.json();
-            sessionStorage.setItem('camposData', JSON.stringify(responseData)); 
-
-            console.log('Resposta do servidor:', responseData);
-            console.log(response);
-
-        } catch (error) {
-            console.log('Erro ao fazer a requisição:', error.message);
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
         }
+
+        const responseData = await response.json();
+        sessionStorage.setItem('camposData', JSON.stringify(responseData));
+
+        console.log('Resposta do servidor:', responseData);
+        console.log(response);
+
+    } catch (error) {
+        console.log('Erro ao fazer a requisição:', error.message);
     }
+}
+
+enviar.addEventListener('click', function(){
+    alert("Template enviado para análise");
+    const nome_template = document.getElementById('nomeTemplate').value = '';
+    const qtdCampos = document.getElementById('qtdCampos').value = '';
+
+    const camposAdcTemplate = document.querySelectorAll('.camposAdcTemplate'); 
+
+    camposAdcTemplate.forEach(campo => {
+        if (campo.tagName === 'INPUT') {
+            campo.value = ''; 
+        }
+    });  
+});
+
+
+
+
 
