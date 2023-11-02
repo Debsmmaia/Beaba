@@ -95,7 +95,7 @@ async function renderizarTemplate() {
         for (const template of templates) {
 
         if(userDataS.tipo_perfil === "Comum" && template.status === "Ativo"){
-            if (template.aprovacao === true) { //so visualiza se o template tiver sido aprovado
+            if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
                 const templateDiv = document.createElement('div');
                 templateDiv.classList.add('templateGerenciar');
                 templateDiv.innerHTML = `
@@ -182,7 +182,7 @@ async function renderizarTemplate() {
             }
             
         }else if(userDataS.tipo_perfil === "Administrador"){ //mostra todos os templates para os administrativos 
-            if (template.aprovacao === true) { //so visualiza se o template tiver sido aprovado
+            if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
                 const templateDiv = document.createElement('div');
                 templateDiv.classList.add('templateGerenciar');
                 templateDiv.innerHTML = `
@@ -195,7 +195,7 @@ async function renderizarTemplate() {
                         <span class="esquerda">${template.tipo_arquivo}</span>
                     </td>
                     <td>
-                        <button class="botaoBranco direita">Download</button>
+                        <button class="botaoBranco direita botaoDownload" >Download</button>
                     </td>
                     <td>
                     <button class="botaoBranco" class="botaoUpload" onclick="openModalUpload()">Upload</button>
@@ -265,6 +265,11 @@ async function renderizarTemplate() {
                     console.error("Elemento 'toggle' não encontrado.");
                 }
 
+                const botaoDownload = templateDiv.querySelector('.botaoDownload');
+                botaoDownload.addEventListener('click', async () => {
+                    await gerarEbaixarExcel(template.idtemplate); 
+                });
+
                 templateList.appendChild(templateDiv);
             }
         }
@@ -274,7 +279,6 @@ async function renderizarTemplate() {
         console.error('Erro ao fazer a requisição:', error.message);
     }
 }
-
 
 renderizarTemplate();
 

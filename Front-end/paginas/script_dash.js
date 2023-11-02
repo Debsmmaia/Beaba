@@ -209,8 +209,8 @@ async function renderizarTemplate() {
     const templates = await response.json();
 
     for (const template of templates) {
+      if (template.aprovacao === 'Pendente') {
       const usuario = await buscarUser(template.usuario);
-      // console.log(template.idtemplate)
 
       const templateDiv = document.createElement('div');
       templateDiv.classList.add('templateDiv');
@@ -245,7 +245,7 @@ async function renderizarTemplate() {
 
           const aprovado = {
             "idtemplate": templateAprovado,
-            "aprovacao": true,
+            "aprovacao": "Aprovado",
           }
           
           try {
@@ -266,24 +266,57 @@ async function renderizarTemplate() {
           }
 
           try {
-            const templateAprovadoDiv = document.getElementById('templateDiv');
-            templateAprovadoDiv.style.display = 'none';
+            const templateAprovadoDiv = this.closest('.templateDiv');
+            templateAprovadoDiv.remove();
           } catch (error) {
             console.error("Ocorreu um erro ao ocultar a div:", error);
           }
 
-          const templateDiv = this.closest('.templateDiv');
-          if (templateDiv) {
-            templateDiv.style.display = 'none';
-          } else {
-            console.error("A div associada ao botão não foi encontrada.");
+      });
+
+    const reprovar = templateDiv.querySelector('.butReprovar');
+    reprovar.addEventListener('click', async function(){
+
+          const url = 'http://localhost:3003/template/reprovarTemplate';
+          const templateReprovado = template.idtemplate;
+
+          const reprovado = {
+            "idtemplate": templateReprovado,
           }
+
+          try {
+            const response = await fetch(url, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(reprovado),
+            });
+            if (!response.ok) {
+              throw Error(response.status);
+            }
+            const responseData = await response.json();
+            console.log('Resposta do servidor:', responseData);
+          } catch (error) {
+            console.error('Erro ao atualizar o valor no banco de dados:', error);
+          }
+
+          try {
+            const templateReprovadoDiv = this.closest('.templateDiv');
+            templateReprovadoDiv.remove()
+          } catch (error) {
+            console.error("Ocorreu um erro ao ocultar a div:", error);
+          }
+
+
       });
     }
-
+    }  
   } catch (error) {
     console.log('Erro ao fazer a requisição:', error.message);
   }
 }
 
 renderizarTemplate();
+
+

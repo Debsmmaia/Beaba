@@ -29,7 +29,7 @@ adicionarCampos.addEventListener('click', function (event) {
         }
     }
 
-    for (let i = camposAtuais.length; i < quantidade; i++) {
+    for (let i = 0; i < quantidade; i++) {
         const novoCampo = document.createElement('div');
         const novoForm = document.createElement('form');
 
@@ -80,7 +80,7 @@ adicionarCampos.addEventListener('click', function (event) {
 
         const lineBreak = document.createElement('br');
         novoInput.classList.add('camposAdcTemplate');
-        novoInput.name = 'nomeCampo';
+        novoInput.name = `nomeCampo${i}`;
         novoSelect.classList.add('campoSelect');
         novoSelect.name = 'tipoDadoCampo';
         novoCampo.classList.add('divCampos');
@@ -179,43 +179,47 @@ enviar.addEventListener('click', async function (event) {
     event.preventDefault();
 
     const qtdCampos = document.getElementById('qtdCampos').value;
-    console.log(qtdCampos);
 
     const valoresNomeCampos = [];
     const valoresTiposDados = [];
     const valoresCamposNulos = [];
 
+    console.log(valoresNomeCampos);
+
     for (let i = 1; i <= qtdCampos; i++) {
-        const nomeCampo = document.getElementsByName('nomeCampo')[i - 1].value;
+        const nomeCampo = document.getElementsByName(`nomeCampo${i - 1}`)[0].value;
         const tipoDadoCampo = document.getElementsByName('tipoDadoCampo')[i - 1].value;
         const campoNulo = document.getElementsByName('campoNulo')[i - 1].value;
-
+    
         valoresNomeCampos.push(nomeCampo);
         valoresTiposDados.push(tipoDadoCampo);
-
+    
         if (campoNulo === "Sim") {
             valoresCamposNulos.push(true);
         } else if (campoNulo === "Não") {
             valoresCamposNulos.push(false);
         }
-
+    
         const templateData = sessionStorage.getItem('templateData');
         const templateDataS = JSON.parse(templateData);
         const templatePertencente = templateDataS.idtemplate;
-
+    
         const campo = {
             "nome_campo": nomeCampo,
             "tipo_dado": tipoDadoCampo,
             "nulo": campoNulo === "Sim",
             "template_pertencente": templatePertencente,
         };
-
+    
         await enviarDadosParaServidorCampos(campo);
     }
+    
 });
 
 async function enviarDadosParaServidorCampos(campo) {
     const url = 'http://localhost:3003/campos/camposPost';
+
+    console.log(campo);
 
     try {
         const response = await fetch(url, {
@@ -227,6 +231,7 @@ async function enviarDadosParaServidorCampos(campo) {
             body: JSON.stringify(campo),
         });
 
+
         if (!response.ok) {
             throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
         }
@@ -235,26 +240,24 @@ async function enviarDadosParaServidorCampos(campo) {
         sessionStorage.setItem('camposData', JSON.stringify(responseData));
 
         console.log('Resposta do servidor:', responseData);
-        console.log(response);
 
     } catch (error) {
         console.log('Erro ao fazer a requisição:', error.message);
     }
 }
 
-enviar.addEventListener('click', function(){
-    alert("Template enviado para análise");
-    const nome_template = document.getElementById('nomeTemplate').value = '';
-    const qtdCampos = document.getElementById('qtdCampos').value = '';
+// enviar.addEventListener('click', function () {
+//     const nome_template = document.getElementById('nomeTemplate').value = '';
+//     const qtdCampos = document.getElementById('qtdCampos').value = '';
 
-    const camposAdcTemplate = document.querySelectorAll('.camposAdcTemplate'); 
+//     const camposAdcTemplate = document.querySelectorAll('.camposAdcTemplate');
 
-    camposAdcTemplate.forEach(campo => {
-        if (campo.tagName === 'INPUT') {
-            campo.value = ''; 
-        }
-    });  
-});
+//     camposAdcTemplate.forEach(campo => {
+//         if (campo.tagName === 'INPUT') {
+//             campo.value = '';
+//         }
+//     });
+// });
 
 
 

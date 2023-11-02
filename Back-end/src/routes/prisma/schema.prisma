@@ -21,8 +21,8 @@ model Templates {
   nome_template String          @db.VarChar(40)
   tipo_arquivo  String          @db.VarChar(10)
   data_criacao  DateTime        @default(now())
-  status        status_template
-  aprovacao     Boolean         @default(false)
+  status        status_template 
+  aprovacao     aprovacao        @default(Pendente)
   usuario       Int             
   Campos        Campos[]
   usuarios      Usuarios        @relation(fields: [usuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "usuario_fkey")
@@ -58,4 +58,10 @@ enum status_template {
 enum tipo_perfil {
   Administrador
   Comum
+}
+
+enum aprovacao {
+  Aprovado
+  Reprovado
+  Pendente
 }
