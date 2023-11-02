@@ -81,7 +81,7 @@ async function renderizarTemplate() {
             throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
         }
 
-        let isAdmin = false; 
+        let isAdmin = false;
         if (tipo_perfil === "Administrador") {
             isAdmin = true;
         }
@@ -94,11 +94,11 @@ async function renderizarTemplate() {
 
         for (const template of templates) {
 
-        if(userDataS.tipo_perfil === "Comum" && template.status === "Ativo"){
-            if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
-                const templateDiv = document.createElement('div');
-                templateDiv.classList.add('templateGerenciar');
-                templateDiv.innerHTML = `
+            if (userDataS.tipo_perfil === "Comum" && template.status === "Ativo") {
+                if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
+                    const templateDiv = document.createElement('div');
+                    templateDiv.classList.add('templateGerenciar');
+                    templateDiv.innerHTML = `
                     <table width="100%">
                     <tr>
                     <td>
@@ -123,69 +123,69 @@ async function renderizarTemplate() {
                 </table>
                 `;
 
-                const toggleElement = templateDiv.querySelector("#toggle");
+                    const toggleElement = templateDiv.querySelector("#toggle");
 
-                if (toggleElement) {
+                    if (toggleElement) {
                         toggleElement.checked = template.status === "Ativo";
 
-                        toggleElement.addEventListener("change", async function() {
-                        const novoEstado = this.checked ? "Ativo" : "Desativo";
-                        console.log(novoEstado)
-                        
-                        const ativo = {
-                            "idtemplate": template.idtemplate,
-                            "status": novoEstado
-                        };
+                        toggleElement.addEventListener("change", async function () {
+                            const novoEstado = this.checked ? "Ativo" : "Desativo";
+                            console.log(novoEstado)
 
-                        const desativo = {
-                            "idtemplate": template.idtemplate,
-                            "status": novoEstado
-                        };
+                            const ativo = {
+                                "idtemplate": template.idtemplate,
+                                "status": novoEstado
+                            };
 
-                        if (novoEstado === "Ativo") {
-                            fetch('http://localhost:3003/template/ativarTemplate', {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(ativo)
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Estado do toggle atualizado no banco de dados.');
-                                } else {
-                                    console.error('Falha ao atualizar o estado do toggle no banco de dados.');
-                                }
-                            });
-                        }else if (novoEstado === "Desativo") {
-                            fetch('http://localhost:3003/template/ativarTemplate', {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(desativo)
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Estado do toggle atualizado no banco de dados.');
-                                } else {
-                                    console.error('Falha ao atualizar o estado do toggle no banco de dados.');
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    console.error("Elemento 'toggle' não encontrado.");
+                            const desativo = {
+                                "idtemplate": template.idtemplate,
+                                "status": novoEstado
+                            };
+
+                            if (novoEstado === "Ativo") {
+                                fetch('http://localhost:3003/template/ativarTemplate', {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(ativo)
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            console.log('Estado do toggle atualizado no banco de dados.');
+                                        } else {
+                                            console.error('Falha ao atualizar o estado do toggle no banco de dados.');
+                                        }
+                                    });
+                            } else if (novoEstado === "Desativo") {
+                                fetch('http://localhost:3003/template/ativarTemplate', {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(desativo)
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            console.log('Estado do toggle atualizado no banco de dados.');
+                                        } else {
+                                            console.error('Falha ao atualizar o estado do toggle no banco de dados.');
+                                        }
+                                    });
+                            }
+                        });
+                    } else {
+                        console.error("Elemento 'toggle' não encontrado.");
+                    }
+
+                    templateList.appendChild(templateDiv);
                 }
 
-                templateList.appendChild(templateDiv);
-            }
-            
-        }else if(userDataS.tipo_perfil === "Administrador"){ //mostra todos os templates para os administrativos 
-            if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
-                const templateDiv = document.createElement('div');
-                templateDiv.classList.add('templateGerenciar');
-                templateDiv.innerHTML = `
+            } else if (userDataS.tipo_perfil === "Administrador") { //mostra todos os templates para os administrativos 
+                if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
+                    const templateDiv = document.createElement('div');
+                    templateDiv.classList.add('templateGerenciar');
+                    templateDiv.innerHTML = `
                     <table width="100%">
                     <tr>
                     <td>
@@ -210,69 +210,89 @@ async function renderizarTemplate() {
                 </table>
                 `;
 
-                const toggleElement = templateDiv.querySelector("#toggle");
+                    const toggleElement = templateDiv.querySelector("#toggle");
 
-                if (toggleElement) {
+                    if (toggleElement) {
                         toggleElement.checked = template.status === "Ativo";
 
-                        toggleElement.addEventListener("change", async function() {
-                        const novoEstado = this.checked ? "Ativo" : "Desativo";
-                        console.log(novoEstado)
-                        
-                        const ativo = {
-                            "idtemplate": template.idtemplate,
-                            "status": novoEstado
-                        };
+                        toggleElement.addEventListener("change", async function () {
+                            const novoEstado = this.checked ? "Ativo" : "Desativo";
+                            console.log(novoEstado)
 
-                        const desativo = {
-                            "idtemplate": template.idtemplate,
-                            "status": novoEstado
-                        };
+                            const ativo = {
+                                "idtemplate": template.idtemplate,
+                                "status": novoEstado
+                            };
 
-                        if (novoEstado === "Ativo") {
-                            fetch('http://localhost:3003/template/ativarTemplate', {
-                                method: 'PUT',
+                            const desativo = {
+                                "idtemplate": template.idtemplate,
+                                "status": novoEstado
+                            };
+
+                            if (novoEstado === "Ativo") {
+                                fetch('http://localhost:3003/template/ativarTemplate', {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(ativo)
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            console.log('Estado do toggle atualizado no banco de dados.');
+                                        } else {
+                                            console.error('Falha ao atualizar o estado do toggle no banco de dados.');
+                                        }
+                                    });
+                            } else if (novoEstado === "Desativo") {
+                                fetch('http://localhost:3003/template/ativarTemplate', {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(desativo)
+                                })
+                                    .then(response => {
+                                        if (response.ok) {
+                                            console.log('Estado do toggle atualizado no banco de dados.');
+                                        } else {
+                                            console.error('Falha ao atualizar o estado do toggle no banco de dados.');
+                                        }
+                                    });
+                            }
+                        });
+                    } else {
+                        console.error("Elemento 'toggle' não encontrado.");
+                    }
+
+                    templateList.appendChild(templateDiv);
+
+                    const botaoDownload = templateDiv.querySelector('.botaoDownload');
+                    botaoDownload.addEventListener('click', async () => {
+                        const url = `http://localhost:3003/campos/buscaCampoeTemplateId/${template.idtemplate}`;
+
+                        try {
+                            const response = await fetch(url, {
+                                method: 'GET',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify(ativo)
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Estado do toggle atualizado no banco de dados.');
-                                } else {
-                                    console.error('Falha ao atualizar o estado do toggle no banco de dados.');
-                                }
                             });
-                        }else if (novoEstado === "Desativo") {
-                            fetch('http://localhost:3003/template/ativarTemplate', {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(desativo)
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Estado do toggle atualizado no banco de dados.');
-                                } else {
-                                    console.error('Falha ao atualizar o estado do toggle no banco de dados.');
-                                }
-                            });
+
+                            if (response.ok) {
+                                const data = await response.json();
+                                console.log('Dados recebidos:', data);
+
+                            } else {
+                                console.error('Falha na requisição');
+                            }
+                        } catch (error) {
+                            console.error('Erro:', error);
                         }
                     });
-                } else {
-                    console.error("Elemento 'toggle' não encontrado.");
+
                 }
-
-                const botaoDownload = templateDiv.querySelector('.botaoDownload');
-                botaoDownload.addEventListener('click', async () => {
-                    await gerarEbaixarExcel(template.idtemplate); 
-                });
-
-                templateList.appendChild(templateDiv);
             }
-        }
 
         }
     } catch (error) {

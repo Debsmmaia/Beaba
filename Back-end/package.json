@@ -9,17 +9,22 @@
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
+    "excel4node": "^1.8.2",
     "exceljs": "^4.4.0",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "fast-csv": "^4.3.6",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.7",
+    "papaparse": "^5.4.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "nodemon src/index.js"
