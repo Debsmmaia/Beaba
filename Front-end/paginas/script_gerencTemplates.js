@@ -269,25 +269,90 @@ async function renderizarTemplate() {
 
                     const botaoDownload = templateDiv.querySelector('.botaoDownload');
                     botaoDownload.addEventListener('click', async () => {
-                        const url = `http://localhost:3003/campos/buscaCampoeTemplateId/${template.idtemplate}`;
+                        if (template.tipo_arquivo === "CSV") {
+                            const url = `http://localhost:3003/campos/templateCSV/${template.idtemplate}`;
 
-                        try {
-                            const response = await fetch(url, {
-                                method: 'GET',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                            });
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                });
 
-                            if (response.ok) {
-                                const data = await response.json();
-                                console.log('Dados recebidos:', data);
+                                if (response.ok) {
+                                    const blob = await response.blob(); //pega a resposta da requisição
+                                    const url = window.URL.createObjectURL(blob);  //cria uma url temporária (o arquivo)
+                                    const a = document.createElement('a'); //transforma essa url em um elemtno a
 
-                            } else {
-                                console.error('Falha na requisição');
+                                    a.href = url;  //mostra qual é o link para ser baixado
+                                    a.download = `${template.nome_template}.csv`; //nome do download
+                                    document.body.appendChild(a); //coloca na tela 
+                                    a.click(); //clica no link e inicia o download
+                                    window.URL.revokeObjectURL(url); //libera memória
+                                    document.body.removeChild(a);  //remove da tela
+                                } else {
+                                    console.error('Falha na requisição');
+                                }
+                            } catch (error) {
+                                console.error('Erro:', error);
                             }
-                        } catch (error) {
-                            console.error('Erro:', error);
+                        }else if (template.tipo_arquivo === "XLX") {
+                            const url = `http://localhost:3003/campos/templateXLX/${template.idtemplate}`;
+
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                });
+
+                                if (response.ok) {
+                                    const blob = await response.blob();
+                                    const url = window.URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+
+                                    a.href = url;
+                                    a.download = `${template.nome_template}.xlsx`;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                    document.body.removeChild(a);
+                                } else {
+                                    console.error('Falha na requisição');
+                                }
+                            } catch (error) {
+                                console.error('Erro:', error);
+                            }
+                        }else if (template.tipo_arquivo === "XLS") {
+                            const url = `http://localhost:3003/campos/templateXLS/${template.idtemplate}`;
+
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'GET',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                });
+
+                                if (response.ok) {
+                                    const blob = await response.blob();
+                                    const url = window.URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+
+                                    a.href = url;
+                                    a.download = `${template.nome_template}.xls`;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    window.URL.revokeObjectURL(url);
+                                    document.body.removeChild(a);
+                                } else {
+                                    console.error('Falha na requisição');
+                                }
+                            } catch (error) {
+                                console.error('Erro:', error);
+                            }
                         }
                     });
 

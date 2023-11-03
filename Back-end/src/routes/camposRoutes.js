@@ -1,3 +1,8 @@
+const fastcsv = require('fast-csv');
+const { createObjectCsvWriter } = require('csv-writer');
+const fs = require('fs');
+const excelJS = require('exceljs');
+const excel4node = require('excel4node');
 const express = require('express');
 const camposRoutes = express.Router();
 const { PrismaClient } = require('@prisma/client');
@@ -43,10 +48,33 @@ camposRoutes.get('/buscaCampoId/:idcampo', async (req, res) => {
   }
 });
 
-camposRoutes.get('/buscaCampoeTemplateId/:idtemplate', async (req, res) => {
+// camposRoutes.get('/buscaCampoeTemplateId/:idtemplate', async (req, res) => {
+//   const idtemplate = parseInt(req.params.idtemplate);
+//   try {
+//     const campos = await prisma.Campos.findMany({
+//       where: {
+//         "template_pertencente": idtemplate
+//       },
+//     });
+
+//     if (!campos || campos.length === 0) {
+//       return res.status(404).json({ erro: 'Não foram encontrados campos para este template!' });
+//     } else {
+//       return res.status(200).json({ campos });
+//     }
+//   } catch (error) {
+//     console.error('Erro ao buscar campos:', error);
+//     res.status(500).json({ erro: 'Erro ao buscar campos.' });
+//   }
+// });
+
+
+
+
+camposRoutes.get('/templateCSV/:idtemplate', async (req, res) => {
   const idtemplate = parseInt(req.params.idtemplate);
   try {
-    const campos = await prisma.Campos.findMany({
+    const campos = await prisma.campos.findMany({
       where: {
         "template_pertencente": idtemplate
       },
@@ -55,75 +83,18 @@ camposRoutes.get('/buscaCampoeTemplateId/:idtemplate', async (req, res) => {
     if (!campos || campos.length === 0) {
       return res.status(404).json({ erro: 'Não foram encontrados campos para este template!' });
     } else {
-      return res.status(200).json({ campos });
-    }
-  } catch (error) {
-    console.error('Erro ao buscar campos:', error);
-    res.status(500).json({ erro: 'Erro ao buscar campos.' });
-  }
-});
+      let csvData = '';
 
-const fastcsv = require('fast-csv');
-const { createObjectCsvWriter } = require('csv-writer');
-
-const fastcsv = require('fast-csv');
-const { createObjectCsvWriter } = require('csv-writer');
-
-camposRoutes.get('/buscaCampoeTemplateId/:idtemplate', async (req, res) => {
-  const idtemplate = parseInt(req.params.idtemplate);
-  try {
-    const campos = await prisma.Campos.findMany({
-      where: {
-        "template_pertencente": idtemplate
-      },
-    });
-
-    if (!campos || campos.length === 0) {
-      return res.status(404).json({ erro: 'Não foram encontrados campos para este template!' });
-    } else {
-      const csvData = [];
-      const csvHeaders = [];
-
-      // Mapear os campos dinamicamente
       campos.forEach(campo => {
-        // Verificar se a coluna já existe nos cabeçalhos
-        if (!csvHeaders.includes(campo.nomeDaColuna)) {
-          csvHeaders.push(campo.nomeDaColuna);
-        }
-
-        // Encontrar o índice da coluna
-        const columnIndex = csvHeaders.indexOf(campo.nomeDaColuna);
-
-        // Se a linha ainda não existe, criar e preencher com valores vazios
-        if (!csvData[campo.id - 1]) {
-          csvData[campo.id - 1] = Array(csvHeaders.length).fill('');
-        }
-
-        // Preencher o valor na linha e coluna correta
-        csvData[campo.id - 1][columnIndex] = campo.valor;
+        csvData += campo.nome_campo + ','; //itera os valores contidos na requisição
       });
 
-      // Criação do arquivo CSV
-      const csvWriter = createObjectCsvWriter({
-        path: 'arquivo.csv',
-        header: csvHeaders.map(header => ({ id: header, title: header }))
-      });
-
-      await csvWriter.writeRecords(csvData);
-
-      // Configuração do cabeçalho da resposta para indicar um arquivo CSV
-      res.setHeader('Content-Type', 'text/csv');
-      res.setHeader('Content-Disposition', 'attachment; filename="arquivo.csv"');
-
-      // Envio do arquivo CSV para download
-      return res.download('arquivo.csv', 'arquivo.csv', (err) => {
-        if (err) {
-          console.error('Erro ao fazer o download do arquivo CSV:', err);
-          res.status(500).json({ erro: 'Erro ao fazer o download do arquivo CSV.' });
-        } else {
-          // Remoção do arquivo após o download
-          fs.unlinkSync('arquivo.csv');
-        }
+      const filePath = 'arquivo.csv';
+      fs.writeFileSync(filePath, csvData); //coloca os dados dos nomes no arquivo temporário
+      const fileStream = fs.createReadStream(filePath);  //cria um fluxo de leitura pro arquivo 
+      fileStream.pipe(res);  //envia o arquivo csv como resposta 
+      fileStream.on('end', () => { //remove o arquivo depois de enviar
+        fs.unlinkSync(filePath);
       });
     }
   } catch (error) {
@@ -132,6 +103,91 @@ camposRoutes.get('/buscaCampoeTemplateId/:idtemplate', async (req, res) => {
   }
 });
 
+camposRoutes.get('/templateXLX/:idtemplate', async (req, res) => {
+  const idtemplate = parseInt(req.params.idtemplate);
+
+  try {
+    const campos = await prisma.campos.findMany({
+      where: {
+        "template_pertencente": idtemplate
+      },
+    });
+
+    if (!campos || campos.length === 0) {
+      return res.status(404).json({ erro: 'Não foram encontrados campos para este template!' });
+    } else {
+      const rows = campos.map(campo => [campo.nome_campo]);
+      const workbook = new excelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Campos');
+
+      rows.forEach(row => {
+        worksheet.addRow(row); // Adiciona cada campo como uma nova linha
+      });
+
+      // Escrever o arquivo XLS temporário
+      const filePath = 'arquivo.xlsx';
+
+      await workbook.xlsx.writeFile(filePath);
+
+      // Envio do arquivo XLS como resposta
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
+
+      // Remoção do arquivo após o envio
+      fileStream.on('end', () => {
+        fs.unlinkSync(filePath);
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar campos:', error);
+    res.status(500).json({ erro: 'Erro ao buscar campos.' });
+  }
+});
+
+
+camposRoutes.get('/templateXLS/:idtemplate', async (req, res) => {
+  const idtemplate = parseInt(req.params.idtemplate);
+
+  try {
+    const campos = await prisma.campos.findMany({
+      where: {
+        "template_pertencente": idtemplate
+      },
+    });
+
+    if (!campos || campos.length === 0) {
+      return res.status(404).json({ erro: 'Não foram encontrados campos para este template!' });
+    } else {
+      const workbook = new excel4node.Workbook();
+      const worksheet = workbook.addWorksheet('Campos');
+
+      campos.forEach((campo, index) => {
+        worksheet.cell(index + 1, 1).string(campo.nome_campo); // Adiciona cada campo como uma nova linha
+      });
+
+      const filePath = 'arquivo.xls'; // Defina o nome do arquivo como 'arquivo.xls' para salvar no formato XLS.
+
+      workbook.write(filePath, err => {
+        if (err) {
+          console.error('Erro ao escrever o arquivo XLS:', err);
+          return res.status(500).json({ erro: 'Erro ao salvar o arquivo XLS.' });
+        }
+
+        // Envio do arquivo XLS como resposta
+        const fileStream = fs.createReadStream(filePath);
+        fileStream.pipe(res);
+
+        // Remoção do arquivo após o envio
+        fileStream.on('end', () => {
+          fs.unlinkSync(filePath);
+        });
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar campos:', error);
+    res.status(500).json({ erro: 'Erro ao buscar campos.' });
+  }
+});
 
 
 module.exports = camposRoutes; 
