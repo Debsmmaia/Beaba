@@ -59,7 +59,7 @@ async function renderizarTemplate() {
                         <button class="botaoBranco direita">Download</button>
                     </td>
                     <td>
-                        <button class="botaoBranco botaoUpload" onclick="openUploadModal()">Upload</button>
+                        <button class="botaoBranco botaoUpload" onclick="openUploadModal(${template.idtemplate})">Upload</button>
                     </td>
                     <td>
                     <label class="switch">
@@ -133,7 +133,6 @@ async function renderizarTemplate() {
                 if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
                     const templateDiv = document.createElement('div');
                     templateDiv.classList.add('templateGerenciar');
-
                     templateDiv.innerHTML = `
                     <table width="100%">
                     <tr>
@@ -147,7 +146,7 @@ async function renderizarTemplate() {
                         <button class="botaoBranco direita botaoDownload" >Download</button>
                     </td>
                     <td>
-                        <button class="botaoBranco botaoUpload" onclick="openUploadModal()">Upload</button>
+                        <button class="botaoBranco botaoUpload" onclick="openUploadModal(${template.idtemplate})">Upload</button>
                     </td>
                     <td>
                     <label class="switch">

@@ -39,17 +39,6 @@ function openModalPerfil() {
   }
 }
 
-function closeModalPerfil(){
-    modalperfil.classList.remove('activeperfil');
-}
-
-//upload
-function openUploadModal() {
-    const modal = document.querySelector('.modalContainerUpload');
-    modal.style.display = 'flex';
-    console.log("chamando")
-}
-
 function closeUploadModal() {
     const modal = document.querySelector('.modalContainerUpload');
     modal.style.display = 'none';

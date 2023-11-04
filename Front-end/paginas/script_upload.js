@@ -1,16 +1,20 @@
 //upload
-const userData = sessionStorage.getItem('userData');
-const userDataS = JSON.parse(userData);
-const token = userDataS.token;
-const idusuario = userDataS.idusuario;
-
-const templateData = sessionStorage.getItem('templateData');
-const templateDataS = JSON.parse(templateData);
-const idtemplate = templateDataS.idtemplate;
-
 const dropArea = document.getElementById('drop-area');
 const progressBar = document.getElementById('barra');
 const fileInfo = document.getElementById('informacao');
+
+let template_usado
+
+function closeModalPerfil(){
+    modalperfil.classList.remove('activeperfil');
+}
+
+function openUploadModal(idtemplate) {
+    const modal = document.querySelector('.modalContainerUpload');
+    modal.style.display = 'flex';
+    console.log("chamando")
+    template_usado = idtemplate;
+}
 
 dropArea.addEventListener('dragover', (e) => {
     e.preventDefault();
@@ -25,11 +29,18 @@ dropArea.addEventListener('drop', (e) => {
 });
 
 function uploadFile(file) {
+
+    const userData = sessionStorage.getItem('userData');
+    const userDataS = JSON.parse(userData);
+    const token = userDataS.token;
+    const idusuario = userDataS.idusuario;
+
+    console.log(token)
+
     const formData = new FormData();
     formData.append('file', file);
-
-    formData.append('idtemplate', idtemplate);
-    formData.append('idusuario', idusuario);
+    formData.append('template_usado', template_usado);
+    formData.append('usuario', idusuario);
     
     const xhr = new XMLHttpRequest();
     xhr.upload.onprogress = function (e) {
@@ -48,7 +59,7 @@ function uploadFile(file) {
         if (xhr.status === 200) {
             fileInfo.innerText = 'Upload completo!';
         } else {
-            console.log(error)
+             console.log("erro")
         }
     };
 
@@ -56,8 +67,7 @@ function uploadFile(file) {
 }
 
 document.getElementById('uploadForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+    event.preventDefault(); 
     const file = document.getElementById('arquivoUpload').files[0];
     uploadFile(file);
 });
-
