@@ -61,25 +61,28 @@
 
     <div class="fundo" id="fundo"></div>
 
-    <div class="modalContainerUpload"> <!--Modal da tela de  class Upload-->
+    <div class="modalContainerUpload">
         <div class="modalUpload">
-            
             <span class="titulo">Fazer Upload</span> 
-            <button onclick="closeModalUpload()" class="botaoXUpload">X</button> 
+            <button class="botaoXUpload" onclick="closeUploadModal()">X</button> 
             <br> <br>
-            <form>
-                <div id="drop-area">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div id="drop-area" class="drop-area">
                     <p>Arraste e solte o arquivo aqui!</p>
                 </div>
                 <br>
-                <div id="barra"></div>
-                <div id="informacao"></div>
+                <div class="progress">
+                    <div class="barra" id="barra"></div>
+                    <div class="informacao" id="informacao"></div>
+                </div>
                 <br>
-                <input type="file" id="arquivo" name="arquivo" value="Pesquisar">
-                <input type="submit" onclick="closeModalUpload()" id="botaoXUpload" class="botoesUpload" value="Adicionar">
+                <input type="file" id="arquivoUpload" name="arquivo" class="inputFile" value="Pesquisar">
+                <input type="submit" id="botaoUpload" class="botoesUpload" value="Adicionar" onclick="uploadFile(event)" >
             </form>
         </div>
     </div>
+    
+    
     
     <section>
         <span class="titulo">Gerenciar Templates</span> <br> <br>
@@ -89,39 +92,18 @@
             <span class="rotulo">Campos</span>
             <span class="rotulo">Solicitante</span>
         </div>
-        <div id="containerTemplate">
-            
+        <div id="containerTemplate">    
         </div>
-
-        <div class="fundo" id="fundo"></div>
-
-        <div class="modalContainerUpload"> </div>
-
-        <div class="modalUpload" style="display: none;">
-            <span class="titulo">Fazer Upload</span> 
-            <button onclick="closeModalUpload()" class="botaoXUpload">X</button> 
-            <br> <br>
-            <form>
-                <div class="drop-area">
-                    <p>Arraste e solte o arquivo aqui!</p>
-                </div>
-                <br>
-                <div class="barra"></div>
-                <div class="informacao"></div>
-                <br>
-                <input type="file" class="arquivo" name="arquivo" value="Pesquisar">
-                <input type="submit" onclick="closeModalUpload()" id="botaoXUpload" class="botoesUpload" value="Adicionar">
-            </form>
-        </div>
-
         
     </section>
 
-    <script src="script.js"></script>
+    <script src="script.js"> </script>
 
-    <script src="script_senha.js"></script>
+    <script src="script_senha.js"> </script>
 
-    <script src="script_gerencTemplates.js"></script>
+    <script src="script_gerencTemplates.js"> </script>
+
+    <script src="script_upload.js"> </script>
     
 </body>
 </html>

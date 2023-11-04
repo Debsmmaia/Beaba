@@ -207,37 +207,30 @@ body {
 
 .modalContainerUpload {
     width: 100vw;
+    height: 100vh;
     position: fixed;
+    top: 0;
+    left: 0;
     display: none;
-    z-index: 999;
     justify-content: center;
     align-items: center;
+    z-index: 999;
 }
 
 .modalUpload {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
     background-color: white;
     border: #026F38 solid 2px;
     width: 650px;
     height: 420px;
-    text-align: center;
     border-radius: 15px;
     padding: 20px;
-}
-
-.activeUpload {
-    display: flex;
-}
-
-.activeUpload .modalUpload {
-    animation: modal .4s;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
 }
 
 .drop-area {
-    border: #026F38 dashed;
+    border: #026F38 2px dashed;
     height: 150px;
     width: 450px;
     text-align: center;
@@ -267,6 +260,7 @@ body {
     cursor: pointer;
     text-align: left;
 }
+
 
 @keyframes modalUpload {
     from {

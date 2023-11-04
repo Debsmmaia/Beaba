@@ -43,6 +43,18 @@ function closeModalPerfil(){
     modalperfil.classList.remove('activeperfil');
 }
 
+//upload
+function openUploadModal() {
+    const modal = document.querySelector('.modalContainerUpload');
+    modal.style.display = 'flex';
+    console.log("chamando")
+}
+
+function closeUploadModal() {
+    const modal = document.querySelector('.modalContainerUpload');
+    modal.style.display = 'none';
+}
+
 //fundo escuro do modal - notificação
 document.getElementById("notificacao").addEventListener("click", function(){
     document.getElementById("fundo").style.display = "block";
@@ -61,8 +73,8 @@ document.querySelector(".botaoXPerfil").addEventListener("click", function(){
     document.getElementById("fundo").style.display = "none";
 });
 
-//fundo escuro do modal - upload
-document.getElementById("botaoUpload").addEventListener("click", function(){
+//fundo escuro do modal
+document.querySelector(".botaoUpload").addEventListener("click", function(){
     document.getElementById("fundo").style.display = "block";
 });
 

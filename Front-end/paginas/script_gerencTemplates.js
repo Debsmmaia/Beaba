@@ -12,59 +12,7 @@ if (tipo_perfil === 'Administrador') {
 }
 
 
-const dropArea = document.getElementById('drop-area');
-const progressBar = document.getElementById('barra');
-const fileInfo = document.getElementById('informacao');
-
-dropArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-});
-
-dropArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-
-    fileInfo.textContent = `Nome do arquivo: ${file.name}`;
-    simulateFileUpload(file);
-});
-
-function simulateFileUpload(file) {
-
-    const totalSize = file.size;
-    let uploadedSize = 0;
-
-    const uploadInterval = 200;
-
-    const uploadTimer = setInterval(() => {
-        uploadedSize += 10000;
-
-        // Atualizar a barra de progresso
-        const progress = (uploadedSize / totalSize) * 100;
-        progressBar.style.width = progress + '%';
-
-        if (uploadedSize >= totalSize) {
-            clearInterval(uploadTimer);
-        }
-    }, uploadInterval);
-}
-
-function openModalUpload() {
-    const modalupload = document.querySelector('.modalUpload');
-    modalupload.style.display = 'block';
-    console.log("chamando")
-}
-
-document.addEventListener("click", function (event) {
-    if (event.target.classList.contains("botaoUpload")) {
-        openModalUpload();
-    }
-});
-
-
-function closeModalUpload() {
-    const modalupload = document.querySelector('.modalUpload');
-    modalupload.style.display = 'none';
-}
+//função para mostrar o template 
 
 async function renderizarTemplate() {
     const url = 'http://localhost:3003/template/templateGet';
@@ -111,7 +59,7 @@ async function renderizarTemplate() {
                         <button class="botaoBranco direita">Download</button>
                     </td>
                     <td>
-                    <button class="botaoBranco" class="botaoUpload" onclick="openModalUpload()">Upload</button>
+                        <button class="botaoBranco botaoUpload" onclick="openUploadModal()">Upload</button>
                     </td>
                     <td>
                     <label class="switch">
@@ -185,6 +133,7 @@ async function renderizarTemplate() {
                 if (template.aprovacao === "Aprovado") { //so visualiza se o template tiver sido aprovado
                     const templateDiv = document.createElement('div');
                     templateDiv.classList.add('templateGerenciar');
+
                     templateDiv.innerHTML = `
                     <table width="100%">
                     <tr>
@@ -198,7 +147,7 @@ async function renderizarTemplate() {
                         <button class="botaoBranco direita botaoDownload" >Download</button>
                     </td>
                     <td>
-                    <button class="botaoBranco" class="botaoUpload" onclick="openModalUpload()">Upload</button>
+                        <button class="botaoBranco botaoUpload" onclick="openUploadModal()">Upload</button>
                     </td>
                     <td>
                     <label class="switch">
@@ -366,5 +315,3 @@ async function renderizarTemplate() {
 }
 
 renderizarTemplate();
-
-
