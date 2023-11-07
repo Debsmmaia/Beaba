@@ -244,20 +244,8 @@ async function enviarDadosParaServidorCampos(campo) {
     } catch (error) {
         console.log('Erro ao fazer a requisição:', error.message);
     }
+    
 }
-
-// enviar.addEventListener('click', function () {
-//     const nome_template = document.getElementById('nomeTemplate').value = '';
-//     const qtdCampos = document.getElementById('qtdCampos').value = '';
-
-//     const camposAdcTemplate = document.querySelectorAll('.camposAdcTemplate');
-
-//     camposAdcTemplate.forEach(campo => {
-//         if (campo.tagName === 'INPUT') {
-//             campo.value = '';
-//         }
-//     });
-// });
 
 
 

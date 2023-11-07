@@ -227,7 +227,7 @@ async function renderizarTemplate() {
               <p>Tipo de arquivo: ${template.tipo_arquivo}</p>
             </td>
             <td class="direita">
-              <button class="butAprovar" id="aprovacao">Aprovar</button>
+              <button class="butAprovar" id="aprovacao" onclick="atualizarTotal()">Aprovar</button>
             </td>
             <td class="direita">
               <button class="butReprovar">Reprovar</button>

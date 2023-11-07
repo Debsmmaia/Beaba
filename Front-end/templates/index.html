@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style3.css">
+  <link rel="stylesheet" type="text/css" href="../static/style/style3.css">
+
   <title>Login</title>
 </head>
 
@@ -21,7 +22,6 @@
   </div>
 
   <script>
- 
     const loginForm = document.getElementById('formLogin');
 
     loginForm.addEventListener('submit', async function (event) {
@@ -53,9 +53,9 @@
           sessionStorage.setItem('userData', JSON.stringify(data));
 
           if(data.tipo_perfil === 'Administrador'){
-            window.location.href = '/Front-end/paginas/Dashboard.html';
+            window.location.href = '../templates/Dashboard.html';
           }else{
-            window.location.href = '/Front-end/paginas/gerenciarTemplate.html';
+            window.location.href = '../templates/gerenciarTemplate.html';
           }
           
         } else if (response.status === 403) {

@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "qqtech",
+    "private_key_id": "c18725342c1142640428a208ceb6fbf0b9def02c",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCdrJ7pcHZABcvV\nIJ6/cWvJ37vAQUfdunyQhd9TwjVRevtXrEThP33Rt89AgTbH5oYTjNPz7OpYJr9m\nAtDgGFnZK7SMvyqGaW/Iwemrx9y/PfDhUR60cJg2nJn1nrIAkoeGK1q18gLVFTbc\npEUBszxQQuEeVf2AVuxYaT/pU3UOeMspexFx3mznlgKY9WDyk6L79Blu4nI6rFak\nWKvcreVFkE2hqjSEk57PQ+b+1CfVixi/CRNEEL1Ph+lsiwZxKkBZos7PsYHC5HrH\np8eYOOKpMyQ13/xzRPo98kuGW5czq1Cylh7QlYjT8oHmli0FyUxBAkOVCbl7hBIR\ncpMcm6yzAgMBAAECggEAS11AE7pSeyWKGRPfbQgsijBrkGhjjmLduUKTzXgtfgW3\nb1+DCNsNK5mc8WsRoRjZiyyr/pKGLJ5Qq9S6u/JHt9sBEKkrDVYGPUIai6YbKDnW\nEgxxDbQnvSq7GEDDOizPpFzCnebQXcMnFu1ZoodmU8Kz0YkugxKJI3UjPEZM1B4+\nZqLjzyRhgGgDpOA8n4/bqiXwyl1AHXpd3juBsteZK/ykgmnPYMndix//rNR8oArc\nfsaen6z7ePWvZhzuIKdNcPVcjX/lCk4qu7tH6KNOrS1R0v6RgjytzxTimIn2VkpL\nltUhNgcPNBVFnNcdev0rZUFELErEypshna3FTIC/OQKBgQDQJgDMl2OVjM2c8v7O\nm/7Iz/hV1vQfI/PRliSqwABvL+WBjIQ6eds38fn0rQ52tfPzUx90LuYOd4WZ+xgQ\nIPhNccDAviEYXJXkmNLkW3DkCS7ZoZcovVENHslTj2ON9ZxogyxIgjXF4n+VScV5\nEYFqUpAoVoyx+sGOd08vUMsNJQKBgQDB7Boqje+LuqYa9jV0Pa826Xi8llZF/Zpk\nvKoHz37Bhv7DsGmz94mpRfbqsBSLJFnXORI8Ix7GTIvEVZ6Ra549iK0kizbvnwvR\nZIg//Itk0RmjOPigk+Wfy+sp2opv7z8qeGtuLjSRjE/PXNgSYqKohFaWJOBpu2Of\nZ/b9S7ym9wKBgFbRMw4iqseqxewLslns2NVbYSI0mPgQH9cwP7T0hnnZyWlCebiG\nMPhhtjbmo5zCAbFg30KveQdZtODnyT6Y8dgjdRkvdFBb9a02TOgwd6K1bdQaQRkd\n9Zt6VtDCguyoIAe7hpHrtZAHC93xuiroMUlujHA2wVJO28KXYvDCSx79AoGAVmet\n7QIbFwZOVrsXbDjD5lK28kiGHl92OKZ7mElS8EYHJAhpwL9t/hdngoB8VtcWlLgg\nMN1xK+gVaqC/q4npEv/gLeU90Bzsthr2PpR3Q6+LndeXqGzdporEuHxgrKlMWs8X\nBxvdXnDHatyyhdafJTj6H6JEv7e4FuHLAmeJolcCgYEAzhGO2MNTlh457hCab0Su\nWuCXReTmrEjril0NpgZfkz1p4dJzGebawW+UK6/RYjPOrPBXZQv90vPU9HFm03RO\nvItlFFy18ltpSND0x/c1Pm53WnVdNIqr7PMq/Zq/exGK9uyPpjUr+vNZagLa8baA\nZXv3KCv0LAElpIhcIpKNq/g=\n-----END PRIVATE KEY-----\n",
+    "client_email": "qqtech@qqtech.iam.gserviceaccount.com",
+    "client_id": "102179916107024236982",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/qqtech%40qqtech.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }

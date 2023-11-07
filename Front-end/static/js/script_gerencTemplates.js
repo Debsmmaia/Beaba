@@ -59,7 +59,7 @@ async function renderizarTemplate() {
                         <button class="botaoBranco direita">Download</button>
                     </td>
                     <td>
-                        <button class="botaoBranco botaoUpload" onclick="openUploadModal(${template.idtemplate})">Upload</button>
+                        <button class="botaoBranco botaoUpload" onclick="openUploadModal(${template.idtemplate})" onclick="fundoPreto()">Upload</button>
                     </td>
                     <td>
                     <label class="switch">

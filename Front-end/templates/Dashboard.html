@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Front-end/static/style/style.css">
     <title>Dashboard</title>
 </head>
 <body>
@@ -15,12 +15,12 @@
 
     <section id="botoes">
         <div>
-            <img src="../imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
-            <a href="Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
-            <a href="gerenciarTemplate.html" class="links">Gerenciar Template</a>
-            <a href="adicionarTemplate.html" class="links">Cadastrar Template</a>
-            <a href="Uploads.html" class="links">Uploads</a>
-            <a href="adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
+            <img src="../static/imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
+            <a href="../templates/Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
+            <a href="../templates/gerenciarTemplate.html" class="links">Gerenciar Template</a>
+            <a href="../templates/adicionarTemplate.html" class="links">Cadastrar Template</a>
+            <a href="../templates/Uploads.html" class="links">Uploads</a>
+            <a href="../templates/adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
         </div>
     </section>
 
@@ -33,7 +33,7 @@
             <br>
             <div class="notificDiv">
                 <span>O template nome foi aprovado! Já está disponível para uso. </span>
-                <img src="../imagens/check.png" class="check">
+                <img src="" class="check">
             </div>
         </div>
     </div>
@@ -76,18 +76,30 @@
                 <div id="templatesParaAprovacao"></div>
             </div>
             <div id="metricas">
-                <div id="aprovados">Templates Aprovados <span>  </span> </div> <br>
-                <div id="reprovados">Templates Reprovados <span>  </span> </div> <br>
+                <div id="aprovados">Templates Aprovados <span>{{ total }}</span> </div> <br>
+                <div id="reprovados">Templates Reprovados <span>  </span> </div> <br>       
                 <div id="templatesTotal">Templates Ativos <span>  </span> </div>
             </div>
 
     </section>
 
-    <script src="script.js"></script>  
-    
-    <script src="script_dash.js"></script>
+    <script>
+        function atualizarTotal() {
+            fetch('/adicionar')
+                .then(response => response.text())
+                .then(() => {
+                    const totalElement = document.getElementById('total');
+                    totalElement.innerText = parseInt(totalElement.innerText) + 1;
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
 
-    <script src="script_senha.js"></script>    
+    <script src="../static/js/script.js"></script>  
+    
+    <script src="../static/js/script_dash.js"></script>
+
+    <script src="../static/js/script_senha.js"></script>    
 
 </body>
 </html>  
