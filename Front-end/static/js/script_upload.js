@@ -42,6 +42,7 @@ async function uploadFile(file) {
 
     const data = await response.json();
     console.log(data.download_link);
+    console.log(template_usado);
 
     const dados = {
         "caminho_arquivo": data.download_link,
@@ -49,7 +50,7 @@ async function uploadFile(file) {
         "template_usado": template_usado,
     }
 
-    const dbResponse = await fetch('http://localhost:5000/addToDatabase', {
+    const upload = await fetch('http://localhost:3003/uploads/adicionarUpload', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -57,8 +58,7 @@ async function uploadFile(file) {
         body: JSON.stringify(dados)
     });
 
-    const dbData = await dbResponse.json();
-    console.log(dbData.message);
+    closeUploadModal();
 
 }
 
