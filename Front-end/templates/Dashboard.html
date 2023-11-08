@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Front-end/static/style/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Dashboard</title>
 </head>
+
 <body>
 
     <header id="cabecalho">
@@ -16,11 +19,12 @@
     <section id="botoes">
         <div>
             <img src="../static/imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
-            <a href="../templates/Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
+            <a href="../templates/Dashboard.html" class="links" id="botaoDash" style="display: none;">Dashboard</a>
             <a href="../templates/gerenciarTemplate.html" class="links">Gerenciar Template</a>
             <a href="../templates/adicionarTemplate.html" class="links">Cadastrar Template</a>
             <a href="../templates/Uploads.html" class="links">Uploads</a>
-            <a href="../templates/adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
+            <a href="../templates/adicionarUsuario.html" class="links" id="botaoAdcUser"
+                style="display: none;">Adicionar Usuário</a> <br>
         </div>
     </section>
 
@@ -42,7 +46,7 @@
         <div class="modalPerfil">
             <button onclick="closeModalPerfil()" class="botaoXPerfil">X</button>
             <div id="informacoesPerfil">
-                
+
             </div>
             <div id="divMudarSenha">
                 <form id="mudarSenha">
@@ -71,36 +75,27 @@
         </div>
 
         <br>
-            <div id="aprovacoes">
-                <p class="subtitulos">Templates para aprovação</p>
-                <div id="templatesParaAprovacao"></div>
-            </div>
-            <div id="metricas">
-                <div id="aprovados">Templates Aprovados <span>{{ total }}</span> </div> <br>
-                <div id="reprovados">Templates Reprovados <span>  </span> </div> <br>       
-                <div id="templatesTotal">Templates Ativos <span>  </span> </div>
-            </div>
+        <div id="aprovacoes">
+            <p class="subtitulos">Templates para aprovação</p>
+            <div id="templatesParaAprovacao"></div>
+        </div>
+        <div id="metricas">
+            <div id="aprovados">Templates Aprovados <span id="totalAprovados">  </span> </div> <br>
+            <div id="reprovados">Templates Reprovados <span id="totalReprovados"> </span> </div> <br>
+            <div id="templatesTotal">Templates Ativos <span id="total"> </span> </div>
+        </div>
 
     </section>
 
-    <script>
-        function atualizarTotal() {
-            fetch('/adicionar')
-                .then(response => response.text())
-                .then(() => {
-                    const totalElement = document.getElementById('total');
-                    totalElement.innerText = parseInt(totalElement.innerText) + 1;
-                })
-                .catch(err => console.error(err));
-        }
-    </script>
-
-    <script src="../static/js/script.js"></script>  
     
+
+
+    <script src="../static/js/script.js"></script>
+
     <script src="../static/js/script_dash.js"></script>
 
-    <script src="../static/js/script_senha.js"></script>    
+    <script src="../static/js/script_senha.js"></script>
 
 </body>
-</html>  
 
+</html>

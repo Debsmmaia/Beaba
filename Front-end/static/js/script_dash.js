@@ -41,6 +41,48 @@ if (tipo_perfil === 'Administrador') {
   botaoAdcUser.style.display = 'inline-block';
 }
 
+//mudar a variável do front 
+//aprovados
+function atualizarTotalAprovados() {
+  $.post("http://localhost:5000/incrementarAprovados", function (data) {
+    $("#totalAprovados").text(data.totalAprovados);
+  });
+}
+
+function Aprovados() {
+  $.get("http://localhost:5000/mostrarAprovados", function (data) {
+    $("#totalAprovados").text(data.totalAprovados);
+  });
+}
+
+//reprovados
+
+function atualizarTotalReprovados() {
+  $.post("http://localhost:5000/incrementarReprovados", function (data) {
+    $("#totalReprovados").text(data.totalReprovados);
+  });
+}
+
+function Reprovados() {
+  $.get("http://localhost:5000/mostrarReprovados", function (data) {
+    $("#totalReprovados").text(data.totalReprovados);
+  });
+}
+
+//total
+
+// function atualizarTotal() {
+//   $.post("http://localhost:5000/total", function (data) {
+//     $("#total").text(data.total);
+//   });
+// }
+
+// function Total() {
+//   $.get("http://localhost:5000/mostrarTotal", function (data) {
+//     $("#total").text(data.total);
+//   });
+// }
+
 
 //pegar os usuarios
 
@@ -210,11 +252,11 @@ async function renderizarTemplate() {
 
     for (const template of templates) {
       if (template.aprovacao === 'Pendente') {
-      const usuario = await buscarUser(template.usuario);
+        const usuario = await buscarUser(template.usuario);
 
-      const templateDiv = document.createElement('div');
-      templateDiv.classList.add('templateDiv');
-      templateDiv.innerHTML = `
+        const templateDiv = document.createElement('div');
+        templateDiv.classList.add('templateDiv');
+        templateDiv.innerHTML = `
         <table width="100%">
           <tr> 
             <td class="esquerda">
@@ -227,18 +269,18 @@ async function renderizarTemplate() {
               <p>Tipo de arquivo: ${template.tipo_arquivo}</p>
             </td>
             <td class="direita">
-              <button class="butAprovar" id="aprovacao" onclick="atualizarTotal()">Aprovar</button>
+              <button class="butAprovar" id="aprovacao" onclick="atualizarTotalAprovados()">Aprovar</button>
             </td>
             <td class="direita">
-              <button class="butReprovar">Reprovar</button>
+              <button class="butReprovar" id="reprovaca" onclick="atualizarTotalReprovados()">Reprovar</button>
             </td>
           </tr>
         </table>
       `;
-      templateList.appendChild(templateDiv);
+        templateList.appendChild(templateDiv);
 
-    const aprovar = templateDiv.querySelector('.butAprovar');
-    aprovar.addEventListener('click', async function(){
+        const aprovar = templateDiv.querySelector('.butAprovar');
+        aprovar.addEventListener('click', async function () {
 
           const url = 'http://localhost:3003/template/aprovarTemplate';
           const templateAprovado = template.idtemplate;
@@ -247,7 +289,7 @@ async function renderizarTemplate() {
             "idtemplate": templateAprovado,
             "aprovacao": "Aprovado",
           }
-          
+
           try {
             const response = await fetch(url, {
               method: 'PUT',
@@ -272,10 +314,10 @@ async function renderizarTemplate() {
             console.error("Ocorreu um erro ao ocultar a div:", error);
           }
 
-      });
+        });
 
-    const reprovar = templateDiv.querySelector('.butReprovar');
-    reprovar.addEventListener('click', async function(){
+        const reprovar = templateDiv.querySelector('.butReprovar');
+        reprovar.addEventListener('click', async function () {
 
           const url = 'http://localhost:3003/template/reprovarTemplate';
           const templateReprovado = template.idtemplate;
@@ -309,9 +351,9 @@ async function renderizarTemplate() {
           }
 
 
-      });
+        });
+      }
     }
-    }  
   } catch (error) {
     console.log('Erro ao fazer a requisição:', error.message);
   }
@@ -319,4 +361,14 @@ async function renderizarTemplate() {
 
 renderizarTemplate();
 
+$(document).ready(function() {
+  Aprovados();
+});
 
+$(document).ready(function() {
+  Reprovados();
+});
+
+// $(document).ready(function() {
+//   Total();
+// });
