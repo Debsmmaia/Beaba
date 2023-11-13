@@ -17,8 +17,7 @@
     </header>
 
     <section id="botoes">
-        <div>
-            <img src="../static/imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
+        <div id="botoesAcesso">
             <a href="../templates/Dashboard.html" class="links" id="botaoDash" style="display: none;">Dashboard</a>
             <a href="../templates/gerenciarTemplate.html" class="links">Gerenciar Template</a>
             <a href="../templates/adicionarTemplate.html" class="links">Cadastrar Template</a>
@@ -81,14 +80,43 @@
         </div>
         <div id="metricas">
             <div id="aprovados">Templates Aprovados <span id="totalAprovados">  </span> </div> <br>
-            <div id="reprovados">Templates Reprovados <span id="totalReprovados"> </span> </div> <br>
-            <div id="templatesTotal">Templates Ativos <span id="total"> </span> </div>
+            <div id="aprovados">Templates Ativos <span id="totalAtivos"> </span> </div> <br>
+            <div id="reprovados">Templates Desativados <span id="totalDesativos"> </span> </div>
         </div>
-
     </section>
 
-    
+    <script>
+        fetch('http://127.0.0.1:5000/count_idtemplates')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.total);
+                document.getElementById('totalAprovados').innerHTML = data.total;
+            })
+            .catch(error => console.log('Erro:', error));
 
+            fetch('http://127.0.0.1:5000/count_status')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.total);
+                document.getElementById('totalAtivos').innerHTML = data.total;
+            })
+            .catch(error => console.log('Erro:', error));    
+
+            fetch('http://127.0.0.1:5000/count_statusDesativo')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Resposta do servidor:', data); // Adiciona um log para verificar a resposta do servidor
+                if (data.error) {
+                    console.log('Erro retornado pelo servidor:', data.error);
+                } else {
+                    console.log('Total retornado:', data.total);
+                    document.getElementById('totalDesativos').innerHTML = data.total;
+                }
+            })
+            .catch(error => console.log('Erro:', error));
+
+            
+    </script>
 
     <script src="../static/js/script.js"></script>
 

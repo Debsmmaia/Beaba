@@ -15,7 +15,6 @@
 
     <section id="botoes">
         <div>
-            <img src="../static/imagens/sino.png" height="15px" id="notificacao" onclick="openModal()">
             <a href="../templates/Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
             <a href="../templates/gerenciarTemplate.html" class="links">Gerenciar Template</a>
             <a href="../templates/adicionarTemplate.html" class="links">Cadastrar Template</a>
@@ -66,7 +65,7 @@
         <div class="informacoesTemplate">
             <span >Nome do arquivo</span>
             <span class="rotulo">Data do Upload</span>
-            <span class="rotulo">Funcionário</span>
+            <span class="rotulo">Tipo de arquivo</span>
         </div>
         <div id="containerTemplateUpload">
             
@@ -88,6 +87,15 @@
             botaoDash.style.display = 'inline-block';
             botaoAdcUser.style.display = 'inline-block';
         } 
+    </script>
+
+    <script>
+        function baixarArquivo(caminho) {
+            var link = document.createElement('a');
+            link.href = caminho;
+            link.download = 'NomeDoArquivo';
+            link.click();
+        }
     </script>
 
     <script src="../static/js/script_senha.js"></script>

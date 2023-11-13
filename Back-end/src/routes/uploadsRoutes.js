@@ -14,6 +14,21 @@ uploadRoutes.get('/uploadsGet', async (req, res) => {
     }
 });
 
+uploadRoutes.get('/uploadsGet/:idupload', async (req, res) => {
+  const idupload = parseInt(req.params.idupload);
+  try {
+    const uploads = await prisma.Uploads.findUnique({
+      where: {
+        "idupload":idupload,
+      }
+    });
+    res.json(uploads);
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+    res.status(500).json({ error: 'Erro ao buscar usuários.' });
+  }
+});
+
 uploadRoutes.post('/adicionarUpload', async (req, res) => {
   try {
     const { caminho_arquivo, usuario, template_usado } = req.body;

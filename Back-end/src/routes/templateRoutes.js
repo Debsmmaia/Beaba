@@ -105,27 +105,35 @@ templateRoutes.put('/ativarTemplate', async (req, res) => {
 });
 
 
-// templateRoutes.delete('/deletarTemplate/:idtemplate', async (req, res) => {
-//   const idtemplate = parseInt(req.params.idtemplate);
+templateRoutes.delete('/deletarTemplate/:idtemplate', async (req, res) => {
+  const idtemplate = parseInt(req.params.idtemplate);
 
-//   try {
-//     const deletedTemplate = await prisma.Templates.delete({ 
-//       where: {
-//         "idtemplate": idtemplate,
-//       },
-//     });
+  try {
 
-//     if (!deletedTemplate) {
-//       return res.status(404).json({ erro: 'Template não existe!' });
-//     }
+    await prisma.Campos.deleteMany({
+      where: {
+        "template_pertencente": idtemplate,
+      },
+    });
 
-//     res.json({ mensagem: 'Template excluído com sucesso!' });
+    const deletedTemplate = await prisma.Templates.delete({ 
+      where: {
+        "idtemplate": idtemplate,
+      },
+    });
 
-//   } catch (error) {
-//     console.error('Erro ao excluir template:', error);
-//     res.status(500).json({ erro: 'Erro ao excluir template"' });
-//   }
-// });
+    if (!deletedTemplate) {
+      return res.status(404).json({ erro: 'Este template não existe!' });
+    }
+
+    res.json({ mensagem: 'Template excluído com sucesso!' });
+
+  } catch (error) {
+    console.error('Erro ao excluir usuário:', error);
+    res.status(500).json({ erro: 'Erro ao excluir template.' });
+  }
+});
+
 
 
 

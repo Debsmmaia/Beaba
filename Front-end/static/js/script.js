@@ -1,15 +1,3 @@
-//Notificações
-
-const modal = document.querySelector('.modalContainer')
-
-function openModal() {
-    modal.classList.add('active')
-}
-
-function closeModal() {
-    modal.classList.remove('active')
-}
-
 //Perfil
 
 const modalperfil = document.querySelector('.modalContainerPerfil');
@@ -75,33 +63,21 @@ function openUploadModal(idtemplate) {
     fundoOpen();
 }
 
-//fundo escuro do modal - notificação
-document.getElementById("notificacao").addEventListener("click", function () {
-    document.getElementById("fundo").style.display = "block";
-});
-
-document.querySelector(".botaoX").addEventListener("click", function () {
-    document.getElementById("fundo").style.display = "none";
-});
-
 //fundo escuro do modal - perfil
 document.getElementById("botaoPerfil").addEventListener("click", function () {
-    document.getElementById("fundo").style.display = "block";
+    console.log("chamando");
+    fundoOpen();
 });
 
 document.querySelector(".botaoXPerfil").addEventListener("click", function () {
-    document.getElementById("fundo").style.display = "none";
+    fundoClose();
 });
 
-//fundo escuro do modal
+//fundo escuro do modal - upload
 document.querySelector(".botaoUpload").addEventListener("click", function () {
-    document.getElementById("fundo").style.display = "block";
+    fundoOpen();
 });
 
 document.querySelector(".botaoXUpload").addEventListener("click", function () {
-    document.getElementById("fundo").style.display = "none";
+    fundoClose();
 });
-
-
-
-

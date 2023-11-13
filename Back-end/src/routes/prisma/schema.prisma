@@ -24,8 +24,8 @@ model Templates {
   status        status_template 
   aprovacao     aprovacao        @default(Pendente)
   usuario       Int             
-  Campos        Campos[]
-  usuarios      Usuarios        @relation(fields: [usuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "usuario_fkey")
+  Campos        Campos[]         
+  usuarios      Usuarios        @relation(fields: [usuario], references: [idusuario], onDelete: Cascade, onUpdate: NoAction, map: "usuario_fkey")
   uploads       Uploads[]
 }
 
@@ -34,7 +34,7 @@ model Uploads {
   caminho_arquivo String    @db.VarChar(500)
   data_criacao    DateTime  @default(now())
   usuario         Int
-  template_usado  Int
+template_usado    Int
   templates       Templates @relation(fields: [template_usado], references: [idtemplate], onDelete: NoAction, onUpdate: NoAction, map: "template_fkey")
   usuarios        Usuarios  @relation(fields: [usuario], references: [idusuario], onDelete: NoAction, onUpdate: NoAction, map: "usuarios_fkey")
 }

@@ -3,38 +3,93 @@ from flask_cors import CORS
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
+import pandas as pd
+import database as dt
 import io
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500", "http://127.0.0.1:5000"]}}, supports_credentials=True)
 
-# Carregue suas credenciais do arquivo json
+DB = {
+    'user': 'postgres',
+    'password': 'postgres',
+    'host': 'localhost',
+    'port': 5432,
+    'database': 'postgres',
+    'db_type': 'postgresql',
+}
+
+def validarDataFrame(df, resultado):
+    erros = []
+
+    # Verifica se as colunas no DataFrame df correspondem às do DataFrame resultado
+    if set(df.columns) != set(resultado['nome_campo']):
+        erros.append("Colunas diferentes encontradas:")
+        erros.append("Colunas no DataFrame df: " + ', '.join(df.columns))
+        erros.append("Colunas no DataFrame resultado: " + ', '.join(resultado['nome_campo']))
+
+    # Itera sobre cada coluna e tipo esperado no mapeamento
+    for _, row in resultado.iterrows():
+        col_name = row['nome_campo']
+        expected_type = row['tipo_dado']
+        is_nullable = row['nulo']
+
+        # Verifica se a coluna está presente no DataFrame df
+        if col_name not in df.columns:
+            erros.append(f"Coluna '{col_name}' não está presente no DataFrame df.")
+
+        # Verifica se todos os valores na coluna são do tipo esperado
+        for value in df[col_name]:
+            if pd.isnull(value) and not is_nullable:
+                erros.append(f"Valor nulo encontrado na coluna '{col_name}', que não permite valores nulos.")
+            if not pd.isnull(value):
+                if expected_type == 'Palavra' and not isinstance(value, str):
+                    erros.append(f"Valor '{value}' na coluna '{col_name}' não é do tipo esperado '{expected_type}'.")
+                elif expected_type == 'Numero inteiro' and not isinstance(value, (int, float)):
+                    erros.append(f"Valor '{value}' na coluna '{col_name}' não é do tipo esperado '{expected_type}'.")
+
+    # Verificação passou, os DataFrames têm as mesmas colunas e tipos de dados
+    return erros
+
 credentials = Credentials.from_service_account_file('credenciais.json')
 
 def build_drive_service():
     return build('drive', 'v3', credentials=credentials)
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    file = request.files['file']
+@app.route('/upload/<int:idtemplate>', methods=['POST'])
+def upload_file(idtemplate):
+    try:
+        file = request.files['file']
+        print(file)
 
-    # Crie um objeto MediaIoBaseUpload
-    media = MediaIoBaseUpload(io.BytesIO(file.read()), mimetype=file.content_type)
+        file_stream = io.BytesIO(file.read())
+        df = pd.read_excel(file_stream)
+        print(df)
+            
+        consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
+        resultado = dt.get_df(consulta_sql, DB)  
+        print(resultado)
 
-    # Autenticação com o Google Drive
-    drive_service = build_drive_service()
-    file_metadata = {'name': file.filename}
-    drive_service.files().create(body=file_metadata, media_body=media).execute()
+        erros = validarDataFrame(df, resultado)
+        if not erros:
+            print("Correto")
+            media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
+            drive_service = build_drive_service()
+            file_metadata = {'name': file.filename}
+            response = drive_service.files().create(body=file_metadata, media_body=media).execute()
+            file_id = response.get('id')
+            download_link = f"https://drive.google.com/uc?export=download&id={file_id}"
+            print(download_link)
 
-    #pega o link de download do arquivo 
-    file_metadata = {'name': file.filename}
-    response = drive_service.files().create(body=file_metadata, media_body=media).execute()
-    file_id = response.get('id')
-    download_link = f"https://drive.google.com/uc?export=download&id={file_id}"
+            return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': download_link})
+                
+        else:
+            print("Erros:", erros)
+            return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400  # Código de status HTTP 400 indica um erro, mas o servidor continuará executando
 
-
-
-    return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': download_link})
+    except Exception as e:
+        print("Erro durante o processamento:", str(e))
+        return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500  # Código de status HTTP 500 indica um erro interno do servidor
 
 if __name__ == '__main__':
     app.run(debug=True)

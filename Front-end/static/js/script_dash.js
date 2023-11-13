@@ -41,49 +41,6 @@ if (tipo_perfil === 'Administrador') {
   botaoAdcUser.style.display = 'inline-block';
 }
 
-//mudar a variável do front 
-//aprovados
-function atualizarTotalAprovados() {
-  $.post("http://localhost:5000/incrementarAprovados", function (data) {
-    $("#totalAprovados").text(data.totalAprovados);
-  });
-}
-
-function Aprovados() {
-  $.get("http://localhost:5000/mostrarAprovados", function (data) {
-    $("#totalAprovados").text(data.totalAprovados);
-  });
-}
-
-//reprovados
-
-function atualizarTotalReprovados() {
-  $.post("http://localhost:5000/incrementarReprovados", function (data) {
-    $("#totalReprovados").text(data.totalReprovados);
-  });
-}
-
-function Reprovados() {
-  $.get("http://localhost:5000/mostrarReprovados", function (data) {
-    $("#totalReprovados").text(data.totalReprovados);
-  });
-}
-
-//total
-
-// function atualizarTotal() {
-//   $.post("http://localhost:5000/total", function (data) {
-//     $("#total").text(data.total);
-//   });
-// }
-
-// function Total() {
-//   $.get("http://localhost:5000/mostrarTotal", function (data) {
-//     $("#total").text(data.total);
-//   });
-// }
-
-
 //pegar os usuarios
 
 fetch('http://localhost:3003/usuario/usuariosGet')
@@ -185,6 +142,9 @@ function excluirUsuario(userId) {
       if (!response.ok) {
         throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
       }
+
+      alert("Usuário excluído com sucesso!");
+      location.reload();
       return response.json();
     })
     .then(responseData => {
@@ -192,6 +152,8 @@ function excluirUsuario(userId) {
     })
     .catch(error => {
       console.error('Erro ao fazer a requisição:', error);
+      alert("Erro ao excluir o usuário!");
+      location.reload();
     });
 }
 
@@ -263,7 +225,7 @@ async function renderizarTemplate() {
               <p> Nome do template: ${template.nome_template} </p>
             </td>
             <td class="esquerda">
-              <p> Requisitante: ${usuario.nome_funcionario}</p>
+              <p> Requisitante: ${usuario}</p>
             </td>
             <td class="centro">
               <p>Tipo de arquivo: ${template.tipo_arquivo}</p>
@@ -360,15 +322,3 @@ async function renderizarTemplate() {
 }
 
 renderizarTemplate();
-
-$(document).ready(function() {
-  Aprovados();
-});
-
-$(document).ready(function() {
-  Reprovados();
-});
-
-// $(document).ready(function() {
-//   Total();
-// });

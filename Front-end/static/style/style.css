@@ -23,13 +23,33 @@ body {
     text-decoration: none;
     color: black;
     margin-right: 18px;
+    cursor: pointer;
+    display: inline-block;
+    /* Adiciona display: inline-block para evitar o movimento ao alterar a altura/margem durante hover */
+    transition: 0.3s;
+    margin-top: 2px;
 }
+
+
+.links:hover {
+    color: rgba(2, 111, 56);
+}
+
+/* Estilizando o texto dentro do botão para garantir que a mudança na borda inferior não afete o layout */
+.links span {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    /* Adiciona display: inline-block para garantir que a largura do elemento seja consistente durante hover */
+}
+
 
 #cabecalho {
     display: flex;
     color: white;
     text-align: left;
-    background: -webkit-linear-gradient(left, #026f38, #fce901);
+    background: -webkit-linear-gradient(left, rgba(2, 111, 56, 0.7), rgba(252, 233, 1, 0.7));
+    /* background: -webkit-linear-gradient(left, #026f38, #fce901); */
     padding: 5px;
     font-family: 'Inter', sans-serif;
     justify-content: space-between;
@@ -39,23 +59,9 @@ body {
     text-align: right;
 }
 
-#notificacao {
-    height: 15px;
-    margin-bottom: 0;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.notificDiv {
-    display: flex;
-    border: #026F38 solid 2px;
-    border-radius: 10px;
-    margin: 30px 2px 5px 2px;
-    padding: 10px;
-    box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.25);
-    height: 80px;
-    text-align: justify center;
-    align-items: center;
+#botoesAcesso {
+    height: 20px;
+    padding: 2px;
 }
 
 #botSair {
@@ -71,71 +77,6 @@ body {
 
 .check {
     height: 50px;
-}
-
-/*Modal Notificacao*/
-
-.modalContainer {
-    width: 100vw;
-    position: fixed;
-    display: none;
-    z-index: 999;
-    top: 0px;
-}
-
-.modal {
-    background-color: white;
-    display: inline-block;
-    flex-direction: column;
-    border: #026F38 solid 2px;
-    padding: 20px;
-    height: 100vw;
-    width: 30%;
-    justify-content: left;
-}
-
-.active {
-    display: flex;
-}
-
-
-.active .modal {
-    animation: modal .4s;
-}
-
-@keyframes modal {
-    from {
-        opacity: 0;
-        transform: translate3d(0, -60px, 0);
-    }
-
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-.fundo {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 2;
-}
-
-.botaoX {
-    display: block;
-    right: 0;
-    background-color: white;
-    color: #026F38;
-    font-size: 20px;
-    cursor: pointer;
-    border: none;
-    font-weight: bold;
-    float: right;
 }
 
 /*Modal Adc Template*/
@@ -394,7 +335,7 @@ small {
 
 /*Dashboard*/
 
-.nivelAcessoSelect{
+.nivelAcessoSelect {
     border: #026F38 solid 1.8px;
     border-radius: 5px;
     padding: 3px;
@@ -753,15 +694,15 @@ h1 {
 /*Gerenciar Templates e Uploads*/
 
 td {
-    max-width: 800px;
-    width: 800px;
+    max-width: 1000px;
+    width: 1000px;
 }
 
-.status{
+.status {
     display: none;
 }
 
-.templateGerenciar{
+.templateGerenciar {
     border: #026f38 solid 2px;
     border-radius: 10px;
     padding: 10px;
@@ -792,7 +733,8 @@ td {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc; /* Cor de fundo padrão */
+    background-color: #ccc;
+    /* Cor de fundo padrão */
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
@@ -812,15 +754,17 @@ td {
     border-radius: 50%;
 }
 
-input:checked + .slider {
-    background-color: #026F38; /* Cor de fundo quando ativado (ligado) */
+input:checked+.slider {
+    background-color: #026F38;
+    /* Cor de fundo quando ativado (ligado) */
     opacity: 0.7;
     border: #026F38 solid 1px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-input:checked + .slider:before {
-    -webkit-transform: translateX(30px); /* Move a bolinha para a direita quando ativado (ligado) */
+input:checked+.slider:before {
+    -webkit-transform: translateX(30px);
+    /* Move a bolinha para a direita quando ativado (ligado) */
     -ms-transform: translateX(30px);
     transform: translateX(30px);
 }
@@ -844,7 +788,7 @@ input:checked + .slider:before {
     margin-left: 5px;
 }
 
-#containerTemplate{
+#containerTemplate {
     display: flex;
     overflow-y: scroll;
     height: 450px;
@@ -852,7 +796,7 @@ input:checked + .slider:before {
     flex-direction: column;
 }
 
-#containerTemplateUpload{
+#containerTemplateUpload {
     display: flex;
     /* overflow-y: scroll; */
     height: 450px;

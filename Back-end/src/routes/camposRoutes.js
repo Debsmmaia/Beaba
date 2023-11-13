@@ -120,10 +120,9 @@ camposRoutes.get('/templateXLX/:idtemplate', async (req, res) => {
       const workbook = new excelJS.Workbook();
       const worksheet = workbook.addWorksheet('Campos');
 
-      rows.forEach(row => {
-        worksheet.addRow(row); // Adiciona cada campo como uma nova linha
-      });
-
+      campos.forEach((campo, index) => {
+        worksheet.cell(1, index + 1).string(campo.nome_campo); // Adiciona cada campo como uma nova coluna
+      })
       // Escrever o arquivo XLS temporário
       const filePath = 'arquivo.xlsx';
 
@@ -162,8 +161,8 @@ camposRoutes.get('/templateXLS/:idtemplate', async (req, res) => {
       const worksheet = workbook.addWorksheet('Campos');
 
       campos.forEach((campo, index) => {
-        worksheet.cell(index + 1, 1).string(campo.nome_campo); // Adiciona cada campo como uma nova linha
-      });
+        worksheet.cell(1, index + 1).string(campo.nome_campo); // Adiciona cada campo como uma nova coluna
+      })
 
       const filePath = 'arquivo.xls'; // Defina o nome do arquivo como 'arquivo.xls' para salvar no formato XLS.
 
