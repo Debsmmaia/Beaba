@@ -15,7 +15,7 @@
     </header>
 
     <section id="botoes">
-        <div>
+        <div id="botoesAcesso">
             <a href="../templates/Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
             <a href="../templates/gerenciarTemplate.html" class="links">Gerenciar Template</a>
             <a href="../templates/adicionarTemplate.html" class="links">Cadastrar Template</a>
@@ -42,17 +42,17 @@
         <div class="modalPerfil">
             <button onclick="closeModalPerfil()" class="botaoXPerfil">X</button>
             <div id="informacoesPerfil">
-                
+
             </div>
             <div id="divMudarSenha">
                 <form id="mudarSenha">
                     <p id="tituloSenha">Trocar minha senha</p>
                     <label for="senhaAtual">Senha atual</label> <br>
-                    <input type="text" class="camposMudarSenha"> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaAtual"> <br>
                     <label for="senhaNova">Nova senha</label> <br>
-                    <input type="text" class="camposMudarSenha"> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaNova"> <br>
                     <label for="senhaNovaConfirmacao">Confirmar nova senha</label> <br>
-                    <input type="text" class="camposMudarSenha"> <br> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaNovaConfirmacao"> <br> <br>
                     <input type="submit" class="buttonMudarSenha">
                 </form>
             </div>
@@ -75,10 +75,21 @@
                     <div class="barra" id="barra"></div>
                     <div class="informacao" id="informacao"></div>
                 </div>
+                <label for="repositorio"> <small> Selecione o repositório desejado para o upload </small> </label>
+                <select id="repositorio" class="nivelAcessoSelect">
+                    <option>Repositório 01</option>
+                    <option>Repositório 02</option>
+                    <option>Repositório 03</option>
+                </select>
                 <br>
-                <input type="file" id="arquivoUpload" name="arquivo" class="inputFile" value="Pesquisar">
-                <input type="submit" id="botaoUpload" class="botoesUpload" value="Adicionar" onsubmit="uploadFile(document.getElementById('arquivoUpload').files[0]); return false;" >
-            </form>
+                
+                <div class="containerBotoesUpload">
+                    <label for="arquivoUpload" class="custom-file-input">
+                        <span class="custom-file-label">Pesquisar</span>
+                        <input type="file" id="arquivoUpload" name="arquivo" class="inputFile">
+                    </label>
+                    <input type="submit" id="botaoUpload" class="botoesUpload" value="Adicionar" onsubmit="uploadFile(document.getElementById('arquivoUpload').files[0]); return false;" >
+                </div>
         </div>
     </div> 
 

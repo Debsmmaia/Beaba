@@ -168,6 +168,10 @@ body {
     top: 50%;
     left: 50%;
     z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .drop-area {
@@ -200,6 +204,50 @@ body {
     font-size: 18px;
     cursor: pointer;
     text-align: left;
+    float: right;
+}
+
+/* botao upload */
+custom-file-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  /* Estilo para o botão personalizado */
+  .custom-file-input input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  /* Estilo para o texto do botão personalizado */
+  .custom-file-input .custom-file-label {
+    position: absolute;
+    display: inline-block;
+    background-color: white;
+    border: #026F38 solid 2px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    height: 40px;
+    width: 125px;
+    margin: 29px;
+    color: #026F38;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: left;
+    text-align: center; /* Alinha o texto horizontalmente */
+    line-height: 29px; /* Alinha o texto verticalmente */
+  }
+
+  .containerBotoesUpload {
+    display: flex;
+    justify-content: space-between;
 }
 
 
@@ -223,6 +271,9 @@ body {
     border: none;
     font-weight: bold;
     float: right;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 /*Modal Perfil*/
@@ -696,6 +747,7 @@ h1 {
 td {
     max-width: 1000px;
     width: 1000px;
+    margin: 10px;
 }
 
 .status {
@@ -720,6 +772,10 @@ td {
 }
 
 /* Estilizando o controle deslizante (slider) */
+
+#toggle{
+    margin-left: auto;
+}
 .switch input[type="checkbox"] {
     opacity: 0;
     width: 0;
@@ -798,7 +854,7 @@ input:checked+.slider:before {
 
 #containerTemplateUpload {
     display: flex;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     height: 450px;
     max-height: 450px;
     flex-direction: column;
@@ -806,6 +862,7 @@ input:checked+.slider:before {
 
 #template {
     display: flex;
+    justify-content: space-between;
     border: #026F38 solid 2px;
     border-radius: 15px;
     margin: 10px 30px 2px 5px;
@@ -813,9 +870,6 @@ input:checked+.slider:before {
     align-items: center;
     width: 96%;
     padding: 12px;
-    justify-content: space-between;
-    text-align: center;
-    align-items: center;
 }
 
 .botaoBranco {
@@ -828,7 +882,6 @@ input:checked+.slider:before {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     margin: 0 auto;
-    margin-right: 20px;
     cursor: pointer;
 }
 
@@ -867,3 +920,12 @@ input:checked+.slider:before {
     font-size: 20px;
     cursor: pointer;
 }
+
+table {
+    width: 100%;
+}
+
+
+
+
+

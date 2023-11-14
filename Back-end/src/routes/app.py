@@ -51,6 +51,17 @@ def validarDataFrame(df, resultado):
     # Verificação passou, os DataFrames têm as mesmas colunas e tipos de dados
     return erros
 
+def permissao(file_id):
+    drive_service = build_drive_service()
+
+    drive_service.permissions().create(
+        fileId=file_id,
+        body={
+            'type': 'anyone',
+            'role': 'reader',
+        },
+    ).execute()
+
 credentials = Credentials.from_service_account_file('credenciais.json')
 
 def build_drive_service():
@@ -59,16 +70,13 @@ def build_drive_service():
 @app.route('/upload/<int:idtemplate>', methods=['POST'])
 def upload_file(idtemplate):
     try:
-        file = request.files['file']
-        print(file)
+        file = request.files['file']     
 
         file_stream = io.BytesIO(file.read())
         df = pd.read_excel(file_stream)
-        print(df)
             
         consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
         resultado = dt.get_df(consulta_sql, DB)  
-        print(resultado)
 
         erros = validarDataFrame(df, resultado)
         if not erros:
@@ -77,11 +85,13 @@ def upload_file(idtemplate):
             drive_service = build_drive_service()
             file_metadata = {'name': file.filename}
             response = drive_service.files().create(body=file_metadata, media_body=media).execute()
-            file_id = response.get('id')
-            download_link = f"https://drive.google.com/uc?export=download&id={file_id}"
-            print(download_link)
 
-            return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': download_link})
+            file_id = response.get('id')
+            permissao(file_id)
+            view_link = f"https://drive.google.com/file/d/{file_id}/view"
+            print(view_link)
+
+            return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
                 
         else:
             print("Erros:", erros)

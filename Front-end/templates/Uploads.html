@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/style/style.css">
     <title>Gerenciar Template</title>
 </head>
+
 <body style="overflow: hidden;">
 
     <header id="cabecalho">
@@ -14,12 +16,13 @@
     </header>
 
     <section id="botoes">
-        <div>
-            <a href="../templates/Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
+        <div id="botoesAcesso">
+            <a href="../templates/Dashboard.html" class="links" id="botaoDash" style="display: none;">Dashboard</a>
             <a href="../templates/gerenciarTemplate.html" class="links">Gerenciar Template</a>
             <a href="../templates/adicionarTemplate.html" class="links">Cadastrar Template</a>
             <a href="../templates/Uploads.html" class="links">Uploads</a>
-            <a href="../templates/adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
+            <a href="../templates/adicionarUsuario.html" class="links" id="botaoAdcUser"
+                style="display: none;">Adicionar Usuário</a> <br>
         </div>
     </section>
 
@@ -41,17 +44,17 @@
         <div class="modalPerfil">
             <button onclick="closeModalPerfil()" class="botaoXPerfil">X</button>
             <div id="informacoesPerfil">
-                
+
             </div>
             <div id="divMudarSenha">
                 <form id="mudarSenha">
                     <p id="tituloSenha">Trocar minha senha</p>
                     <label for="senhaAtual">Senha atual</label> <br>
-                    <input type="text" class="camposMudarSenha"> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaAtual"> <br>
                     <label for="senhaNova">Nova senha</label> <br>
-                    <input type="text" class="camposMudarSenha"> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaNova"> <br>
                     <label for="senhaNovaConfirmacao">Confirmar nova senha</label> <br>
-                    <input type="text" class="camposMudarSenha"> <br> <br>
+                    <input type="password" class="camposMudarSenha" id="senhaNovaConfirmacao"> <br> <br>
                     <input type="submit" class="buttonMudarSenha">
                 </form>
             </div>
@@ -59,16 +62,16 @@
     </div>
 
     <div class="fundo" id="fundo"></div>
-    
+
     <section>
         <span class="titulo">Uploads</span> <br> <br>
         <div class="informacoesTemplate">
-            <span >Nome do arquivo</span>
+            <span>Nome do arquivo</span>
             <span class="rotulo">Data do Upload</span>
             <span class="rotulo">Tipo de arquivo</span>
         </div>
         <div id="containerTemplateUpload">
-            
+
         </div>
     </section>
 
@@ -82,7 +85,7 @@
 
         const spanNomeUsuario = document.getElementById('botaoPerfil');
         spanNomeUsuario.innerHTML = nome;
-    
+
         if (tipo_perfil === 'Administrador') {
             botaoDash.style.display = 'inline-block';
             botaoAdcUser.style.display = 'inline-block';
@@ -90,10 +93,10 @@
     </script>
 
     <script>
-        function baixarArquivo(caminho) {
+        function visualizarArquivo(caminho) {
             var link = document.createElement('a');
             link.href = caminho;
-            link.download = 'NomeDoArquivo';
+            link.target = '_blank'; 
             link.click();
         }
     </script>
@@ -101,6 +104,7 @@
     <script src="../static/js/script_senha.js"></script>
 
     <script src="../static/js/script_uploadRender.js"></script>
-    
+
 </body>
+
 </html>

@@ -10,7 +10,7 @@ body {
 
 #bodyLogin{
     /* background: -webkit-linear-gradient(left, rgba(2, 111, 56, 0.7), rgba(252, 233, 1, 0.7)); */
-    background-color: rgba(200, 200, 200, 0.9);
+    background-color: rgba(2, 111, 56, 0.7);
     display: flex;
     min-height: 100vh;
     justify-content: right;

@@ -120,22 +120,22 @@ async function renderizarTemplate() {
                     templateDiv.innerHTML = `
                     <table width="100%">
                     <tr>
-                    <td>
-                        <span class="esquerda">${template.nome_template}</span>
+                    <td class="esquerda">
+                        <span >${template.nome_template}</span>
                     </td>
-                    <td>
-                        <span class="esquerda">${template.tipo_arquivo}</span>
+                    <td class="esquerda">
+                        <span>${template.tipo_arquivo}</span>
                     </td>
-                    <td>
-                        <span class="esquerda">${usuario}</span>
+                    <td class="esquerda">
+                        <span>${usuario}</span>
                     </td>
-                    <td>
-                        <button class="botaoBranco direita botaoDownload">Download</button>
+                    <td >
+                        <button class="botaoBranco botaoDownload">Download</button>
                     </td>
-                    <td>
+                    <td >
                         <button class="botaoBranco botaoUpload" onclick="openUploadModal(${template.idtemplate})" onclick="fundoPreto()">Upload</button>
                     </td>
-                    <td>
+                    <td class="direita">
                     <label class="switch">
                             <input type="checkbox" id="toggle">
                             ${isAdmin ? ' <span class="slider" id="botaoStatus" ></span>' : ''}

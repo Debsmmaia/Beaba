@@ -35,7 +35,7 @@ adicionar.addEventListener('submit', function (event) {
 
                 const responseData = await response.json();
 
-                console.log('Resposta do servidor:', responseData);
+                alert("Senha atualizada com sucesso!");
                 limparCampos();
             } catch (error) {
                 console.log('Erro ao fazer a requisição:', error.message);
@@ -46,6 +46,7 @@ adicionar.addEventListener('submit', function (event) {
 
     } else {
         console.log('A nova senha e a confirmação não coincidem');
+        alert("A nova senha e a confirmação não coincidem");
     }
 });
 

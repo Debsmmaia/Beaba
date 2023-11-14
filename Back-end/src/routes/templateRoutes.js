@@ -116,6 +116,12 @@ templateRoutes.delete('/deletarTemplate/:idtemplate', async (req, res) => {
       },
     });
 
+    await prisma.Uploads.deleteMany({
+      where: {
+        "template_usado": idtemplate,
+      },
+    });
+
     const deletedTemplate = await prisma.Templates.delete({ 
       where: {
         "idtemplate": idtemplate,
