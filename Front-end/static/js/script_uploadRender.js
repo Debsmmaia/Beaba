@@ -79,7 +79,7 @@ async function renderizarUpload() {
                         <span class="esquerda">${template.tipo_arquivo}</span>
                     </td>
                     <td>
-                        <button class="botaoBranco direita botaoDownload" onclick="baixarArquivo('${upload.caminho_arquivo}')">Download</button>
+                        <button class="botaoBranco direita botaoDownload" onclick="visualizarArquivo('${upload.caminho_arquivo}')">Download</button>
                     </td>
                     </tr>
                 </table>
