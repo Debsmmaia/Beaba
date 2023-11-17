@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/style/style.css">
+    <link rel="icon" href="../static/imagens/pin.png" type="image/x-icon">
     <title>Gerenciar Template</title>
 </head>
 
@@ -65,11 +66,18 @@
 
     <section>
         <span class="titulo">Uploads</span> <br> <br>
+        <div class="search-box">
+            <input type="text" class="search-text" placeholder="   Pesquisar..." id="myInput" onkeyup="myFunction()">
+            <a class="search-btn">
+                <img src="../static/imagens/lupa.png" class="lupa">
+            </a>
+        </div>
         <div class="informacoesTemplate">
             <span>Nome do arquivo</span>
             <span class="rotulo">Data do Upload</span>
             <span class="rotulo">Tipo de arquivo</span>
         </div>
+
         <div id="containerTemplateUpload">
 
         </div>
@@ -96,10 +104,33 @@
         function visualizarArquivo(caminho) {
             var link = document.createElement('a');
             link.href = caminho;
-            link.target = '_blank'; 
+            link.target = '_blank';
             link.click();
         }
     </script>
+
+    <script>
+        function myFunction() {
+            var input, filter, div, divs, a, i;
+            input = document.getElementById('myInput');
+            filter = input.value.toUpperCase();
+            div = document.getElementById("containerTemplateUpload");
+            divs = div.getElementsByClassName('templateGerenciar');
+            for (i = 0; i < divs.length; i++) {
+                a = divs[i].dataset.templateName;
+                if (a.toUpperCase().indexOf(filter) > -1) {
+                    divs[i].style.display = "";
+                } else {
+                    divs[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
+
+
+
+
 
     <script src="../static/js/script_senha.js"></script>
 

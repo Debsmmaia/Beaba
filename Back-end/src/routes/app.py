@@ -45,9 +45,10 @@ def validarDataFrame(df, resultado):
             if not pd.isnull(value):
                 if expected_type == 'Palavra' and not isinstance(value, str):
                     erros.append(f"Valor '{value}' na coluna '{col_name}' não é do tipo esperado '{expected_type}'.")
-                elif expected_type == 'Numero inteiro' and not isinstance(value, (int, float)):
+                elif expected_type == 'Numero inteiro' and not isinstance(value, int):
                     erros.append(f"Valor '{value}' na coluna '{col_name}' não é do tipo esperado '{expected_type}'.")
-
+                elif expected_type == 'Numero real' and not isinstance(value, (int,float)):
+                    erros.append(f"Valor '{value}' na coluna '{col_name}' não é do tipo esperado '{expected_type}'.")    
     # Verificação passou, os DataFrames têm as mesmas colunas e tipos de dados
     return erros
 
@@ -80,7 +81,6 @@ def upload_file1(idtemplate):
 
         erros = validarDataFrame(df, resultado)
         if not erros:
-            print("Correto")
             media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
             drive_service = build_drive_service()
             file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}

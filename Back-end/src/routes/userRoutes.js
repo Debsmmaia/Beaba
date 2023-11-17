@@ -43,6 +43,28 @@ userRoutes.get('/buscaUsuarioId/:idusuario', async (req, res) => {
   }
 });
 
+userRoutes.get('/buscaMatricula/:matricula', async (req, res) => {
+  const matricula = req.params.matricula;
+  try {
+    const usuario = await prisma.Usuarios.findMany({
+      where: {
+        "matricula": matricula,
+      },
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ erro: 'Este usuário não existe!' });
+    } else {
+      return res.status(200).json({ usuario });
+    }
+
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+    res.status(500).json({ erro: 'Erro ao buscar usuários.' });
+  }
+});
+
+
 // Rota POST para criar um novo usuário
 userRoutes.post('/usuariosPost', async (req, res) => {
 

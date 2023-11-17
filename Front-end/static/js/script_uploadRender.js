@@ -59,26 +59,25 @@ async function renderizarUpload() {
         for (const upload of uploads) {
             if (userDataS.idusuario === upload.usuario) { 
 
-                console.log(upload)
-
-                    const template = await buscarTemplate(upload.template_usado);
+                    const template = await buscarTemplate(upload.template_usado);        
                     const dataFormatada = formatarData(upload.data_criacao);
-
                     const uploadDiv = document.createElement('div');
                     uploadDiv.classList.add('templateGerenciar');
+                    uploadDiv.dataset.templateName = template.nome_template;     
+
                     uploadDiv.innerHTML = `
                     <table width="100%">
                     <tr>
-                    <td>
+                    <td class="uplaodtd">
                         <span class="esquerda">${template.nome_template}</span>
                     </td>
-                    <td>
+                    <td class="uplaodtd">
                         <span class="esquerda">${dataFormatada}</span>
                     </td>
-                    <td>
+                    <td class="uplaodtd">
                         <span class="esquerda">${template.tipo_arquivo}</span>
                     </td>
-                    <td>
+                    <td class="uplaodtd">
                         <button class="botaoBranco direita botaoDownload" onclick="visualizarArquivo('${upload.caminho_arquivo}')">Download</button>
                     </td>
                     </tr>

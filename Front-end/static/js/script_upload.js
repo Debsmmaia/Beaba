@@ -143,3 +143,4 @@ async function uploadFile(file) {
         alert(`Ocorreu um erro durante o upload: ${error.message}`);
     }
 }
+

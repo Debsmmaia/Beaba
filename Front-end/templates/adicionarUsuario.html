@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/style/style.css">
+    <link rel="icon" href="../static/imagens/pin.png" type="image/x-icon">
     <title>Adicionar Usuário</title>
 </head>
 
@@ -91,89 +92,7 @@
 
     <script src="../static/js/script.js"></script>
 
-    <script>
-        const userData = sessionStorage.getItem('userData');
-        const userDataS = JSON.parse(userData);
-        const tipo_perfil = userDataS.tipo_perfil;
-
-        const nome = userDataS.nome_funcionario;
-        const spanNomeUsuario = document.getElementById('botaoPerfil');
-        spanNomeUsuario.innerHTML = nome;
-    
-        if (tipo_perfil === 'Administrador') {
-            botaoDash.style.display = 'inline-block';
-            botaoAdcUser.style.display = 'inline-block';
-        } 
-    </script>
-
-    <script>
-        const adicionar = document.getElementById('formulario')
-
-        adicionar.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const { nome, email, matricula, nivelAcesso } = event.target
-
-            const user = {
-                nome_funcionario: nome.value,
-                email: email.value,
-                matricula: matricula.value,
-                senha: "Quero@2023#",
-                tipo_perfil: nivelAcesso.value,
-            }
-
-            async function enviarDadosParaServidor() {
-                const url = 'http://localhost:3003/usuario/usuariosPost';
-
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            "Access-Control-Allow-Origin": "*",
-                            "X-Requested-With": "XMLHttpRequest",
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(user),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Erro na requisição: ${response.status} ${response.statusText}`);
-                    }
-
-                    const responseData = await response.json();
-
-                    const mensagemSucesso = document.getElementById('mensagemSucesso');
-                    mensagemSucesso.style.display = 'flex';
-
-                    setTimeout(function () {
-                        mensagemSucesso.style.display = 'none';
-                    }, 5000); // Esconde a mensagem após 5 segundos (5000 milissegundos)
-
-
-                    console.log('Resposta do servidor:', responseData);
-                    console.log(response);
-
-                } catch (error) {
-                    console.log('Erro ao fazer a requisição:', error.message);
-                }
-            }
-
-            enviarDadosParaServidor();
-            limparCampos();
-        });
-
-        function limparCampos() {
-            const nome = document.getElementById('nome');
-            const email = document.getElementById('email');
-            const matricula = document.getElementById('matricula');
-            const nivelAcesso = document.getElementById('nivelAcesso');
-
-            nome.value = '';
-            email.value = '';
-            matricula.value = '';
-            nivelAcesso.value = '';
-        }
-
-    </script>
+    <script src="../static/js/script_adcUser.js"></script>
 
     <script src="../static/js/script_senha.js"></script>
 

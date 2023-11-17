@@ -67,12 +67,12 @@ fetch('http://localhost:3003/usuario/usuariosGet')
               <label for="nivelAcessoSelect">Nível de acesso: </label>
               <select class="nivelAcessoSelect" data-userid="${user.idusuario}">
                 <option> ${user.tipo_perfil} </option>
-                <option> Administrativo </option>
+                <option> Administrador </option>
                 <option> Comum </option>
               </select>
             </td>
             <td class="direita">
-              <button class="butExcluirUser" onclick="excluirUsuario(${user.idusuario})">Excluir</button>
+              <button class="butExcluir" onclick="excluirUsuario(${user.idusuario})">Excluir</button>
             </td>
           </tr>
         </table>
@@ -86,6 +86,7 @@ fetch('http://localhost:3003/usuario/usuariosGet')
         const idusuario = parseInt(userId);
         console.log(idusuario);
         const novoValor = event.target.value;
+        console.log(novoValor)
         const url = 'http://localhost:3003/usuario/atualizarAcesso';
         const token = 'QQ2023Tech5';
 

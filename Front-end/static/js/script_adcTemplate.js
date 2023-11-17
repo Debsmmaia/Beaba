@@ -58,9 +58,13 @@ adicionarCampos.addEventListener('click', function (event) {
         const option3 = document.createElement('option');
         option3.value = 'Data';
         option3.text = 'Data';
+        const option4 = document.createElement('option');
+        option4.value = 'Numero real';
+        option4.text = 'Numero real';
         novoSelect.appendChild(option1);
         novoSelect.appendChild(option2);
         novoSelect.appendChild(option3);
+        novoSelect.appendChild(option4);
 
         const novoLabelNulo = document.createElement('label');
         novoLabelNulo.for = `O campo ${i + 1} pode ser nulo?`;

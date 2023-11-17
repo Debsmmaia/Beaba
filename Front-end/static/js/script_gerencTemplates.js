@@ -311,20 +311,20 @@ async function renderizarTemplate() {
                     <td>
                         <span class="esquerda">${usuario}</span>
                     </td>
-                    <td>
+                    <td style="width: 90px;">
                         <button class="botaoBranco direita botaoDownload">Download</button>                   
                     </td>
-                    <td>
+                    <td style="width: 90px;">
                         <button class="botaoBranco botaoUpload" onclick="openUploadModal(${template.idtemplate})">Upload</button>
                     </td>
-                    <td>
-                        ${isAdmin ? `<button class="botaoBranco direita" onclick="excluirTemplate(${template.idtemplate})">Excluir</button>` : ''}                  
-                    </td>
-                    <td>
+                    <td style="width: 90px;">
                     <label class="switch">
                             <input type="checkbox" id="toggle">
                             ${isAdmin ? ' <span class="slider" id="botaoStatus" ></span>' : ''}
                         </label>  
+                    </td>
+                    <td>
+                        ${isAdmin ? `<button class="direita butExcluir" onclick="excluirTemplate(${template.idtemplate})">Excluir</button>` : ''}                  
                     </td>
                     </tr>
                 </table>
