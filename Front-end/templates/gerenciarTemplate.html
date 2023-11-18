@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style/style.css"> 
+    <link rel="stylesheet" href="../static/style/style.css">
     <link rel="icon" href="../static/imagens/pin.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Gerenciar Template</title>
 </head>
+
 <body style="overflow: hidden;">
 
     <header id="cabecalho">
@@ -17,11 +19,12 @@
 
     <section id="botoes">
         <div id="botoesAcesso">
-            <a href="../templates/Dashboard.html" class="links" id="botaoDash"  style="display: none;">Dashboard</a>
+            <a href="../templates/Dashboard.html" class="links" id="botaoDash" style="display: none;">Dashboard</a>
             <a href="../templates/gerenciarTemplate.html" class="links">Gerenciar Template</a>
             <a href="../templates/adicionarTemplate.html" class="links">Cadastrar Template</a>
             <a href="../templates/Uploads.html" class="links">Uploads</a>
-            <a href="../templates/adicionarUsuario.html" class="links" id="botaoAdcUser"  style="display: none;">Adicionar Usuário</a> <br>
+            <a href="../templates/adicionarUsuario.html" class="links" id="botaoAdcUser"
+                style="display: none;">Adicionar Usuário</a> <br>
         </div>
     </section>
 
@@ -64,63 +67,69 @@
 
     <div class="modalContainerUpload">
         <div class="modalUpload">
-            <span class="titulo">Fazer Upload</span> 
-            <button class="botaoXUpload" onclick="closeUploadModal()">X</button> 
-            <br> <br>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <div id="drop-area" class="drop-area">
-                    <p>Arraste e solte o arquivo aqui!</p>
-                </div>
-                <br>
-                <div class="progress">
-                    <div class="barra" id="barra"></div>
-                    <div class="informacao" id="informacao"></div>
-                </div>
+
+            <button class="botaoXUpload" onclick="closeUploadModal()">X</button>
+
+            <div id="modalReposit">
                 <label for="repositorio"> <small> Selecione o repositório desejado para o upload </small> </label>
-                <select id="repositorio" class="nivelAcessoSelect">
+                <select id="repositorio" class="nivelAcessoSelect" style="margin: 5px;">
+                    <option disabled selected value="">Selecione</option>
                     <option>Repositório 01</option>
                     <option>Repositório 02</option>
                     <option>Repositório 03</option>
-                </select>
-                <br>
-                
-                <div class="containerBotoesUpload">
-                    <label for="arquivoUpload" class="custom-file-input">
-                        <span class="custom-file-label">Pesquisar</span>
-                        <input type="file" id="arquivoUpload" name="arquivo" class="inputFile">
-                    </label>
-                    <input type="submit" id="botaoUpload" class="botoesUpload" value="Adicionar" onsubmit="uploadFile(document.getElementById('arquivoUpload').files[0]); return false;" >
-                </div>
-        </div>
-    </div> 
+                </select> <br>
+            </div>
 
+            <div id="modalArquivo">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div id="drop-area" class="drop-area">
+                        <p>Arraste e solte o arquivo aqui!</p>
+                        <small>Upload automático do arquivo</small>
+                    </div>
+
+                    <br>
+
+                    <div class="progress">
+                        <div class="barra" id="barra"></div>
+                        <div class="informacao" id="informacao"></div>
+                    </div>
+                    
+                    <br>
     
+                    <div class="containerBotoesUpload">
+                        <label for="arquivoUpload" class="custom-file-input">
+                            <span class="custom-file-label">Pesquisar</span>
+                            <input type="file" id="arquivoUpload" name="arquivo" class="inputFile">
+                        </label>
+                        <input type="submit" id="botaoUpload" class="botoesUpload" value="Adicionar" onsubmit="uploadFile(document.getElementById('arquivoUpload').files[0]); return false;">
+                    </div>
+                </form>  
+            </div>         
+        </div>
+    </div>
+
+
     <section>
         <span class="titulo">Gerenciar Templates</span> <br> <br>
         <div class="informacoesTemplate">
-            <span >Nome do arquivo</span>
+            <span>Nome do arquivo</span>
             <span class="rotulo">Formato</span>
             <span class="rotulo">Solicitante</span>
         </div>
-        <div id="containerTemplate">    
+        <div id="containerTemplate">
         </div>
-        
     </section>
 
-    <script src="../static/js/script.js"></script>  
+    <script src="../static/js/script.js"></script>
 
     <script src="../static/js/script_gerencTemplates.js"> </script>
 
-    <script src="../static/js/script_upload.js"></script>  
+    <script src="../static/js/script_upload.js"></script>
 
-    <script src="../static/js/script_senha.js"></script>  
+    <script src="../static/js/script_senha.js"></script>
 
-    
-    
+
+
 </body>
+
 </html>
-
-
-
-
-      

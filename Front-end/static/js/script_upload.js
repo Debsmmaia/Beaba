@@ -9,12 +9,12 @@ dropArea.addEventListener('dragover', (e) => {
 dropArea.addEventListener('drop', (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0]; // Captura o arquivo solto na área de drop
-    fileInfo.textContent = `Nome do arquivo: ${file.name}`;
-
-    uploadFile(file); // Inicia o upload do arquivo solto
+    fileInfo.textContent = `Arquivo: ${file.name}`;
+    uploadFile(file); 
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    event.preventDefault();
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
         event.preventDefault();
         const file = document.getElementById('arquivoUpload').files[0];
@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 async function uploadFile(file) {
+
+    if (!file) {
+        alert('Selecione um arquivo para enviar');
+        return;
+    }
+
     try {
         const userData = sessionStorage.getItem('userData');
         const userDataS = JSON.parse(userData);
@@ -67,7 +73,7 @@ async function uploadFile(file) {
                 throw new Error(`Erro ao adicionar upload: ${upload.statusText}`);
             }
 
-            console.log("Upload concluído com sucesso!");
+           alert("Upload concluído com sucesso!");
             closeUploadModal();
         } else if (repositorio === "Repositório 02") {
             const response = await fetch(`http://localhost:5000/uploadRep2/${template_usado}`, {
@@ -100,7 +106,7 @@ async function uploadFile(file) {
                 throw new Error(`Erro ao adicionar upload: ${upload.statusText}`);
             }
 
-            console.log("Upload concluído com sucesso!");
+            alert("Upload concluído com sucesso!");
             closeUploadModal();
         } else if (repositorio === "Repositório 03") {
             const response = await fetch(`http://localhost:5000/uploadRep3/${template_usado}`, {
@@ -133,7 +139,7 @@ async function uploadFile(file) {
                 throw new Error(`Erro ao adicionar upload: ${upload.statusText}`);
             }
 
-            console.log("Upload concluído com sucesso!");
+            alert("Upload concluído com sucesso!");
             closeUploadModal();
         }
 
@@ -143,4 +149,18 @@ async function uploadFile(file) {
         alert(`Ocorreu um erro durante o upload: ${error.message}`);
     }
 }
+
+const repositorio = document.getElementById('repositorio');
+repositorio.addEventListener('input', function() {
+    const modal = document.getElementById('modalArquivo');
+    modal.style.display = 'flex';
+
+    const modalRep = document.getElementById('modalReposit');
+    modalRep.style.display = 'none';
+
+    const modalUpload = document.querySelector('.modalUpload'); 
+    modalUpload.style.height = '350px';
+    modalUpload.style.width = '650px';
+});
+
 

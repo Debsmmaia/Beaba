@@ -35,6 +35,16 @@ function closeModalPerfil() {
 function closeUploadModal() {
     const modal = document.querySelector('.modalContainerUpload');
     modal.style.display = 'none';
+
+    const modalArq = document.getElementById('modalArquivo'); 
+    modalArq.style.display = 'none';
+
+    const modalUpload = document.querySelector('.modalUpload'); 
+    modalUpload.style.height = '100px';
+    modalUpload.style.width = '500px';
+
+    const modalRep = document.getElementById('modalReposit');
+    modalRep.style.display = 'flex';
     fundoClose();
 }
 

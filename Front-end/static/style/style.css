@@ -146,7 +146,6 @@ body {
 }
 
 /*Modal Upload*/
-
 .modalContainerUpload {
     width: 100vw;
     height: 100vh;
@@ -162,8 +161,8 @@ body {
 .modalUpload {
     background-color: white;
     border: #026F38 solid 2px;
-    width: 650px;
-    height: 420px;
+    width: 500px;
+    height: 100px;
     border-radius: 15px;
     padding: 20px;
     top: 50%;
@@ -178,10 +177,9 @@ body {
 .drop-area {
     border: #026F38 2px dashed;
     height: 150px;
-    width: 450px;
+    width: 400px;
     text-align: center;
     display: block;
-    margin-left: 48px;
 }
 
 .barra {
@@ -193,62 +191,56 @@ body {
     opacity: 0.8;
 }
 
+.inputFile {
+    display: none;
+}
+
 .botoesUpload {
     background-color: white;
     border: #026F38 solid 2px;
     border-radius: 10px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    height: 45px;
-    width: 130px;
+    height: 40px;
+    width: 110px;
     margin: 30px;
     color: #026F38;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
     float: right;
 }
 
 /* botao upload */
-custom-file-input {
-    position: relative;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-  }
 
-  /* Estilo para o botão personalizado */
-  .custom-file-input input {
-    position: absolute;
-    font-size: 100px;
-    right: 0;
-    top: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  /* Estilo para o texto do botão personalizado */
-  .custom-file-input .custom-file-label {
-    position: absolute;
-    display: inline-block;
+.custom-file-input {
     background-color: white;
     border: #026F38 solid 2px;
     border-radius: 10px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    height: 40px;
-    width: 125px;
-    margin: 29px;
+    height: 35px;
+    width: 110px;
+    margin: 30px;
     color: #026F38;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
-    text-align: left;
-    text-align: center; /* Alinha o texto horizontalmente */
-    line-height: 29px; /* Alinha o texto verticalmente */
-  }
+    text-align: center;
+    display: inline-block;
+    line-height: 34px;
+}
 
-  .containerBotoesUpload {
+.containerBotoesUpload {
     display: flex;
     justify-content: space-between;
+    text-align: center;
+}
+
+#modalReposit {
+    margin: 15px;
+}
+
+#modalArquivo {
+    transition: 4s;
+    display: none;
 }
 
 
@@ -745,6 +737,18 @@ h1 {
 
 /*Gerenciar Templates e Uploads*/
 
+.tdInicial {
+    margin: 10px;
+    width: 320px;
+    max-width: 320px;
+}
+
+.td2{
+    width: 190px;
+    max-width: 190px; 
+    margin: 0 auto;
+}
+
 .uplaodtd {
     width: 1000px;
     max-width: 1000px;
@@ -776,9 +780,10 @@ h1 {
 
 /* Estilizando o controle deslizante (slider) */
 
-#toggle{
+#toggle {
     margin-left: auto;
 }
+
 .switch input[type="checkbox"] {
     opacity: 0;
     width: 0;
@@ -884,14 +889,14 @@ input:checked+.slider:before {
     border: #026F38 solid 1px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    margin: 0 auto;
+    margin: 5px;
     cursor: pointer;
     float: right;
 }
 
 
 /* barra pesquisa */
-.search-box{
+.search-box {
     position: absolute;
     top: 23.3%;
     right: 0;
@@ -907,7 +912,7 @@ input:checked+.slider:before {
     opacity: 0.6;
 }
 
-.search-text{
+.search-text {
     background: none;
     border: 0;
     outline: 0;
@@ -917,7 +922,7 @@ input:checked+.slider:before {
     transition: 0.4s;
 }
 
-.search-btn{
+.search-btn {
     width: 50px;
     height: 50px;
     display: flex;
@@ -927,13 +932,13 @@ input:checked+.slider:before {
     cursor: pointer;
 }
 
-.search-box:hover > .search-text{
+.search-box:hover>.search-text {
     width: 320px;
     padding-left: 10px;
     border-bottom: #026F38 solid 1.8px;
 }
 
-.lupa{
+.lupa {
     width: 25px;
     margin: 0;
 }

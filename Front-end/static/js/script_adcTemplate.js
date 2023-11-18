@@ -125,6 +125,23 @@ adicionarCampos.addEventListener('click', function (event) {
 
 //adicionar o template 
 
+function limparCampos() {
+    const camposFormulario = document.querySelectorAll('input[type=text]');
+    camposFormulario.forEach((campo) => {
+        campo.value = '';
+    });
+
+    const divsParaApagar = document.querySelectorAll('.divCampos');
+    divsParaApagar.forEach((div) => {
+        div.remove();
+    });
+
+    const botao = document.getElementById('enviarForm');
+    botao.style.display = 'none';
+    
+    alert("Template enviado para aprovação!");
+}
+
 const adicionar = document.getElementById('adicionarCampos');
 
 adicionar.addEventListener('click', function (event) {
@@ -175,7 +192,6 @@ adicionar.addEventListener('click', function (event) {
     }
 
     enviarDadosParaServidor();
-    limparCampos();
 });
 
 const enviar = document.getElementById('enviarForm');
@@ -217,6 +233,8 @@ enviar.addEventListener('click', async function (event) {
     
         await enviarDadosParaServidorCampos(campo);
     }
+
+    setTimeout(limparCampos, 2000);
     
 });
 
@@ -250,6 +268,7 @@ async function enviarDadosParaServidorCampos(campo) {
     }
     
 }
+
 
 
 

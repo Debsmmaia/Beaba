@@ -74,29 +74,54 @@ def upload_file1(idtemplate):
         file = request.files['file']     
 
         file_stream = io.BytesIO(file.read())
-        df = pd.read_excel(file_stream)
-            
-        consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
-        resultado = dt.get_df(consulta_sql, DB)  
 
-        erros = validarDataFrame(df, resultado)
-        if not erros:
-            media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
-            drive_service = build_drive_service()
-            file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
-            response = drive_service.files().create(body=file_metadata, media_body=media).execute()
-
-            file_id = response.get('id')
-            permissao(file_id)
-            view_link = f"https://drive.google.com/file/d/{file_id}/view"
-            print(view_link)
-
-            return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+        if file.filename.endswith('.xlsx'):
+            df = pd.read_excel(file_stream)
                 
-        else:
-            print("Erros:", erros)
-            return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400  # Código de status HTTP 400 indica um erro, mas o servidor continuará executando
+            consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
+            resultado = dt.get_df(consulta_sql, DB)  
 
+            erros = validarDataFrame(df, resultado)
+            if not erros:
+                media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
+                drive_service = build_drive_service()
+                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                response = drive_service.files().create(body=file_metadata, media_body=media).execute()
+
+                file_id = response.get('id')
+                permissao(file_id)
+                view_link = f"https://drive.google.com/file/d/{file_id}/view"
+                print(view_link)
+
+                return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+                    
+            else:
+                print("Erros:", erros)
+                return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400  
+
+        elif file.filename.endswith('.csv'):
+            df = pd.read_csv(file_stream)
+                
+            consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
+            resultado = dt.get_df(consulta_sql, DB)  
+
+            erros = validarDataFrame(df, resultado)
+            if not erros:
+                media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
+                drive_service = build_drive_service()
+                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                response = drive_service.files().create(body=file_metadata, media_body=media).execute()
+
+                file_id = response.get('id')
+                permissao(file_id)
+                view_link = f"https://drive.google.com/file/d/{file_id}/view"
+                print(view_link)
+
+                return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+                    
+            else:
+                print("Erros:", erros)
+                return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400 
     except Exception as e:
         print("Erro durante o processamento:", str(e))
         return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500  # Código de status HTTP 500 indica um erro interno do servidor
