@@ -45,6 +45,13 @@ function closeUploadModal() {
 
     const modalRep = document.getElementById('modalReposit');
     modalRep.style.display = 'flex';
+
+    const selectRepositorio = document.getElementById('repositorio');
+    selectRepositorio.value = "";
+
+    const divInformacao = document.getElementById('informacao');
+    divInformacao.innerHTML = ' ';
+
     fundoClose();
 }
 

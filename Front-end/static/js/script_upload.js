@@ -1,5 +1,4 @@
 const dropArea = document.getElementById('drop-area');
-const progressBar = document.getElementById('barra');
 const fileInfo = document.getElementById('informacao');
 
 dropArea.addEventListener('dragover', (e) => {
@@ -8,7 +7,7 @@ dropArea.addEventListener('dragover', (e) => {
 
 dropArea.addEventListener('drop', (e) => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0]; // Captura o arquivo solto na área de drop
+    const file = e.dataTransfer.files[0]; 
     fileInfo.textContent = `Arquivo: ${file.name}`;
     uploadFile(file); 
 });
@@ -20,7 +19,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const file = document.getElementById('arquivoUpload').files[0];
         uploadFile(file);
     });
-});
+
+    document.getElementById('arquivoUpload').addEventListener('change', function() {
+        const file = this.files[0];
+        fileInfo.textContent = `Arquivo: ${file.name}`;
+    });
+    
+    document.getElementById('botaoPesquisar').addEventListener('click', function() {
+        document.getElementById('arquivoUpload').click();
+    });
+});   
 
 async function uploadFile(file) {
 
@@ -40,7 +48,7 @@ async function uploadFile(file) {
         const repositorio = document.getElementById('repositorio').value;
 
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', file);       
 
         if (repositorio === "Repositório 01") {
             const response = await fetch(`http://localhost:5000/uploadRep1/${template_usado}`, {
@@ -70,7 +78,7 @@ async function uploadFile(file) {
             });
 
             if (!upload.ok) {
-                throw new Error(`Erro ao adicionar upload: ${upload.statusText}`);
+                throw new Error(`Erro fazer o upload!`);
             }
 
            alert("Upload concluído com sucesso!");
@@ -82,7 +90,7 @@ async function uploadFile(file) {
             });
 
             if (!response.ok) {
-                throw new Error(`Erro ao enviar arquivo: ${response.statusText}`);
+                throw new Error(`Erro ao enviar arquivo!`);
             }
 
             const data = await response.json();
@@ -103,7 +111,7 @@ async function uploadFile(file) {
             });
 
             if (!upload.ok) {
-                throw new Error(`Erro ao adicionar upload: ${upload.statusText}`);
+                throw new Error(`Erro fazer o upload!`);
             }
 
             alert("Upload concluído com sucesso!");
@@ -115,7 +123,7 @@ async function uploadFile(file) {
             });
 
             if (!response.ok) {
-                throw new Error(`Erro ao enviar arquivo: ${response.statusText}`);
+                throw new Error(`Erro ao enviar arquivo!`);
             }
 
             const data = await response.json();
@@ -136,7 +144,7 @@ async function uploadFile(file) {
             });
 
             if (!upload.ok) {
-                throw new Error(`Erro ao adicionar upload: ${upload.statusText}`);
+                throw new Error(`Erro fazer o upload!`);
             }
 
             alert("Upload concluído com sucesso!");
@@ -146,7 +154,7 @@ async function uploadFile(file) {
 
     } catch (error) {
         console.error(error);
-        alert(`Ocorreu um erro durante o upload: ${error.message}`);
+        alert(`Ocorreu um erro durante o upload! O seu arquivo possui algumas incompatibilidades com o template escolhido`);
     }
 }
 

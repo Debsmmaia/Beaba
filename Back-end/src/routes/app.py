@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
@@ -6,6 +6,11 @@ from googleapiclient.http import MediaIoBaseUpload
 import pandas as pd
 import database as dt
 import io
+from io import BytesIO
+import psycopg2
+import openpyxl
+from openpyxl.utils.dataframe import dataframe_to_rows
+
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://127.0.0.1:5500", "http://127.0.0.1:5000"]}}, supports_credentials=True)
@@ -77,6 +82,68 @@ def upload_file1(idtemplate):
 
         if file.filename.endswith('.xlsx'):
             df = pd.read_excel(file_stream)
+    
+            consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
+            resultado = dt.get_df(consulta_sql, DB)  
+
+            erros = validarDataFrame(df, resultado)
+            if not erros:
+                media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
+                drive_service = build_drive_service()
+                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                response = drive_service.files().create(body=file_metadata, media_body=media).execute()
+
+                file_id = response.get('id')
+                permissao(file_id)
+                view_link = f"https://drive.google.com/file/d/{file_id}/view"
+                print(view_link)
+
+                return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+                    
+            else:
+                print("Erros:", erros)
+                return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400  
+
+        elif file.filename.endswith('.csv'):
+            df = pd.read_csv(file_stream)
+                
+            consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
+            resultado = dt.get_df(consulta_sql, DB)  
+
+            erros = validarDataFrame(df, resultado)
+            if not erros:
+                media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
+                drive_service = build_drive_service()
+                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                response = drive_service.files().create(body=file_metadata, media_body=media).execute()
+
+                file_id = response.get('id')
+                permissao(file_id)
+                view_link = f"https://drive.google.com/file/d/{file_id}/view"
+                print(view_link)
+
+                return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+                    
+            else:
+                print("Erros:", erros)
+                return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400 
+    except Exception as e:
+        print("Erro durante o processamento:", str(e))
+        return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500 
+
+
+
+
+
+@app.route('/uploadRep2/<int:idtemplate>', methods=['POST'])
+def upload_file2(idtemplate):
+    try:
+        file = request.files['file']     
+
+        file_stream = io.BytesIO(file.read())
+
+        if file.filename.endswith('.xlsx'):
+            df = pd.read_excel(file_stream)
                 
             consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
             resultado = dt.get_df(consulta_sql, DB)  
@@ -124,45 +191,7 @@ def upload_file1(idtemplate):
                 return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400 
     except Exception as e:
         print("Erro durante o processamento:", str(e))
-        return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500  # Código de status HTTP 500 indica um erro interno do servidor
-
-
-
-
-
-@app.route('/uploadRep2/<int:idtemplate>', methods=['POST'])
-def upload_file2(idtemplate):
-    try:
-        file = request.files['file']     
-
-        file_stream = io.BytesIO(file.read())
-        df = pd.read_excel(file_stream)
-            
-        consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
-        resultado = dt.get_df(consulta_sql, DB)  
-
-        erros = validarDataFrame(df, resultado)
-        if not erros:
-            print("Correto")
-            media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
-            drive_service = build_drive_service()
-            file_metadata = {'name': file.filename, 'parents': ['1aJ0P_1hTWajmNOZjLT_v0g_12oRY1lZt']}
-            response = drive_service.files().create(body=file_metadata, media_body=media).execute()
-
-            file_id = response.get('id')
-            permissao(file_id)
-            view_link = f"https://drive.google.com/file/d/{file_id}/view"
-            print(view_link)
-
-            return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
-                
-        else:
-            print("Erros:", erros)
-            return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400  # Código de status HTTP 400 indica um erro, mas o servidor continuará executando
-
-    except Exception as e:
-        print("Erro durante o processamento:", str(e))
-        return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500  # Código de status HTTP 500 indica um erro interno do servidor
+        return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500 
 
 
 
@@ -174,33 +203,120 @@ def upload_file3(idtemplate):
         file = request.files['file']     
 
         file_stream = io.BytesIO(file.read())
-        df = pd.read_excel(file_stream)
-            
-        consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
-        resultado = dt.get_df(consulta_sql, DB)  
 
-        erros = validarDataFrame(df, resultado)
-        if not erros:
-            print("Correto")
-            media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
-            drive_service = build_drive_service()
-            file_metadata = {'name': file.filename, 'parents': ['1CzpGwqWncTmgZqOJzpjqTWkPd56R_KEq']}
-            response = drive_service.files().create(body=file_metadata, media_body=media).execute()
-
-            file_id = response.get('id')
-            permissao(file_id)
-            view_link = f"https://drive.google.com/file/d/{file_id}/view"
-            print(view_link)
-
-            return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+        if file.filename.endswith('.xlsx'):
+            df = pd.read_excel(file_stream)
                 
-        else:
-            print("Erros:", erros)
-            return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400  # Código de status HTTP 400 indica um erro, mas o servidor continuará executando
+            consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
+            resultado = dt.get_df(consulta_sql, DB)  
 
+            erros = validarDataFrame(df, resultado)
+            if not erros:
+                media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
+                drive_service = build_drive_service()
+                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                response = drive_service.files().create(body=file_metadata, media_body=media).execute()
+
+                file_id = response.get('id')
+                permissao(file_id)
+                view_link = f"https://drive.google.com/file/d/{file_id}/view"
+                print(view_link)
+
+                return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+                    
+            else:
+                print("Erros:", erros)
+                return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400  
+
+        elif file.filename.endswith('.csv'):
+            df = pd.read_csv(file_stream)
+                
+            consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
+            resultado = dt.get_df(consulta_sql, DB)  
+
+            erros = validarDataFrame(df, resultado)
+            if not erros:
+                media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
+                drive_service = build_drive_service()
+                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                response = drive_service.files().create(body=file_metadata, media_body=media).execute()
+
+                file_id = response.get('id')
+                permissao(file_id)
+                view_link = f"https://drive.google.com/file/d/{file_id}/view"
+                print(view_link)
+
+                return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
+                    
+            else:
+                print("Erros:", erros)
+                return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400 
     except Exception as e:
         print("Erro durante o processamento:", str(e))
-        return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500  # Código de status HTTP 500 indica um erro interno do servidor
+        return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500  
+
+
+
+
+
+
+
+
+
+
+
+# Rota para contar os templates
+
+@app.route('/count_idtemplates', methods=['GET'])
+def count_idtemplates():
+    try:
+        resultado = dt.get_df('SELECT COUNT(idtemplate) as count_idtemplates FROM projeto."Templates"', DB)
+
+        if resultado is not None and not resultado.empty:
+            count_value = resultado['count_idtemplates'].iloc[0]  # Acessando o valor da contagem na primeira linha
+            return jsonify({ 'total': int(count_value) })  # Convertendo o valor para int e retornando como JSON
+        else:
+            return jsonify({ 'error': 'Nenhum resultado retornado' })
+
+    except Exception as e:
+        print(f"Erro: {e}")
+        return jsonify({ 'error': 'Ocorreu um erro ao processar a solicitação' })
+
+@app.route('/count_status', methods=['GET'])
+def count_status():
+    try:
+        resultado = dt.get_df('SELECT COUNT(idtemplate) as count_status FROM projeto."Templates"  WHERE status = \'Ativo\'', DB)
+
+        if resultado is not None and not resultado.empty:
+            count_value = resultado['count_status'].iloc[0]  # Acessando o valor da contagem na primeira linha
+            return jsonify({ 'total': int(count_value) })  # Convertendo o valor para int e retornando como JSON
+        else:
+            return jsonify({ 'error': 'Nenhum resultado retornado' })
+
+    except Exception as e:
+        print(f"Erro: {e}")
+        return jsonify({ 'error': 'Ocorreu um erro ao processar a solicitação' })
+
+@app.route('/count_statusDesativo', methods=['GET'])
+def count_statusDesativo():
+    try:
+        resultado = dt.get_df('SELECT COUNT(idtemplate) as count_statusDesativo FROM projeto."Templates" WHERE status = \'Desativo\'', DB)
+        print(resultado)
+
+        if resultado is not None and not resultado.empty:
+            count_value = resultado['count_statusdesativo'].iloc[0]  # Corrigido para 'count_statusdesativo'
+            print(count_value)
+            return jsonify({ 'total': int(count_value) })  # Convertendo o valor para int e retornando como JSON
+        else:
+            return jsonify({ 'error': 'Nenhum resultado retornado ou status incorreto' })
+
+    except Exception as e:
+        print(f"Erro: {e}")
+        return jsonify({ 'error': 'Ocorreu um erro ao processar a solicitação' })
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
 if __name__ == '__main__':

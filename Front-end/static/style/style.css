@@ -49,7 +49,7 @@ body {
     color: white;
     text-align: left;
     /* background-color: rgb(207, 207, 207); */
-    background: -webkit-linear-gradient(left, rgba(2, 111, 56, 0.7), rgba(252, 233, 1, 0.7));
+    background: -webkit-linear-gradient(left, rgba(2, 111, 56, 0.6), rgba(252, 233, 1, 0.6));
     /* background: -webkit-linear-gradient(left, #026f38, #fce901); */
     padding: 5px;
     font-family: 'Inter', sans-serif;
@@ -761,7 +761,7 @@ h1 {
 
 .templateGerenciar {
     border: #026f38 solid 2px;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 10px;
     margin: 5px;
     display: flex;
