@@ -417,7 +417,7 @@ async function renderizarTemplate() {
                             } catch (error) {
                                 console.error('Erro:', error);
                             }
-                        } else if (template.tipo_arquivo === "XLX") {
+                        } else if (template.tipo_arquivo === "XLSX") {
                             const url = `http://localhost:3003/campos/templateXLX/${template.idtemplate}`;
 
                             try {
@@ -427,6 +427,8 @@ async function renderizarTemplate() {
                                         'Content-Type': 'application/json'
                                     },
                                 });
+
+                                console.log(response)
 
                                 if (response.ok) {
                                     const blob = await response.blob();

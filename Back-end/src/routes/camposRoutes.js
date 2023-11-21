@@ -103,6 +103,7 @@ camposRoutes.get('/templateCSV/:idtemplate', async (req, res) => {
   }
 });
 
+
 camposRoutes.get('/templateXLX/:idtemplate', async (req, res) => {
   const idtemplate = parseInt(req.params.idtemplate);
 
@@ -116,25 +117,29 @@ camposRoutes.get('/templateXLX/:idtemplate', async (req, res) => {
     if (!campos || campos.length === 0) {
       return res.status(404).json({ erro: 'Não foram encontrados campos para este template!' });
     } else {
-      const rows = campos.map(campo => [campo.nome_campo]);
-      const workbook = new excelJS.Workbook();
+      const workbook = new excel4node.Workbook();
       const worksheet = workbook.addWorksheet('Campos');
 
       campos.forEach((campo, index) => {
         worksheet.cell(1, index + 1).string(campo.nome_campo); // Adiciona cada campo como uma nova coluna
       })
-      // Escrever o arquivo XLS temporário
-      const filePath = 'arquivo.xlsx';
 
-      await workbook.xlsx.writeFile(filePath);
+      const filePath = 'arquivo.xlsx'; // Defina o nome do arquivo como 'arquivo.xls' para salvar no formato XLS.
 
-      // Envio do arquivo XLS como resposta
-      const fileStream = fs.createReadStream(filePath);
-      fileStream.pipe(res);
+      workbook.write(filePath, err => {
+        if (err) {
+          console.error('Erro ao escrever o arquivo XLS:', err);
+          return res.status(500).json({ erro: 'Erro ao salvar o arquivo XLS.' });
+        }
 
-      // Remoção do arquivo após o envio
-      fileStream.on('end', () => {
-        fs.unlinkSync(filePath);
+        // Envio do arquivo XLS como resposta
+        const fileStream = fs.createReadStream(filePath);
+        fileStream.pipe(res);
+
+        // Remoção do arquivo após o envio
+        fileStream.on('end', () => {
+          fs.unlinkSync(filePath);
+        });
       });
     }
   } catch (error) {
