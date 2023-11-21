@@ -117,7 +117,7 @@ userRoutes.post('/usuariosPost', async (req, res) => {
     }
 
   } catch (error) {
-    console.error(error);  // Adicione esta linha para imprimir o erro no console
+    console.error(error);  
     res.status(500).json({ error: 'Erro ao criar usuário.' });
   }
 });

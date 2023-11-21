@@ -124,7 +124,7 @@ camposRoutes.get('/templateXLX/:idtemplate', async (req, res) => {
         worksheet.cell(1, index + 1).string(campo.nome_campo); // Adiciona cada campo como uma nova coluna
       })
 
-      const filePath = 'arquivo.xlsx'; // Defina o nome do arquivo como 'arquivo.xls' para salvar no formato XLS.
+      const filePath = 'arquivo.xlsx'; 
 
       workbook.write(filePath, err => {
         if (err) {
@@ -166,11 +166,10 @@ camposRoutes.get('/templateXLS/:idtemplate', async (req, res) => {
       const worksheet = workbook.addWorksheet('Campos');
 
       campos.forEach((campo, index) => {
-        worksheet.cell(1, index + 1).string(campo.nome_campo); // Adiciona cada campo como uma nova coluna
+        worksheet.cell(1, index + 1).string(campo.nome_campo); 
       })
 
-      const filePath = 'arquivo.xls'; // Defina o nome do arquivo como 'arquivo.xls' para salvar no formato XLS.
-
+      const filePath = 'arquivo.xls'; 
       workbook.write(filePath, err => {
         if (err) {
           console.error('Erro ao escrever o arquivo XLS:', err);
