@@ -303,7 +303,7 @@ def count_status():
 @app.route('/count_statusDesativo', methods=['GET'])
 def count_statusDesativo():
     try:
-        resultado = dt.get_df('SELECT COUNT(idtemplate) as count_statusDesativo FROM projeto."Templates" WHERE status = \'Desativo\'', DB)
+        resultado = dt.get_df('SELECT COUNT(idtemplate) as count_statusDesativo FROM projeto."Templates" WHERE status = \'Desativo\' AND aprovacao = \'Aprovado\'', DB)
         print(resultado)
 
         if resultado is not None and not resultado.empty:
