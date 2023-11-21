@@ -50,7 +50,7 @@ async function uploadFile(file) {
         const formData = new FormData();
         formData.append('file', file);       
 
-        if (repositorio === "Repositório 01") {
+        if (repositorio === "Recursos Humanos") {
             const response = await fetch(`http://localhost:5000/uploadRep1/${template_usado}`, {
                 method: 'POST',
                 body: formData
@@ -83,7 +83,7 @@ async function uploadFile(file) {
 
            alert("Upload concluído com sucesso!");
             closeUploadModal();
-        } else if (repositorio === "Repositório 02") {
+        } else if (repositorio === "TI") {
             const response = await fetch(`http://localhost:5000/uploadRep2/${template_usado}`, {
                 method: 'POST',
                 body: formData
@@ -116,7 +116,7 @@ async function uploadFile(file) {
 
             alert("Upload concluído com sucesso!");
             closeUploadModal();
-        } else if (repositorio === "Repositório 03") {
+        } else if (repositorio === "Contabilidade") {
             const response = await fetch(`http://localhost:5000/uploadRep3/${template_usado}`, {
                 method: 'POST',
                 body: formData
@@ -170,5 +170,3 @@ repositorio.addEventListener('input', function() {
     modalUpload.style.height = '350px';
     modalUpload.style.width = '650px';
 });
-
-

@@ -80,7 +80,7 @@ def upload_file1(idtemplate):
 
         file_stream = io.BytesIO(file.read())
 
-        if file.filename.endswith('.xlsx'):
+        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
             df = pd.read_excel(file_stream)
     
             consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
@@ -130,6 +130,7 @@ def upload_file1(idtemplate):
     except Exception as e:
         print("Erro durante o processamento:", str(e))
         return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500 
+    
 
 
 
@@ -142,7 +143,7 @@ def upload_file2(idtemplate):
 
         file_stream = io.BytesIO(file.read())
 
-        if file.filename.endswith('.xlsx'):
+        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
             df = pd.read_excel(file_stream)
                 
             consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
@@ -152,7 +153,7 @@ def upload_file2(idtemplate):
             if not erros:
                 media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
                 drive_service = build_drive_service()
-                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                file_metadata = {'name': file.filename, 'parents': ['1aJ0P_1hTWajmNOZjLT_v0g_12oRY1lZt']}
                 response = drive_service.files().create(body=file_metadata, media_body=media).execute()
 
                 file_id = response.get('id')
@@ -176,7 +177,7 @@ def upload_file2(idtemplate):
             if not erros:
                 media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
                 drive_service = build_drive_service()
-                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                file_metadata = {'name': file.filename, 'parents': ['1aJ0P_1hTWajmNOZjLT_v0g_12oRY1lZt']}
                 response = drive_service.files().create(body=file_metadata, media_body=media).execute()
 
                 file_id = response.get('id')
@@ -189,6 +190,8 @@ def upload_file2(idtemplate):
             else:
                 print("Erros:", erros)
                 return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400 
+    
+    
     except Exception as e:
         print("Erro durante o processamento:", str(e))
         return jsonify({"Erro": "Ocorreu um erro durante o processamento"}), 500 
@@ -204,7 +207,7 @@ def upload_file3(idtemplate):
 
         file_stream = io.BytesIO(file.read())
 
-        if file.filename.endswith('.xlsx'):
+        if file.filename.endswith('.xlsx') or file.filename.endswith('.xls'):
             df = pd.read_excel(file_stream)
                 
             consulta_sql = 'SELECT * FROM projeto."Campos" WHERE template_pertencente = {}'.format(idtemplate)
@@ -214,7 +217,7 @@ def upload_file3(idtemplate):
             if not erros:
                 media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
                 drive_service = build_drive_service()
-                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                file_metadata = {'name': file.filename, 'parents': ['1CzpGwqWncTmgZqOJzpjqTWkPd56R_KEq']}
                 response = drive_service.files().create(body=file_metadata, media_body=media).execute()
 
                 file_id = response.get('id')
@@ -238,7 +241,7 @@ def upload_file3(idtemplate):
             if not erros:
                 media = MediaIoBaseUpload(file_stream, mimetype=file.content_type)
                 drive_service = build_drive_service()
-                file_metadata = {'name': file.filename, 'parents': ['1p4F8jSLHAh9Gf9XlwyQgEru0YajWPLwv']}
+                file_metadata = {'name': file.filename, 'parents': ['1CzpGwqWncTmgZqOJzpjqTWkPd56R_KEq']}
                 response = drive_service.files().create(body=file_metadata, media_body=media).execute()
 
                 file_id = response.get('id')
@@ -313,10 +316,6 @@ def count_statusDesativo():
     except Exception as e:
         print(f"Erro: {e}")
         return jsonify({ 'error': 'Ocorreu um erro ao processar a solicitação' })
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
 if __name__ == '__main__':

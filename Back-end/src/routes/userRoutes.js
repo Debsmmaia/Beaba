@@ -83,7 +83,7 @@ userRoutes.post('/usuariosPost', async (req, res) => {
 
     if (newUser) {
       const emailHTML =
-      `
+        `
         <html>
           <head>
             <style>
@@ -106,16 +106,16 @@ userRoutes.post('/usuariosPost', async (req, res) => {
               </div>
             </body>
             </html>`;
-            await transporter.sendMail({
-              from: process.env.SMTP_USER,
-            to: email,
-            subject: "Sistema de Gerenciamento Eletrônico de Templates",
-            html: emailHTML,
+      await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: "Sistema de Gerenciamento Eletrônico de Templates",
+        html: emailHTML,
       });
 
       res.json(newUser);
     }
-           
+
   } catch (error) {
     console.error(error);  // Adicione esta linha para imprimir o erro no console
     res.status(500).json({ error: 'Erro ao criar usuário.' });
@@ -126,32 +126,38 @@ userRoutes.post('/usuariosPost', async (req, res) => {
 userRoutes.delete('/deletarUsuario', async (req, res) => {
   const idusuario = parseInt(req.body.idusuario);
 
-            if (isNaN(idusuario)) {
-    return res.status(400).json({erro: 'ID de usuário inválido!' });
+  if (isNaN(idusuario)) {
+    return res.status(400).json({ erro: 'ID de usuário inválido!' });
   }
 
-            try {
-              await prisma.Templates.deleteMany({
-                where: {
-                  usuario: idusuario,
-                },
-              });
-
-            const deletedUser = await prisma.Usuarios.delete({
-              where: {
-              idusuario: idusuario,
+  try {
+    await prisma.Templates.deleteMany({
+      where: {
+        usuario: idusuario,
       },
     });
 
-            if (!deletedUser) {
-      return res.status(404).json({erro: 'Este usuário não existe!' });
+    await prisma.uploads.deleteMany({
+      where: {
+        usuario: idusuario,
+      },
+    });
+
+    const deletedUser = await prisma.Usuarios.delete({
+      where: {
+        idusuario: idusuario,
+      },
+    });
+
+    if (!deletedUser) {
+      return res.status(404).json({ erro: 'Este usuário não existe!' });
     }
 
-            res.json({mensagem: 'Usuário excluído com sucesso!' });
+    res.json({ mensagem: 'Usuário excluído com sucesso!' });
 
   } catch (error) {
-              console.error('Erro ao excluir usuário:', error);
-            res.status(500).json({erro: 'Erro ao excluir usuário.' });
+    console.error('Erro ao excluir usuário:', error);
+    res.status(500).json({ erro: 'Erro ao excluir usuário.' });
   }
 });
 
@@ -159,28 +165,28 @@ userRoutes.delete('/deletarUsuario', async (req, res) => {
 //atualizar o nivel de acesso do usuário
 userRoutes.put('/atualizarAcesso', async (req, res) => {
   const idusuario = parseInt(req.body.idusuario);
-            const updateUser = await prisma.Usuarios.update({
-              where: {
-              "idusuario": idusuario
+  const updateUser = await prisma.Usuarios.update({
+    where: {
+      "idusuario": idusuario
     },
-            data: req.body
+    data: req.body
   });
-            res.json(updateUser);
+  res.json(updateUser);
 });
 
 //atualizar a senha
 userRoutes.put('/atualizarSenha', async (req, res) => {
   const idusuario = parseInt(req.body.idusuario);
-            const novaSenha = await bcrypt.hash(req.body.senha, 10);
-            const updateUser = await prisma.Usuarios.update({
-              where: {
-              "idusuario": idusuario
+  const novaSenha = await bcrypt.hash(req.body.senha, 10);
+  const updateUser = await prisma.Usuarios.update({
+    where: {
+      "idusuario": idusuario
     },
-            data: {
-              senha: novaSenha
+    data: {
+      senha: novaSenha
     }
   });
-            res.json(updateUser);
+  res.json(updateUser);
 });
 
 
@@ -188,58 +194,58 @@ userRoutes.put('/atualizarSenha', async (req, res) => {
 userRoutes.post('/login', async (req, res) => {
 
   const secretKey = 'QQ2023Tech5';
-            const {matricula, senha} = req.body;
-            console.log(env.DATABASE_URL)
-            try {
+  const { matricula, senha } = req.body;
+  console.log(env.DATABASE_URL)
+  try {
     const user = await prisma.Usuarios.findFirst({
-              where: {
-              "matricula": matricula,
+      where: {
+        "matricula": matricula,
       }
     })
 
-            if (user) {
+    if (user) {
 
       const senhaValidada = await bcrypt.compare(senha, user.senha);
 
-            if (senhaValidada === true) {
-              req.session.usuario = user;
+      if (senhaValidada === true) {
+        req.session.usuario = user;
 
-            const userData = {
-              idusuario: user.idusuario,
-            matricula: user.matricula,
-            tipo_perfil: user.tipo_perfil,
+        const userData = {
+          idusuario: user.idusuario,
+          matricula: user.matricula,
+          tipo_perfil: user.tipo_perfil,
         };
 
-            const token = jwt.sign(userData, secretKey, {expiresIn: '1h' });
+        const token = jwt.sign(userData, secretKey, { expiresIn: '1h' });
 
-            res.json({
-              token: token,
-            nome_funcionario: user.nome_funcionario,
-            idusuario: user.idusuario,
-            matricula: user.matricula,
-            tipo_perfil: user.tipo_perfil,
+        res.json({
+          token: token,
+          nome_funcionario: user.nome_funcionario,
+          idusuario: user.idusuario,
+          matricula: user.matricula,
+          tipo_perfil: user.tipo_perfil,
 
         })
 
       } else {
-              res.status(401).json({ error: 'Credenciais inválidas.' });
+        res.status(401).json({ error: 'Credenciais inválidas.' });
       }
     } else {
-              res.status(404).json({ error: 'Usuário não encontrado' });
+      res.status(404).json({ error: 'Usuário não encontrado' });
     }
   } catch (error) {
-              console.error('Erro ao realizar login:', error);
-            res.status(500).json({error: 'Erro interno do servidor' });
+    console.error('Erro ao realizar login:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
   }
 });
 
 userRoutes.get('/logout', (req, res) => {
-              req.session.destroy((err) => {
-                if (err) {
-                  console.error('Erro ao fazer logout:', err);
-                }
-              });
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Erro ao fazer logout:', err);
+    }
+  });
 });
 
 
-            module.exports = userRoutes;
+module.exports = userRoutes;

@@ -138,7 +138,7 @@ function limparCampos() {
 
     const botao = document.getElementById('enviarForm');
     botao.style.display = 'none';
-    
+
     alert("Template enviado para aprovação!");
 }
 
@@ -210,32 +210,32 @@ enviar.addEventListener('click', async function (event) {
         const nomeCampo = document.getElementsByName(`nomeCampo${i - 1}`)[0].value;
         const tipoDadoCampo = document.getElementsByName('tipoDadoCampo')[i - 1].value;
         const campoNulo = document.getElementsByName('campoNulo')[i - 1].value;
-    
+
         valoresNomeCampos.push(nomeCampo);
         valoresTiposDados.push(tipoDadoCampo);
-    
+
         if (campoNulo === "Sim") {
             valoresCamposNulos.push(true);
         } else if (campoNulo === "Não") {
             valoresCamposNulos.push(false);
         }
-    
+
         const templateData = sessionStorage.getItem('templateData');
         const templateDataS = JSON.parse(templateData);
         const templatePertencente = templateDataS.idtemplate;
-    
+
         const campo = {
             "nome_campo": nomeCampo,
             "tipo_dado": tipoDadoCampo,
             "nulo": campoNulo === "Sim",
             "template_pertencente": templatePertencente,
         };
-    
+
         await enviarDadosParaServidorCampos(campo);
     }
 
     setTimeout(limparCampos, 2000);
-    
+
 });
 
 async function enviarDadosParaServidorCampos(campo) {
@@ -266,7 +266,7 @@ async function enviarDadosParaServidorCampos(campo) {
     } catch (error) {
         console.log('Erro ao fazer a requisição:', error.message);
     }
-    
+
 }
 
 
