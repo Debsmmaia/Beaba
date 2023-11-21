@@ -273,7 +273,7 @@ def upload_file3(idtemplate):
 @app.route('/count_idtemplates', methods=['GET'])
 def count_idtemplates():
     try:
-        resultado = dt.get_df('SELECT COUNT(idtemplate) as count_idtemplates FROM projeto."Templates"', DB)
+        resultado = dt.get_df('SELECT COUNT(idtemplate) as count_idtemplates FROM projeto."Templates" WHERE aprovacao = \'Aprovado\'', DB)
 
         if resultado is not None and not resultado.empty:
             count_value = resultado['count_idtemplates'].iloc[0]  # Acessando o valor da contagem na primeira linha
