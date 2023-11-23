@@ -57,11 +57,19 @@ async function uploadFile(file) {
             });
 
             if (!response.ok) {
+                try {
+                    const erro = await response.json();
+                    console.log(erro);
+                    const erroString = JSON.stringify(erro.Detalhes);
+                    alert(erroString);
+                } catch (error) {
+                    console.log("Erro")
+                }
+            
                 throw new Error(`Erro ao enviar arquivo: ${response.statusText}`);
             }
 
             const data = await response.json();
-            console.log(data.download_link);
 
             const dados = {
                 "caminho_arquivo": data.download_link,
@@ -80,9 +88,11 @@ async function uploadFile(file) {
             if (!upload.ok) {
                 throw new Error(`Erro fazer o upload!`);
             }
-
-           alert("Upload concluído com sucesso!");
+            
+            alert("Upload concluído com sucesso!");
             closeUploadModal();
+            
+
         } else if (repositorio === "TI") {
             const response = await fetch(`http://localhost:5000/uploadRep2/${template_usado}`, {
                 method: 'POST',
@@ -90,11 +100,19 @@ async function uploadFile(file) {
             });
 
             if (!response.ok) {
-                throw new Error(`Erro ao enviar arquivo!`);
+                try {
+                    const erro = await response.json();
+                    console.log(erro);
+                    const erroString = JSON.stringify(erro.Detalhes);
+                    alert(erroString);
+                } catch (error) {
+                    console.log("Erro")
+                }
+            
+                throw new Error(`Erro ao enviar arquivo: ${response.statusText}`);
             }
 
             const data = await response.json();
-            console.log(data.download_link);
 
             const dados = {
                 "caminho_arquivo": data.download_link,
@@ -116,6 +134,7 @@ async function uploadFile(file) {
 
             alert("Upload concluído com sucesso!");
             closeUploadModal();
+
         } else if (repositorio === "Contabilidade") {
             const response = await fetch(`http://localhost:5000/uploadRep3/${template_usado}`, {
                 method: 'POST',
@@ -123,11 +142,19 @@ async function uploadFile(file) {
             });
 
             if (!response.ok) {
-                throw new Error(`Erro ao enviar arquivo!`);
+                try {
+                    const erro = await response.json();
+                    console.log(erro);
+                    const erroString = JSON.stringify(erro.Detalhes);
+                    alert(erroString);
+                } catch (error) {
+                    console.log("Erro")
+                }
+            
+                throw new Error(`Erro ao enviar arquivo: ${response.statusText}`);
             }
 
             const data = await response.json();
-            console.log(data.download_link);
 
             const dados = {
                 "caminho_arquivo": data.download_link,
@@ -154,7 +181,6 @@ async function uploadFile(file) {
 
     } catch (error) {
         console.error(error);
-        alert(`Ocorreu um erro durante o upload! O seu arquivo possui algumas incompatibilidades com o template escolhido`);
     }
 }
 

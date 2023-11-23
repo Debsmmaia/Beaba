@@ -125,7 +125,6 @@ def upload_file1(idtemplate):
                 return jsonify({'message': 'Arquivo enviado com sucesso para o Google Drive', 'download_link': view_link})
                     
             else:
-                print("Erros:", erros)
                 return jsonify({"Erro": "Tipos de dados incorretos nos campos do arquivo", "Detalhes": erros}), 400 
     except Exception as e:
         print("Erro durante o processamento:", str(e))

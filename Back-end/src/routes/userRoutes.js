@@ -195,7 +195,7 @@ userRoutes.post('/login', async (req, res) => {
 
   const secretKey = 'QQ2023Tech5';
   const { matricula, senha } = req.body;
-  console.log(env.DATABASE_URL)
+  
   try {
     const user = await prisma.Usuarios.findFirst({
       where: {
