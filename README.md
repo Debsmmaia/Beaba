@@ -1,57 +1,24 @@
-# 📌 Sistema de Controle de Templates - Estágio QQTech
+# 📄 Sistema de Gerenciamento de Templates — QQTech
 
-Sistema web desenvolvido durante meu estágio na Lojas Quero-Quero, com o objetivo de automatizar e padronizar o processo de criação, validação e controle de templates de arquivos XML e CSV utilizados internamente pela empresa.
+Sistema desenvolvido para a **Lojas Quero-Quero** que automatiza a criação, validação e controle de templates XML e CSV. 
 
-# 🎯 Objetivo do Projeto
+O sistema realiza a validação minuciosa, campo a campo, para garantir que o arquivo preenchido corresponda exatamente ao template cadastrado. Além disso, é capaz de processar arquivos massivos com até **10 milhões de linhas** e salvar os resultados automaticamente através da **Google Drive API**.
 
-A solução tinha como objetivo:
+---
 
-  • Criar e gerenciar templates de arquivos 
-  
-  • Validar estrutura de XML e CSV
-  
-  • Garantir padronização dos dados  
-  
-  • Reduzir erros operacionais 
-  
-  • Centralizar controle de versões
+## 🛠️ Tecnologias Utilizadas
 
-# 🛠️ Tecnologias Utilizadas
+* **Frontend:** HTML, CSS, JavaScript
+* **Backend:** Node.js, Express.js
+* **Processamento de Dados:** Python (Pandas, Psycopg2, Openpyxl)
+* **Banco de Dados & ORM:** PostgreSQL, Prisma ORM
+* **Integrações & Design:** Google Drive API, Figma
 
-Frontend
+---
 
-• HTML
+## 👩‍💻 Minhas Responsabilidades
 
-• CSS
-
-• JavaScript
-
-
-Backend
-
-• Node.js
-
-• Express.js
-
-• Prisma ORM
-
-
-Processamento de Dados
-
-• Python
-
-# 👩‍💻 Minha Atuação
-
-• Desenvolvimento do sistema end-to-end;
-
-• Definição da experiência do usuário (UX);
-
-• Implementação da interface web;
-
-• Estruturação da API com Node.js e Express;
-
-• Modelagem de dados com Prisma ORM;
-
-• Implementação de validações automatizadas com Python;
-
-
+* Desenvolvimento Full Stack completo (Frontend, Backend e Banco de Dados).
+* Criação de automações de validação de dados estruturados utilizando Python.
+* Integração de serviços em nuvem com a Google Drive API.
+* Modelagem e arquitetura do banco de dados relacional com Prisma e PostgreSQL.
