@@ -1,8 +1,6 @@
 # 📄 Sistema de Gerenciamento de Templates — QQTech
 
-Sistema desenvolvido para a **Lojas Quero-Quero** que automatiza a criação, validação e controle de templates XML e CSV. 
-
-O sistema realiza a validação minuciosa, campo a campo, para garantir que o arquivo preenchido corresponda exatamente ao template cadastrado. Além disso, é capaz de processar arquivos massivos com até **10 milhões de linhas** e salvar os resultados automaticamente através da **Google Drive API**.
+Sistema desenvolvido que automatiza a criação, validação e controle de templates XML e CSV. 
 
 ---
 
